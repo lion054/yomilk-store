@@ -98,10 +98,10 @@
       <div class="relative">
         <button
           (click)="toggleDepartmentSidebar()"
-          class="flex items-center gap-3 bg-fresh-500 text-white py-4 px-6 rounded-[12px] font-semibold cursor-pointer transition-all hover:bg-fresh-600">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          class="flex items-center gap-2.5 bg-gradient-to-r from-[#42af57] to-[#3d9332] text-white py-3 px-5 rounded-xl font-semibold text-sm cursor-pointer transition-all hover:shadow-lg hover:scale-105 active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
           Browse All Categories
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
         </button>
       </div>
 
@@ -187,46 +187,65 @@
 <!-- Department Sidebar Overlay -->
 <div
   *ngIf="showDepartmentSidebar"
-  class="fixed inset-0 bg-black/50 z-[1200] transition-opacity"
+  class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1200] transition-opacity animate-fade-in"
   (click)="toggleDepartmentSidebar()"
 ></div>
 
 <!-- Department Sidebar Panel -->
 <aside
   *ngIf="showDepartmentSidebar"
-  class="fixed top-0 left-0 h-full w-80 bg-white z-[1201] shadow-2xl overflow-hidden">
-  <div class="flex items-center justify-between p-4 bg-fresh-500">
-    <h2 class="text-lg font-bold text-white">Shop by Category</h2>
-    <button (click)="toggleDepartmentSidebar()" class="text-white hover:text-fresh-100 transition-colors">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  class="fixed top-0 left-0 h-full w-72 bg-white z-[1201] shadow-2xl overflow-hidden animate-slide-in-right">
+  <!-- Header -->
+  <div class="flex items-center justify-between p-4 bg-gradient-to-r from-[#42af57] to-[#3d9332] border-b border-white/10">
+    <h2 class="text-base font-bold text-white">Shop by Category</h2>
+    <button
+      (click)="toggleDepartmentSidebar()"
+      class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/20 text-white transition-all"
+      aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
   </div>
 
-  <nav class="overflow-y-auto h-[calc(100%-64px)]">
+  <nav class="overflow-y-auto h-[calc(100%-64px)] hide-scrollbar">
     <!-- Loading State -->
     <div *ngIf="isLoadingCategories" class="flex items-center justify-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-[#42af57]"></div>
+      <div class="animate-spin rounded-full h-6 w-6 border-3 border-gray-300 border-t-[#42af57]"></div>
     </div>
 
     <!-- Categories from API -->
-    <ul *ngIf="!isLoadingCategories && categories.length > 0">
+    <ul *ngIf="!isLoadingCategories && categories.length > 0" class="py-2">
       <!-- All Products Option -->
       <li>
-        <a routerLink="/store" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100 bg-fresh-500 text-white hover:bg-fresh-600">
-          <div class="w-[70px] h-[70px] rounded-full bg-white/20 flex items-center justify-center text-4xl">🛒</div>
-          <div class="flex-1">
-            <span class="font-medium text-[14px]">All Products</span>
+        <a
+          routerLink="/store"
+          (click)="toggleDepartmentSidebar()"
+          class="group flex items-center gap-3 px-4 py-3 hover:bg-gradient-to-r hover:from-[#42af57]/10 hover:to-transparent transition-all duration-300 border-l-3 border-transparent hover:border-[#42af57]">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#42af57] to-[#3d9332] flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>
+            </svg>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="flex-1">
+            <span class="font-semibold text-sm text-gray-900 group-hover:text-[#42af57] transition-colors">All Products</span>
+            <p class="text-xs text-gray-500">Browse everything</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 group-hover:text-[#42af57] group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       </li>
+
       <li *ngFor="let category of categories">
-        <a routerLink="/store" [queryParams]="{group: category.number}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
-          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">{{ getCategoryEmoji(category.groupName) }}</div>
-          <div class="flex-1">
-            <span class="font-medium text-[14px]">{{ category.groupName }}</span>
+        <a
+          routerLink="/store"
+          [queryParams]="{group: category.number}"
+          (click)="toggleDepartmentSidebar()"
+          class="group flex items-center gap-3 px-4 py-3 hover:bg-gradient-to-r hover:from-[#42af57]/10 hover:to-transparent transition-all duration-300 border-l-3 border-transparent hover:border-[#42af57]">
+          <div class="w-10 h-10 rounded-xl bg-gray-100 group-hover:bg-[#42af57]/10 flex items-center justify-center text-xl shadow-sm group-hover:scale-110 transition-all duration-300">
+            {{ getCategoryEmoji(category.groupName) }}
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="m9 18 6-6-6-6"/></svg>
+          <div class="flex-1">
+            <span class="font-medium text-sm text-gray-900 group-hover:text-[#42af57] transition-colors">{{ category.groupName }}</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-300 group-hover:text-[#42af57] group-hover:translate-x-1 transition-all"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       </li>
     </ul>
