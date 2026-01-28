@@ -1,0 +1,125 @@
+<!-- Wishlist Page -->
+<div class="min-h-screen bg-gray-50 pt-[180px] md:pt-[200px] pb-12">
+  <div class="container mx-auto px-4 md:px-6">
+    <!-- Breadcrumb -->
+    <app-breadcrumb [items]="[{label: 'Wishlist', link: '/wishlist'}]"></app-breadcrumb>
+
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900">My Wishlist</h1>
+        <p class="text-gray-500 mt-1">{{ wishlistItems.length }} item{{ wishlistItems.length !== 1 ? 's' : '' }} saved</p>
+      </div>
+
+      <!-- Actions -->
+      <div *ngIf="wishlistItems.length > 0" class="flex gap-3">
+        <button
+          (click)="moveAllToCart()"
+          class="flex items-center gap-2 px-5 py-2.5 bg-[#42af57] hover:bg-[#3a9a4d] text-white font-semibold rounded-xl transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+          </svg>
+          Add All to Cart
+        </button>
+        <button
+          (click)="clearWishlist()"
+          class="flex items-center gap-2 px-5 py-2.5 border border-gray-300 hover:border-gray-400 text-gray-700 font-semibold rounded-xl transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+          </svg>
+          Clear All
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="wishlistItems.length === 0" class="bg-white rounded-2xl shadow-sm p-12 text-center">
+      <div class="w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+        </svg>
+      </div>
+      <h2 class="text-xl font-semibold text-gray-900 mb-2">Your wishlist is empty</h2>
+      <p class="text-gray-500 mb-6">Save items you love by clicking the heart icon on any product</p>
+      <a routerLink="/store" class="inline-flex items-center gap-2 px-6 py-3 bg-[#42af57] hover:bg-[#3a9a4d] text-white font-semibold rounded-xl transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>
+        </svg>
+        Browse Products
+      </a>
+    </div>
+
+    <!-- Wishlist Grid -->
+    <div *ngIf="wishlistItems.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div *ngFor="let item of wishlistItems" class="bg-white rounded-2xl shadow-sm overflow-hidden group hover:shadow-lg transition-all duration-300 border border-gray-100">
+        <!-- Product Image -->
+        <div class="relative aspect-square bg-gray-50 overflow-hidden">
+          <a [routerLink]="['/product', item.itemCode]">
+            <img
+              [src]="item.image || 'assets/images/woocommerce-placeholder.webp'"
+              [alt]="item.itemName"
+              class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+              (error)="$any($event.target).src = 'assets/images/woocommerce-placeholder.webp'"
+            />
+          </a>
+
+          <!-- Remove Button -->
+          <button
+            (click)="removeFromWishlist(item.itemCode)"
+            class="absolute top-3 right-3 w-9 h-9 bg-white/90 hover:bg-red-50 text-red-500 rounded-full flex items-center justify-center shadow-md transition-colors"
+            title="Remove from wishlist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Product Info -->
+        <div class="p-4">
+          <!-- Price -->
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-xl font-bold text-[#42af57]">
+              {{ item.currency }}{{ item.price | number:'1.2-2' }}
+            </span>
+          </div>
+
+          <!-- Name -->
+          <a [routerLink]="['/product', item.itemCode]">
+            <h3 class="text-sm font-semibold text-gray-800 line-clamp-2 min-h-[40px] hover:text-[#42af57] transition-colors">
+              {{ item.itemName }}
+            </h3>
+          </a>
+
+          <!-- Added Date -->
+          <p class="text-xs text-gray-400 mt-2">
+            Added {{ item.addedAt | date:'mediumDate' }}
+          </p>
+
+          <!-- Add to Cart Button -->
+          <button
+            (click)="moveToCart(item)"
+            class="w-full mt-4 py-2.5 bg-gradient-to-r from-[#42af57] to-[#4a9a48] hover:from-[#4a9a48] hover:to-[#3d9332] text-white text-sm font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+            Move to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Continue Shopping -->
+    <div *ngIf="wishlistItems.length > 0" class="mt-8 text-center">
+      <a routerLink="/store" class="inline-flex items-center gap-2 text-[#42af57] hover:text-[#3a9a4d] font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+        </svg>
+        Continue Shopping
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMart - Multi-Vendor Grocery Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2cb569;
+            --primary-dark: #1e9c54;
+            --primary-light: #e8f7ef;
+            --secondary: #ff6b35;
+            --secondary-light: #fff4f0;
+            --accent-yellow: #ffc107;
+            --accent-red: #e53935;
+            --dark: #1a1a2e;
+            --dark-light: #3d3d5c;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 50px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: var(--dark);
+            color: var(--white);
+            padding: 10px 0;
+            font-size: 13px;
+        }
+
+        .top-bar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .top-bar-left span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-bar-left i {
+            color: var(--primary);
+        }
+
+        .top-bar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .top-bar-right a:hover {
+            color: var(--primary);
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            max-width: 600px;
+        }
+
+        .search-category {
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--gray-700);
+            border-right: 1px solid var(--gray-300);
+            cursor: pointer;
+            outline: none;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .header-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .header-action i {
+            font-size: 22px;
+            color: var(--dark);
+        }
+
+        .header-action span {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .header-action .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-action:hover i {
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .categories-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .categories-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 20px 0;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        .nav-menu .active {
+            color: var(--primary);
+        }
+
+        .nav-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hotline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hotline-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .hotline-text span {
+            display: block;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .hotline-text strong {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 30px 0;
+            background: var(--gray-100);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .hero-main {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: var(--radius-lg);
+            padding: 60px;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-main::before {
+            content: '';
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 400px;
+            height: 400px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="%232cb569" opacity="0.1"/></svg>');
+            background-size: contain;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--white);
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            max-width: 500px;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-text {
+            color: var(--gray-600);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .hero-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .hero-form input {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: #e55a28;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .hero-side {
+            display: grid;
+            gap: 20px;
+        }
+
+        .hero-card {
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-card-1 {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+        }
+
+        .hero-card-2 {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+
+        .hero-card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .hero-card p {
+            color: var(--gray-600);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .hero-card .btn {
+            padding: 10px 20px;
+            font-size: 13px;
+            width: fit-content;
+        }
+
+        /* Features Strip */
+        .features {
+            padding: 40px 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: var(--primary-light);
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 32px;
+        }
+
+        .section-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .section-nav button {
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--gray-300);
+            background: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+
+        .section-nav button:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateY(-5px);
+        }
+
+        .category-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .category-card h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .category-card span {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* Products Section */
+        .products {
+            padding: 60px 0;
+            background: var(--gray-100);
+        }
+
+        .products-tabs {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .products-tabs button {
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            padding: 10px 0;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .products-tabs button.active {
+            color: var(--primary);
+        }
+
+        .products-tabs button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .product-badge {
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-sale {
+            background: var(--accent-red);
+            color: var(--white);
+        }
+
+        .badge-hot {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .badge-new {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .badge-organic {
+            background: var(--accent-yellow);
+            color: var(--dark);
+        }
+
+        .product-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(10px);
+            transition: var(--transition);
+            z-index: 2;
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .product-action-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--dark);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .product-action-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .product-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: var(--gray-100);
+        }
+
+        .product-image img {
+            max-height: 140px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        .product-title a:hover {
+            color: var(--primary);
+        }
+
+        .product-vendor {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 10px;
+        }
+
+        .product-vendor a {
+            color: var(--primary);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+            color: var(--accent-yellow);
+            font-size: 12px;
+        }
+
+        .rating-count {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-current {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .price-old {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Deals Section */
+        .deals {
+            padding: 60px 0;
+        }
+
+        .deals-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .deal-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .deal-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .deal-image {
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .deal-timer {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .timer-box {
+            background: rgba(255,255,255,0.95);
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .timer-box span {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .timer-box small {
+            font-size: 10px;
+            color: var(--gray-600);
+            text-transform: uppercase;
+        }
+
+        .deal-info {
+            padding: 20px;
+        }
+
+        .deal-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .deal-title a:hover {
+            color: var(--primary);
+        }
+
+        .deal-price {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .deal-progress {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .deal-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .deal-sold {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 8px;
+        }
+
+        /* Vendors Section */
+        .vendors {
+            padding: 60px 0;
+            background: var(--gray-100);
+        }
+
+        .vendors-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .vendor-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            position: relative;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .vendor-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .vendor-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .vendor-badge.featured {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .vendor-badge.verified {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .vendor-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .vendor-logo {
+            width: 70px;
+            height: 70px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .vendor-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .vendor-info .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .vendor-info .stars {
+            color: var(--accent-yellow);
+        }
+
+        .vendor-since {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        .vendor-stats {
+            display: flex;
+            gap: 20px;
+            padding: 15px 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 15px;
+        }
+
+        .vendor-stat {
+            text-align: center;
+        }
+
+        .vendor-stat span {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .vendor-stat small {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .vendor-address {
+            font-size: 13px;
+            color: var(--gray-600);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .vendor-address i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+
+        .vendor-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        /* Banner Section */
+        .banner-section {
+            padding: 60px 0;
+        }
+
+        .banner-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .banner {
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .banner-1 {
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+        }
+
+        .banner-2 {
+            background: linear-gradient(135deg, #e8f5e9 0%, #a5d6a7 100%);
+        }
+
+        .banner-3 {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+        }
+
+        .banner h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .banner p {
+            color: var(--gray-600);
+            margin-bottom: 20px;
+        }
+
+        .banner .btn {
+            width: fit-content;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .newsletter::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .newsletter-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-text {
+            color: var(--white);
+        }
+
+        .newsletter-text h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-text p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            width: 350px;
+            padding: 18px 24px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .newsletter-form .btn {
+            background: var(--secondary);
+            padding: 18px 35px;
+        }
+
+        .newsletter-form .btn:hover {
+            background: #e55a28;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-about .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: var(--gray-500);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .footer h4 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .app-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .app-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .app-btn i {
+            font-size: 28px;
+        }
+
+        .app-btn span {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .app-btn strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .payment-icons img {
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .footer-bottom {
+            padding: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .categories-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-side {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .categories-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .deals-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .vendors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .banner-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            .search-bar {
+                order: 3;
+                max-width: 100%;
+                width: 100%;
+            }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .hero-title {
+                font-size: 36px;
+            }
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .newsletter-form input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .top-bar-left {
+                display: none;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .deals-grid {
+                grid-template-columns: 1fr;
+            }
+            .vendors-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero-main {
+                padding: 40px 25px;
+            }
+            .hero-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-left">
+                    <span><i class="fas fa-map-marker-alt"></i> 123 Fresh Street, Harare, Zimbabwe</span>
+                    <span><i class="fas fa-clock"></i> Mon-Sat: 8:00 AM - 8:00 PM</span>
+                </div>
+                <div class="top-bar-right">
+                    <a href="#">About Us</a>
+                    <a href="#">My Account</a>
+                    <a href="#">Wishlist</a>
+                    <a href="#">Order Tracking</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                    FreshMart
+                </a>
+                <div class="search-bar">
+                    <select class="search-category">
+                        <option>All Categories</option>
+                        <option>Fruits & Vegetables</option>
+                        <option>Dairy & Eggs</option>
+                        <option>Meat & Seafood</option>
+                        <option>Bakery</option>
+                        <option>Beverages</option>
+                    </select>
+                    <input type="text" class="search-input" placeholder="Search for products...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <div class="header-action">
+                        <i class="far fa-heart"></i>
+                        <span>Wishlist</span>
+                        <div class="badge">3</div>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Compare</span>
+                        <div class="badge">2</div>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                        <div class="badge">5</div>
+                    </div>
+                    <div class="header-action">
+                        <i class="far fa-user"></i>
+                        <span>Account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="categories-btn">
+                    <i class="fas fa-th-large"></i>
+                    Browse All Categories
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active"><i class="fas fa-fire"></i> Deals</a></li>
+                    <li><a href="#">Home <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Shop <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Vendors <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Mega Menu <i class="fas fa-chevron-down"></i></a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="hotline">
+                        <div class="hotline-icon"><i class="fas fa-headset"></i></div>
+                        <div class="hotline-text">
+                            <span>24/7 Support</span>
+                            <strong>+263 78 123 4567</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-main">
+                    <span class="hero-tag">🔥 Weekend Special</span>
+                    <h1 class="hero-title">Fresh Groceries <span>Delivered</span> to Your Doorstep</h1>
+                    <p class="hero-text">Save up to 50% on your first order. Fresh produce from local vendors.</p>
+                    <form class="hero-form">
+                        <input type="email" placeholder="Enter your email address">
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+                <div class="hero-side">
+                    <div class="hero-card hero-card-1">
+                        <h3>Organic Fruits</h3>
+                        <p>Fresh from the farm</p>
+                        <button class="btn btn-secondary">Shop Now</button>
+                    </div>
+                    <div class="hero-card hero-card-2">
+                        <h3>Daily Essentials</h3>
+                        <p>Everything you need</p>
+                        <button class="btn btn-primary">Shop Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-text">
+                        <h4>Free Delivery</h4>
+                        <p>Orders over $50</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-text">
+                        <h4>Best Prices</h4>
+                        <p>Guaranteed savings</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎁</div>
+                    <div class="feature-text">
+                        <h4>Daily Deals</h4>
+                        <p>Up to 50% off</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-text">
+                        <h4>Secure Payment</h4>
+                        <p>100% protected</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-text">
+                        <h4>Easy Returns</h4>
+                        <p>30 day guarantee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Shop by Category</h2>
+                <div class="section-nav">
+                    <button><i class="fas fa-chevron-left"></i></button>
+                    <button><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">🍎</div>
+                    <h4>Fruits</h4>
+                    <span>156 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🥬</div>
+                    <h4>Vegetables</h4>
+                    <span>203 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🥛</div>
+                    <h4>Dairy</h4>
+                    <span>89 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🥩</div>
+                    <h4>Meat</h4>
+                    <span>67 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🐟</div>
+                    <h4>Seafood</h4>
+                    <span>45 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🍞</div>
+                    <h4>Bakery</h4>
+                    <span>98 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🥤</div>
+                    <h4>Beverages</h4>
+                    <span>134 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🍿</div>
+                    <h4>Snacks</h4>
+                    <span>178 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">❄️</div>
+                    <h4>Frozen</h4>
+                    <span>112 items</span>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🧴</div>
+                    <h4>Personal Care</h4>
+                    <span>245 items</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Products -->
+    <section class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Products</h2>
+                <div class="products-tabs">
+                    <button class="active">All</button>
+                    <button>Fruits</button>
+                    <button>Vegetables</button>
+                    <button>Dairy</button>
+                    <button>Meat</button>
+                    <button>Snacks</button>
+                </div>
+            </div>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="product-badge badge-hot">Hot</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="product-action-btn"><i class="far fa-heart"></i></button>
+                        <button class="product-action-btn"><i class="fas fa-exchange-alt"></i></button>
+                        <button class="product-action-btn"><i class="far fa-eye"></i></button>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1568702846914-96b305d2uj69?w=300&h=300&fit=crop" alt="Fresh Apples">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Fruits</span>
+                        <h3 class="product-title"><a href="#">Fresh Organic Red Apples</a></h3>
+                        <span class="product-vendor">By <a href="#">Nature's Farm</a></span>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(4.5)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-current">$4.99</span>
+                                <span class="price-old">$6.99</span>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="product-badge badge-sale">-20%</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="product-action-btn"><i class="far fa-heart"></i></button>
+                        <button class="product-action-btn"><i class="fas fa-exchange-alt"></i></button>
+                        <button class="product-action-btn"><i class="far fa-eye"></i></button>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1598965675045-45c5e72c7d05?w=300&h=300&fit=crop" alt="Fresh Milk">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Dairy</span>
+                        <h3 class="product-title"><a href="#">Farm Fresh Whole Milk 2L</a></h3>
+                        <span class="product-vendor">By <a href="#">Dairy Delights</a></span>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(5.0)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-current">$3.49</span>
+                                <span class="price-old">$4.29</span>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="product-badge badge-organic">Organic</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="product-action-btn"><i class="far fa-heart"></i></button>
+                        <button class="product-action-btn"><i class="fas fa-exchange-alt"></i></button>
+                        <button class="product-action-btn"><i class="far fa-eye"></i></button>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&h=300&fit=crop" alt="Fresh Potatoes">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Vegetables</span>
+                        <h3 class="product-title"><a href="#">Organic Baby Potatoes 1kg</a></h3>
+                        <span class="product-vendor">By <a href="#">Green Valley</a></span>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(4.0)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-current">$2.99</span>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="product-badge badge-new">New</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="product-action-btn"><i class="far fa-heart"></i></button>
+                        <button class="product-action-btn"><i class="fas fa-exchange-alt"></i></button>
+                        <button class="product-action-btn"><i class="far fa-eye"></i></button>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&h=300&fit=crop" alt="Orange Juice">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Beverages</span>
+                        <h3 class="product-title"><a href="#">Fresh Squeezed Orange Juice 1L</a></h3>
+                        <span class="product-vendor">By <a href="#">Citrus Valley</a></span>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(4.6)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-current">$5.99</span>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-badges">
+                        <span class="product-badge badge-sale">-15%</span>
+                        <span class="product-badge badge-hot">Hot</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="product-action-btn"><i class="far fa-heart"></i></button>
+                        <button class="product-action-btn"><i class="fas fa-exchange-alt"></i></button>
+                        <button class="product-action-btn"><i class="far fa-eye"></i></button>
+                    </div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300&h=300&fit=crop" alt="Premium Beef">
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Meat</span>
+                        <h3 class="product-title"><a href="#">Premium Grass-Fed Beef Steak</a></h3>
+                        <span class="product-vendor">By <a href="#">Prime Cuts</a></span>
+                        <div class="product-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(5.0)</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-current">$12.99</span>
+                                <span class="price-old">$15.29</span>
+                            </div>
+                            <button class="add-to-cart"><i class="fas fa-shopping-cart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deals of the Day -->
+    <section class="deals">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🔥 Deals of the Day</h2>
+                <a href="#" class="btn btn-outline">View All Deals</a>
+            </div>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=400&h=300&fit=crop" alt="Tropical Fruits">
+                        <div class="deal-timer">
+                            <div class="timer-box"><span>05</span><small>Days</small></div>
+                            <div class="timer-box"><span>12</span><small>Hours</small></div>
+                            <div class="timer-box"><span>38</span><small>Mins</small></div>
+                            <div class="timer-box"><span>22</span><small>Secs</small></div>
+                        </div>
+                    </div>
+                    <div class="deal-info">
+                        <h3 class="deal-title"><a href="#">Tropical Fruit Bundle Pack</a></h3>
+                        <div class="deal-price">
+                            <span class="price-current">$19.99</span>
+                            <span class="price-old">$34.99</span>
+                        </div>
+                        <div class="deal-progress">
+                            <div class="deal-progress-bar" style="width: 65%"></div>
+                        </div>
+                        <p class="deal-sold">Sold: 65/100</p>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&h=300&fit=crop" alt="Fresh Vegetables">
+                        <div class="deal-timer">
+                            <div class="timer-box"><span>02</span><small>Days</small></div>
+                            <div class="timer-box"><span>08</span><small>Hours</small></div>
+                            <div class="timer-box"><span>15</span><small>Mins</small></div>
+                            <div class="timer-box"><span>45</span><small>Secs</small></div>
+                        </div>
+                    </div>
+                    <div class="deal-info">
+                        <h3 class="deal-title"><a href="#">Organic Vegetable Box</a></h3>
+                        <div class="deal-price">
+                            <span class="price-current">$24.99</span>
+                            <span class="price-old">$39.99</span>
+                        </div>
+                        <div class="deal-progress">
+                            <div class="deal-progress-bar" style="width: 45%"></div>
+                        </div>
+                        <p class="deal-sold">Sold: 45/100</p>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://images.unsplash.com/photo-1559598467-f8b76c8155d0?w=400&h=300&fit=crop" alt="Dairy Products">
+                        <div class="deal-timer">
+                            <div class="timer-box"><span>01</span><small>Days</small></div>
+                            <div class="timer-box"><span>18</span><small>Hours</small></div>
+                            <div class="timer-box"><span>42</span><small>Mins</small></div>
+                            <div class="timer-box"><span>10</span><small>Secs</small></div>
+                        </div>
+                    </div>
+                    <div class="deal-info">
+                        <h3 class="deal-title"><a href="#">Dairy Essentials Pack</a></h3>
+                        <div class="deal-price">
+                            <span class="price-current">$15.99</span>
+                            <span class="price-old">$24.99</span>
+                        </div>
+                        <div class="deal-progress">
+                            <div class="deal-progress-bar" style="width: 78%"></div>
+                        </div>
+                        <p class="deal-sold">Sold: 78/100</p>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop" alt="Meat Selection">
+                        <div class="deal-timer">
+                            <div class="timer-box"><span>03</span><small>Days</small></div>
+                            <div class="timer-box"><span>06</span><small>Hours</small></div>
+                            <div class="timer-box"><span>28</span><small>Mins</small></div>
+                            <div class="timer-box"><span>55</span><small>Secs</small></div>
+                        </div>
+                    </div>
+                    <div class="deal-info">
+                        <h3 class="deal-title"><a href="#">Premium Meat Selection</a></h3>
+                        <div class="deal-price">
+                            <span class="price-current">$45.99</span>
+                            <span class="price-old">$69.99</span>
+                        </div>
+                        <div class="deal-progress">
+                            <div class="deal-progress-bar" style="width: 32%"></div>
+                        </div>
+                        <p class="deal-sold">Sold: 32/100</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Vendors -->
+    <section class="vendors">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Vendors</h2>
+                <a href="#" class="btn btn-outline">View All Vendors</a>
+            </div>
+            <div class="vendors-grid">
+                <div class="vendor-card">
+                    <span class="vendor-badge featured">Featured</span>
+                    <div class="vendor-header">
+                        <div class="vendor-logo">🥬</div>
+                        <div class="vendor-info">
+                            <h4>Nature's Farm</h4>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>(5.0)</span>
+                            </div>
+                            <span class="vendor-since">Since 2018</span>
+                        </div>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="vendor-stat">
+                            <span>256</span>
+                            <small>Products</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>98%</span>
+                            <small>Positive</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>4.5K</span>
+                            <small>Orders</small>
+                        </div>
+                    </div>
+                    <div class="vendor-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Farm Road, Harare, Zimbabwe</span>
+                    </div>
+                    <button class="btn btn-primary vendor-btn">Visit Store</button>
+                </div>
+
+                <div class="vendor-card">
+                    <span class="vendor-badge verified">Verified</span>
+                    <div class="vendor-header">
+                        <div class="vendor-logo">🥛</div>
+                        <div class="vendor-info">
+                            <h4>Dairy Delights</h4>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span>(4.8)</span>
+                            </div>
+                            <span class="vendor-since">Since 2015</span>
+                        </div>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="vendor-stat">
+                            <span>89</span>
+                            <small>Products</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>96%</span>
+                            <small>Positive</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>8.2K</span>
+                            <small>Orders</small>
+                        </div>
+                    </div>
+                    <div class="vendor-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>45 Dairy Lane, Bulawayo, Zimbabwe</span>
+                    </div>
+                    <button class="btn btn-primary vendor-btn">Visit Store</button>
+                </div>
+
+                <div class="vendor-card">
+                    <span class="vendor-badge featured">Featured</span>
+                    <div class="vendor-header">
+                        <div class="vendor-logo">🥩</div>
+                        <div class="vendor-info">
+                            <h4>Prime Cuts</h4>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>(5.0)</span>
+                            </div>
+                            <span class="vendor-since">Since 2012</span>
+                        </div>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="vendor-stat">
+                            <span>124</span>
+                            <small>Products</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>99%</span>
+                            <small>Positive</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>12.8K</span>
+                            <small>Orders</small>
+                        </div>
+                    </div>
+                    <div class="vendor-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>78 Butcher Street, Harare, Zimbabwe</span>
+                    </div>
+                    <button class="btn btn-primary vendor-btn">Visit Store</button>
+                </div>
+
+                <div class="vendor-card">
+                    <span class="vendor-badge verified">Verified</span>
+                    <div class="vendor-header">
+                        <div class="vendor-logo">🍞</div>
+                        <div class="vendor-info">
+                            <h4>Golden Bakery</h4>
+                            <div class="rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span>(4.2)</span>
+                            </div>
+                            <span class="vendor-since">Since 2020</span>
+                        </div>
+                    </div>
+                    <div class="vendor-stats">
+                        <div class="vendor-stat">
+                            <span>67</span>
+                            <small>Products</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>94%</span>
+                            <small>Positive</small>
+                        </div>
+                        <div class="vendor-stat">
+                            <span>2.1K</span>
+                            <small>Orders</small>
+                        </div>
+                    </div>
+                    <div class="vendor-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>12 Baker Avenue, Mutare, Zimbabwe</span>
+                    </div>
+                    <button class="btn btn-primary vendor-btn">Visit Store</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banners -->
+    <section class="banner-section">
+        <div class="container">
+            <div class="banner-grid">
+                <div class="banner banner-1">
+                    <h3>Fresh Fruits<br>& Vegetables</h3>
+                    <p>Get 25% off on your first order</p>
+                    <button class="btn btn-secondary">Shop Now</button>
+                </div>
+                <div class="banner banner-2">
+                    <h3>Organic<br>Products</h3>
+                    <p>100% natural and healthy</p>
+                    <button class="btn btn-primary">Explore</button>
+                </div>
+                <div class="banner banner-3">
+                    <h3>Become<br>a Vendor</h3>
+                    <p>Sell your products today</p>
+                    <button class="btn btn-outline">Join Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Stay Home & Get Your Daily Needs</h2>
+                    <p>Subscribe to our newsletter and get 15% off your first order!</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="#" class="logo">
+                        <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                        FreshMart
+                    </a>
+                    <p>Your trusted multi-vendor grocery marketplace. Fresh produce, competitive prices, and fast delivery right to your doorstep.</p>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 123 Fresh Street, Harare, Zimbabwe</span>
+                        <span><i class="fas fa-phone"></i> +263 78 123 4567</span>
+                        <span><i class="fas fa-envelope"></i> support@freshmart.co.zw</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Sign In</a></li>
+                        <li><a href="#">View Cart</a></li>
+                        <li><a href="#">My Wishlist</a></li>
+                        <li><a href="#">Track My Order</a></li>
+                        <li><a href="#">Help Ticket</a></li>
+                        <li><a href="#">Compare Products</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Vendor</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Become a Vendor</a></li>
+                        <li><a href="#">Vendor Dashboard</a></li>
+                        <li><a href="#">Vendor Guidelines</a></li>
+                        <li><a href="#">Our Suppliers</a></li>
+                        <li><a href="#">Accessibility</a></li>
+                        <li><a href="#">Promotions</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Install App</h4>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>Get it on</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                    <h4>Secure Payments</h4>
+                    <div class="payment-icons">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard">
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 FreshMart. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple countdown timer
+        function updateTimers() {
+            const timerBoxes = document.querySelectorAll('.timer-box span');
+            timerBoxes.forEach(box => {
+                let value = parseInt(box.textContent);
+                if (value > 0) {
+                    // Simulate countdown
+                }
+            });
+        }
+
+        // Product tabs
+        document.querySelectorAll('.products-tabs button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelector('.products-tabs button.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
+
+        // Category card hover effect
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href'))?.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>

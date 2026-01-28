@@ -1,0 +1,247 @@
+<!-- Store Page - FreshMart Design -->
+
+<!-- Breadcrumb -->
+<app-breadcrumb [items]="[
+  { label: 'Home', link: '/', icon: 'fas fa-home' },
+  { label: 'Shop' }
+]"></app-breadcrumb>
+
+<!-- Page Header -->
+<section class="page-header bg-gradient-to-r from-[#42af57] to-[#3d9332] py-12">
+  <div class="container mx-auto px-5">
+    <div class="text-center text-white">
+      <h1 class="text-4xl font-bold mb-4 font-outfit">Our Products</h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        Browse our wide selection of fresh, quality products delivered right to your door
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Search and Filter Bar -->
+<section class="py-6 bg-white border-b border-gray-200">
+  <div class="container mx-auto px-5">
+    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+      <!-- Search Bar -->
+      <div class="relative flex-1 max-w-xl w-full">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+          (keydown.enter)="search()"
+          placeholder="Search products..."
+          class="w-full px-5 py-4 pl-12 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[#42af57] focus:bg-white focus:outline-none transition-all"
+        />
+        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <button
+          *ngIf="searchTerm"
+          (click)="searchTerm = ''; search()"
+          class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <!-- Filters and Pagination Info -->
+      <div class="flex flex-wrap gap-4 items-center justify-center lg:justify-end w-full lg:w-auto">
+        <!-- Category Filter (Mobile) -->
+        <div class="flex flex-col lg:hidden">
+          <label for="itemGroupMobile" class="text-sm text-gray-600 mb-1">Category</label>
+          <select
+            id="itemGroupMobile"
+            [(ngModel)]="activeItemGroup"
+            (change)="fetchProducts()"
+            class="px-4 py-2 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer"
+          >
+            <option [value]="0">All Categories</option>
+            <option *ngFor="let group of itemGroups" [value]="group['number']">{{ group.groupName }}</option>
+          </select>
+        </div>
+
+        <!-- Items Per Page -->
+        <div class="flex flex-col">
+          <label for="pageSize" class="text-sm text-gray-600 mb-1">Show</label>
+          <select
+            id="pageSize"
+            [(ngModel)]="pageSize"
+            (change)="fetchProducts()"
+            class="px-4 py-2 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer"
+          >
+            <option [value]="20">20</option>
+            <option [value]="50">50</option>
+            <option [value]="100">100</option>
+          </select>
+        </div>
+
+        <!-- Page Info -->
+        <div class="flex items-center gap-2 text-gray-600">
+          <span class="text-sm">Page</span>
+          <span class="font-semibold text-[#1c352c]">{{ pageNumber }}</span>
+          <span class="text-sm">of</span>
+          <span class="font-semibold text-[#1c352c]">{{ totalPages }}</span>
+        </div>
+
+        <!-- Pagination Buttons -->
+        <div class="flex gap-2">
+          <button
+            (click)="goToPreviousPage()"
+            [disabled]="pageNumber === 1"
+            class="w-10 h-10 flex items-center justify-center rounded-xl border-2 border-gray-200 text-gray-600 hover:border-[#42af57] hover:text-[#42af57] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button
+            (click)="goToNextPage()"
+            [disabled]="pageNumber === totalPages"
+            class="w-10 h-10 flex items-center justify-center rounded-xl border-2 border-gray-200 text-gray-600 hover:border-[#42af57] hover:text-[#42af57] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          >
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Results Banner -->
+    <div *ngIf="searchTerm" class="mt-4 flex items-center gap-2 text-gray-600">
+      <i class="fas fa-search text-[#42af57]"></i>
+      <span>Showing results for "<strong class="text-[#1c352c]">{{ searchTerm }}</strong>"</span>
+      <button (click)="searchTerm = ''; search()" class="ml-2 text-[#42af57] hover:underline text-sm">
+        Clear search
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section class="py-8 bg-gray-100">
+  <div class="container mx-auto px-5">
+    <div class="flex gap-8">
+      <!-- Sidebar - Categories (Desktop) -->
+      <aside class="hidden lg:block w-72 flex-shrink-0">
+        <div class="bg-white rounded-[20px] p-6 sticky top-24 shadow-sm">
+          <h3 class="text-lg font-semibold text-[#1c352c] mb-4 font-outfit">Categories</h3>
+
+          <nav class="space-y-1">
+            <!-- All Categories -->
+            <button
+              (click)="setActiveItemGroup(0)"
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all"
+              [ngClass]="{
+                'bg-[#42af57] text-white': activeItemGroup === 0,
+                'text-gray-600 hover:bg-gray-100': activeItemGroup !== 0
+              }"
+            >
+              <i class="fas fa-th-large w-5"></i>
+              <span class="font-medium">All Products</span>
+              <i *ngIf="activeItemGroup === 0" class="fas fa-check ml-auto"></i>
+            </button>
+
+            <!-- Category Items -->
+            <button
+              *ngFor="let group of itemGroups; trackBy: trackByGroupNumber"
+              (click)="setActiveItemGroup(group['number'])"
+              class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all"
+              [ngClass]="{
+                'bg-[#42af57] text-white': activeItemGroup === group['number'],
+                'text-gray-600 hover:bg-gray-100': activeItemGroup !== group['number']
+              }"
+            >
+              <i class="fas fa-tag w-5"></i>
+              <span class="font-medium">{{ group.groupName }}</span>
+              <i *ngIf="activeItemGroup === group['number']" class="fas fa-check ml-auto"></i>
+            </button>
+          </nav>
+
+          <!-- Category Count -->
+          <div class="mt-6 pt-4 border-t border-gray-200 text-center">
+            <span class="text-sm text-gray-500">{{ itemGroups?.length || 0 }} categories</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Products Grid -->
+      <div class="flex-1">
+        <!-- Products Loading State -->
+        <div *ngIf="loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div *ngFor="let item of arr" class="bg-white rounded-[20px] overflow-hidden shadow-sm">
+            <div class="aspect-square bg-gray-200 animate-pulse"></div>
+            <div class="p-4">
+              <div class="h-4 bg-gray-200 rounded animate-pulse mb-2"></div>
+              <div class="h-3 bg-gray-200 rounded animate-pulse w-2/3 mb-3"></div>
+              <div class="h-6 bg-gray-200 rounded animate-pulse w-1/2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products Grid -->
+        <ng-container *ngIf="!loading && !isError">
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
+            @for (product of products; track product.itemCode) {
+              <app-product-card [product]="product"></app-product-card>
+            }
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="products.length === 0" class="text-center py-16">
+            <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-6">
+              <i class="fas fa-search text-4xl text-gray-400"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-[#1c352c] mb-2">No products found</h3>
+            <p class="text-gray-600 mb-6">Try adjusting your search or filter criteria</p>
+            <button
+              (click)="searchTerm = ''; activeItemGroup = 0; fetchProducts()"
+              class="inline-flex items-center gap-2 bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold px-6 py-3 rounded-xl transition-all"
+            >
+              <i class="fas fa-redo"></i>
+              Reset Filters
+            </button>
+          </div>
+
+          <!-- Bottom Pagination -->
+          <div *ngIf="products.length > 0" class="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+            <span class="text-gray-600">
+              Page <strong class="text-[#1c352c]">{{ pageNumber }}</strong> of <strong class="text-[#1c352c]">{{ totalPages }}</strong>
+            </span>
+            <div class="flex gap-2">
+              <button
+                (click)="goToPreviousPage()"
+                [disabled]="pageNumber === 1"
+                class="px-4 py-2 flex items-center gap-2 rounded-xl border-2 border-gray-200 text-gray-600 hover:border-[#42af57] hover:text-[#42af57] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <i class="fas fa-chevron-left"></i>
+                Previous
+              </button>
+              <button
+                (click)="goToNextPage()"
+                [disabled]="pageNumber === totalPages"
+                class="px-4 py-2 flex items-center gap-2 rounded-xl bg-[#42af57] text-white hover:bg-[#3d9332] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                Next
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Error State -->
+        <div *ngIf="!loading && isError" class="text-center py-16">
+          <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-exclamation-triangle text-4xl text-red-500"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-[#1c352c] mb-2">Unable to load products</h3>
+          <p class="text-gray-600 mb-6">Something went wrong. Please try again later.</p>
+          <button
+            (click)="fetchProducts()"
+            class="inline-flex items-center gap-2 bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold px-6 py-3 rounded-xl transition-all"
+          >
+            <i class="fas fa-redo"></i>
+            Try Again
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Strip -->
+<app-features-strip></app-features-strip>

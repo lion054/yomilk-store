@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organic Bananas - FreshMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2cb569;
+            --primary-dark: #1e9c54;
+            --primary-light: #e8f7ef;
+            --secondary: #ff6b35;
+            --secondary-light: #fff4f0;
+            --accent-yellow: #ffc107;
+            --accent-red: #e53935;
+            --dark: #1a1a2e;
+            --dark-light: #3d3d5c;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 50px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--gray-100);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .header-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .header-action i {
+            font-size: 22px;
+            color: var(--dark);
+        }
+
+        .header-action span {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .header-action .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-action:hover i {
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .categories-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .categories-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 20px 0;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary);
+        }
+
+        .nav-right {
+            margin-left: auto;
+        }
+
+        .hotline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hotline-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .hotline-text span {
+            display: block;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .hotline-text strong {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--white);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-content a {
+            color: var(--gray-600);
+        }
+
+        .breadcrumb-content a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumb-content span {
+            color: var(--gray-400);
+        }
+
+        .breadcrumb-content .current {
+            color: var(--dark);
+        }
+
+        /* Product Detail Section */
+        .product-detail-section {
+            padding: 40px 0;
+        }
+
+        .product-detail-wrapper {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+        }
+
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        /* Product Gallery */
+        .product-gallery {
+            display: flex;
+            gap: 20px;
+        }
+
+        .gallery-thumbs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .thumb-item {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 2px solid var(--gray-200);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .thumb-item:hover,
+        .thumb-item.active {
+            border-color: var(--primary);
+        }
+
+        .thumb-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-main {
+            flex: 1;
+            position: relative;
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+        }
+
+        .gallery-badges {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .gallery-badge {
+            padding: 6px 15px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .gallery-badge.sale {
+            background: var(--secondary);
+        }
+
+        .gallery-badge.organic {
+            background: var(--primary);
+        }
+
+        .gallery-zoom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .gallery-zoom:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Product Info */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-stock {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--primary-light);
+            color: var(--primary);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .product-stock.out {
+            background: var(--secondary-light);
+            color: var(--secondary);
+        }
+
+        .product-title {
+            font-size: 32px;
+            line-height: 1.3;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-rating .stars {
+            display: flex;
+            gap: 3px;
+            color: var(--accent-yellow);
+            font-size: 16px;
+        }
+
+        .product-rating span {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .product-sku {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .product-price-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-price .current {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-price .original {
+            font-size: 22px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+
+        .discount-tag {
+            padding: 6px 12px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .product-description {
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        .product-details-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            padding: 20px 0;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .detail-item i {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .detail-item span {
+            color: var(--gray-600);
+        }
+
+        .detail-item strong {
+            color: var(--dark);
+        }
+
+        /* Quantity & Add to Cart */
+        .add-to-cart-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 25px 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+
+        .qty-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            background: var(--gray-100);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .qty-input {
+            width: 60px;
+            height: 50px;
+            border: none;
+            text-align: center;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-wishlist {
+            width: 55px;
+            height: 55px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            color: var(--dark);
+            padding: 0;
+        }
+
+        .btn-wishlist:hover {
+            background: var(--secondary-light);
+            color: var(--secondary);
+        }
+
+        /* Vendor Info */
+        .vendor-box {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+        }
+
+        .vendor-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .vendor-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .vendor-info h4 a:hover {
+            color: var(--primary);
+        }
+
+        .vendor-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .vendor-rating .stars {
+            color: var(--accent-yellow);
+        }
+
+        .vendor-btn {
+            margin-left: auto;
+            padding: 10px 20px;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .vendor-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Product Actions */
+        .product-actions {
+            display: flex;
+            gap: 25px;
+        }
+
+        .action-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .action-link:hover {
+            color: var(--primary);
+        }
+
+        /* Product Tabs */
+        .product-tabs-section {
+            margin-top: 40px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+        }
+
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--gray-200);
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 15px 30px;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-600);
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content p {
+            color: var(--gray-600);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .tab-content h4 {
+            margin: 25px 0 15px;
+            font-size: 18px;
+        }
+
+        .tab-content ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .tab-content ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: var(--gray-600);
+        }
+
+        .tab-content ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Reviews */
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .review-item {
+            display: flex;
+            gap: 20px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .review-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .review-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .review-content {
+            flex: 1;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .review-author h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .review-author span {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .review-rating {
+            display: flex;
+            gap: 3px;
+            color: var(--accent-yellow);
+            font-size: 14px;
+        }
+
+        .review-text {
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* Related Products */
+        .related-section {
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .product-badge {
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .product-badge.hot {
+            background: var(--accent-red);
+        }
+
+        .product-badge.sale {
+            background: var(--secondary);
+        }
+
+        .product-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-card-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-card-title a:hover {
+            color: var(--primary);
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-price .current {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-price .original {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .add-to-cart-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0 0;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-about .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: var(--gray-500);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .footer h4 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .app-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .app-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .app-btn i {
+            font-size: 28px;
+        }
+
+        .app-btn span {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .app-btn strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .footer-bottom {
+            padding: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .product-gallery {
+                flex-direction: column-reverse;
+            }
+            .gallery-thumbs {
+                flex-direction: row;
+            }
+            .gallery-main img {
+                height: 350px;
+            }
+            .product-details-list {
+                grid-template-columns: 1fr;
+            }
+            .add-to-cart-section {
+                flex-wrap: wrap;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .tabs-header {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .product-detail-wrapper {
+                padding: 20px;
+            }
+            .product-title {
+                font-size: 24px;
+            }
+            .product-price .current {
+                font-size: 28px;
+            }
+            .vendor-box {
+                flex-direction: column;
+                text-align: center;
+            }
+            .vendor-btn {
+                margin: 15px auto 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                    FreshMart
+                </a>
+                <div class="header-actions">
+                    <a href="wishlist.html" class="header-action">
+                        <i class="far fa-heart"></i>
+                        <span>Wishlist</span>
+                        <div class="badge">3</div>
+                    </a>
+                    <a href="cart.html" class="header-action">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                        <div class="badge">5</div>
+                    </a>
+                    <a href="login.html" class="header-action">
+                        <i class="far fa-user"></i>
+                        <span>Account</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="categories-btn">
+                    <i class="fas fa-th-large"></i>
+                    Browse All Categories
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="vendors.html">Vendors</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="hotline">
+                        <div class="hotline-icon"><i class="fas fa-headset"></i></div>
+                        <div class="hotline-text">
+                            <span>24/7 Support</span>
+                            <strong>+263 78 123 4567</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <span>/</span>
+                <a href="shop.html">Shop</a>
+                <span>/</span>
+                <a href="#">Fruits</a>
+                <span>/</span>
+                <span class="current">Organic Bananas</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="product-detail-wrapper">
+                <div class="product-detail-grid">
+                    <!-- Product Gallery -->
+                    <div class="product-gallery">
+                        <div class="gallery-thumbs">
+                            <div class="thumb-item active">
+                                <img src="https://images.unsplash.com/photo-1518977676601-b28d136957bc?w=100&h=100&fit=crop" alt="Thumb 1">
+                            </div>
+                            <div class="thumb-item">
+                                <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=100&h=100&fit=crop" alt="Thumb 2">
+                            </div>
+                            <div class="thumb-item">
+                                <img src="https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=100&h=100&fit=crop" alt="Thumb 3">
+                            </div>
+                            <div class="thumb-item">
+                                <img src="https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=100&h=100&fit=crop" alt="Thumb 4">
+                            </div>
+                        </div>
+                        <div class="gallery-main">
+                            <div class="gallery-badges">
+                                <span class="gallery-badge sale">-29% Off</span>
+                                <span class="gallery-badge organic">Organic</span>
+                            </div>
+                            <div class="gallery-zoom"><i class="fas fa-search-plus"></i></div>
+                            <img src="https://images.unsplash.com/photo-1518977676601-b28d136957bc?w=600&h=600&fit=crop" alt="Organic Bananas">
+                        </div>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="product-info">
+                        <div class="product-stock">
+                            <i class="fas fa-check-circle"></i>
+                            In Stock (56 items)
+                        </div>
+
+                        <h1 class="product-title">Organic Bananas - Fresh from Farm</h1>
+
+                        <div class="product-meta">
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>(4.9) 32 Reviews</span>
+                            </div>
+                            <div class="product-sku">SKU: <strong>FRM-BN-001</strong></div>
+                        </div>
+
+                        <div class="product-price-box">
+                            <div class="product-price">
+                                <span class="current">$4.99</span>
+                                <span class="original">$6.99</span>
+                            </div>
+                            <span class="discount-tag">Save 29%</span>
+                        </div>
+
+                        <p class="product-description">
+                            Our organic bananas are sourced directly from certified organic farms. They're naturally ripened, pesticide-free, and packed with essential nutrients. Perfect for smoothies, baking, or enjoying as a healthy snack.
+                        </p>
+
+                        <div class="product-details-list">
+                            <div class="detail-item">
+                                <i class="fas fa-box"></i>
+                                <span>Weight:</span>
+                                <strong>1 kg (approx 6 pcs)</strong>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-tag"></i>
+                                <span>Brand:</span>
+                                <strong>Nature's Best</strong>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-leaf"></i>
+                                <span>Type:</span>
+                                <strong>Organic</strong>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Shelf Life:</span>
+                                <strong>5-7 Days</strong>
+                            </div>
+                        </div>
+
+                        <div class="add-to-cart-section">
+                            <div class="quantity-selector">
+                                <button class="qty-btn">-</button>
+                                <input type="number" class="qty-input" value="1" min="1">
+                                <button class="qty-btn">+</button>
+                            </div>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-shopping-cart"></i>
+                                Add to Cart
+                            </button>
+                            <button class="btn btn-wishlist">
+                                <i class="far fa-heart"></i>
+                            </button>
+                        </div>
+
+                        <div class="vendor-box">
+                            <div class="vendor-logo">🍌</div>
+                            <div class="vendor-info">
+                                <h4><a href="#">Nature Food</a></h4>
+                                <div class="vendor-rating">
+                                    <span class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                    <span>(5.0) • 380 Products</span>
+                                </div>
+                            </div>
+                            <a href="#" class="btn vendor-btn">Visit Store</a>
+                        </div>
+
+                        <div class="product-actions">
+                            <a href="#" class="action-link">
+                                <i class="fas fa-sync-alt"></i>
+                                Compare
+                            </a>
+                            <a href="#" class="action-link">
+                                <i class="fas fa-share-alt"></i>
+                                Share
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Tabs -->
+            <div class="product-tabs-section">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="description">Description</button>
+                    <button class="tab-btn" data-tab="additional">Additional Info</button>
+                    <button class="tab-btn" data-tab="reviews">Reviews (32)</button>
+                    <button class="tab-btn" data-tab="vendor">Vendor</button>
+                </div>
+
+                <div id="description" class="tab-content active">
+                    <p>Our premium organic bananas are carefully selected from the finest organic farms to ensure you receive only the best quality fruit. Each banana is hand-picked at the optimal ripeness stage to deliver maximum flavor and nutritional value.</p>
+                    
+                    <h4>Key Benefits</h4>
+                    <ul>
+                        <li>100% Certified Organic - No pesticides or harmful chemicals</li>
+                        <li>Rich in Potassium - Essential for heart health</li>
+                        <li>Natural Energy Booster - Perfect pre or post workout snack</li>
+                        <li>High in Fiber - Supports digestive health</li>
+                        <li>Contains Vitamin B6 - Supports brain function</li>
+                    </ul>
+
+                    <h4>Storage Instructions</h4>
+                    <p>Store at room temperature until ripe. Once ripe, you can refrigerate to extend freshness. The peel may darken in the refrigerator, but the fruit inside remains fresh for several more days.</p>
+                </div>
+
+                <div id="additional" class="tab-content">
+                    <p><strong>Weight:</strong> 1 kg (approximately 6 pieces)</p>
+                    <p><strong>Origin:</strong> Zimbabwe</p>
+                    <p><strong>Certification:</strong> USDA Organic, Fair Trade</p>
+                    <p><strong>Storage:</strong> Room temperature, refrigerate when ripe</p>
+                    <p><strong>Shelf Life:</strong> 5-7 days at room temperature</p>
+                </div>
+
+                <div id="reviews" class="tab-content">
+                    <div class="reviews-list">
+                        <div class="review-item">
+                            <div class="review-avatar">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Sarah M.">
+                            </div>
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <div class="review-author">
+                                        <h4>Sarah M.</h4>
+                                        <span>January 5, 2026</span>
+                                    </div>
+                                    <div class="review-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="review-text">Absolutely love these bananas! They're always perfectly ripe and so much tastier than regular store-bought ones. Will definitely order again.</p>
+                            </div>
+                        </div>
+
+                        <div class="review-item">
+                            <div class="review-avatar">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Michael T.">
+                            </div>
+                            <div class="review-content">
+                                <div class="review-header">
+                                    <div class="review-author">
+                                        <h4>Michael T.</h4>
+                                        <span>January 3, 2026</span>
+                                    </div>
+                                    <div class="review-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                <p class="review-text">Great quality organic bananas. Fast delivery and well packaged. My kids love them for their school lunches.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vendor" class="tab-content">
+                    <p><strong>Store Name:</strong> Nature Food</p>
+                    <p><strong>Address:</strong> 123 Fresh Road, Harare, Zimbabwe</p>
+                    <p><strong>Rating:</strong> 5.0 (380 products)</p>
+                    <p><strong>Joined:</strong> 2018</p>
+                    <p>Nature Food is committed to providing the highest quality organic produce sourced directly from local farms. We believe in sustainable farming practices and supporting our local community of farmers.</p>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-section">
+                <h2 class="section-title">Related Products</h2>
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="product-badge sale">-25%</span>
+                        </div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&h=300&fit=crop" alt="Avocados">
+                        </div>
+                        <div class="product-content">
+                            <div class="product-category">Fruits</div>
+                            <h3 class="product-card-title"><a href="#">Fresh Avocados</a></h3>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="current">$8.99</span>
+                                    <span class="original">$11.99</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300&h=300&fit=crop" alt="Strawberries">
+                        </div>
+                        <div class="product-content">
+                            <div class="product-category">Fruits</div>
+                            <h3 class="product-card-title"><a href="#">Fresh Strawberries</a></h3>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="current">$6.49</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-badges">
+                            <span class="product-badge hot">Hot</span>
+                        </div>
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300&h=300&fit=crop" alt="Apples">
+                        </div>
+                        <div class="product-content">
+                            <div class="product-category">Fruits</div>
+                            <h3 class="product-card-title"><a href="#">Red Apples</a></h3>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="current">$4.49</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1546548970-71785318a17b?w=300&h=300&fit=crop" alt="Oranges">
+                        </div>
+                        <div class="product-content">
+                            <div class="product-category">Fruits</div>
+                            <h3 class="product-card-title"><a href="#">Fresh Oranges</a></h3>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    <span class="current">$5.99</span>
+                                </div>
+                                <button class="add-to-cart-btn"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                        FreshMart
+                    </a>
+                    <p>Your trusted multi-vendor grocery marketplace. Fresh produce, competitive prices, and fast delivery right to your doorstep.</p>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 123 Fresh Street, Harare, Zimbabwe</span>
+                        <span><i class="fas fa-phone"></i> +263 78 123 4567</span>
+                        <span><i class="fas fa-envelope"></i> support@freshmart.co.zw</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="login.html">Sign In</a></li>
+                        <li><a href="cart.html">View Cart</a></li>
+                        <li><a href="wishlist.html">My Wishlist</a></li>
+                        <li><a href="#">Track My Order</a></li>
+                        <li><a href="#">Help Ticket</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Vendor</h4>
+                    <ul class="footer-links">
+                        <li><a href="register.html">Become a Vendor</a></li>
+                        <li><a href="vendors.html">All Vendors</a></li>
+                        <li><a href="#">Vendor Guidelines</a></li>
+                        <li><a href="#">Our Suppliers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Install App</h4>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>Get it on</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 FreshMart. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Quantity selector
+        document.querySelectorAll('.qty-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const input = this.parentElement.querySelector('.qty-input');
+                let value = parseInt(input.value);
+                
+                if (this.textContent === '+') {
+                    input.value = value + 1;
+                } else if (value > 1) {
+                    input.value = value - 1;
+                }
+            });
+        });
+
+        // Thumbnail gallery
+        document.querySelectorAll('.thumb-item').forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                document.querySelectorAll('.thumb-item').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const mainImg = document.querySelector('.gallery-main img');
+                mainImg.src = this.querySelector('img').src.replace('100', '600');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<nav class="nav-bar">
+  <div class="container">
+    <div class="nav-content">
+      <div class="categories-btn" (click)="toggleCategories()">
+        <i class="fas fa-th-large"></i>
+        Browse All Categories
+        <i class="fas fa-chevron-down"></i>
+      </div>
+      <ul class="nav-menu">
+        <li *ngFor="let item of navLinks">
+          <a [routerLink]="item.link" routerLinkActive="active" [routerLinkActiveOptions]="{exact: item.link === '/'}">
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+      <div class="nav-right">
+        <div class="hotline">
+          <div class="hotline-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <div class="hotline-text">
+            <span>{{ hotline.label }}</span>
+            <strong>{{ hotline.phone }}</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - FreshMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2cb569;
+            --primary-dark: #1e9c54;
+            --primary-light: #e8f7ef;
+            --secondary: #ff6b35;
+            --secondary-light: #fff4f0;
+            --accent-yellow: #ffc107;
+            --accent-red: #e53935;
+            --dark: #1a1a2e;
+            --dark-light: #3d3d5c;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 50px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--gray-100);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            max-width: 500px;
+            margin: 0 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .header-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .header-action i {
+            font-size: 22px;
+            color: var(--dark);
+        }
+
+        .header-action span {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .header-action .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-action:hover i {
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .categories-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .categories-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 20px 0;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .nav-right {
+            margin-left: auto;
+        }
+
+        .hotline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hotline-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .hotline-text span {
+            display: block;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .hotline-text strong {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--white);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-content a {
+            color: var(--gray-600);
+        }
+
+        .breadcrumb-content a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumb-content span {
+            color: var(--gray-400);
+        }
+
+        .breadcrumb-content .current {
+            color: var(--dark);
+        }
+
+        /* Shop Layout */
+        .shop-section {
+            padding: 30px 0;
+        }
+
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .sidebar-widget {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+        }
+
+        .sidebar-widget h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-widget h3 i {
+            color: var(--primary);
+        }
+
+        .category-list {
+            list-style: none;
+        }
+
+        .category-list li {
+            margin-bottom: 12px;
+        }
+
+        .category-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-list a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: var(--gray-100);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .category-list a:hover,
+        .category-list a.active {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .category-list span {
+            background: var(--white);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .price-slider {
+            padding: 10px 0;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .price-input {
+            flex: 1;
+        }
+
+        .price-input label {
+            display: block;
+            font-size: 12px;
+            color: var(--gray-600);
+            margin-bottom: 5px;
+        }
+
+        .price-input input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .price-input input:focus {
+            border-color: var(--primary);
+        }
+
+        .range-slider {
+            width: 100%;
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .range-slider .fill {
+            position: absolute;
+            left: 10%;
+            right: 30%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        .filter-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .checkbox-list {
+            list-style: none;
+        }
+
+        .checkbox-list li {
+            margin-bottom: 12px;
+        }
+
+        .checkbox-list label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .checkbox-list input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-list span {
+            color: var(--gray-500);
+            margin-left: auto;
+        }
+
+        .rating-filter {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating-filter .stars {
+            color: var(--accent-yellow);
+            font-size: 14px;
+        }
+
+        /* Banner Widget */
+        .sidebar-banner {
+            background: linear-gradient(135deg, var(--secondary-light) 0%, #ffd4c4 100%);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .sidebar-banner h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .sidebar-banner p {
+            color: var(--gray-600);
+            margin-bottom: 15px;
+        }
+
+        .sidebar-banner .discount {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        /* Products Area */
+        .products-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .products-header {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .products-count {
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+
+        .products-count strong {
+            color: var(--primary);
+        }
+
+        .products-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 8px;
+        }
+
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gray-300);
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .view-btn:hover,
+        .view-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+        }
+
+        .sort-select {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-select label {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .sort-select select {
+            padding: 10px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .sort-select select:focus {
+            border-color: var(--primary);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .product-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .product-badges {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 10;
+        }
+
+        .product-badge {
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .product-badge.hot {
+            background: var(--accent-red);
+        }
+
+        .product-badge.sale {
+            background: var(--secondary);
+        }
+
+        .product-badge.new {
+            background: var(--primary);
+        }
+
+        .product-badge.organic {
+            background: var(--accent-yellow);
+            color: var(--dark);
+        }
+
+        .product-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .product-action {
+            width: 36px;
+            height: 36px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .product-action:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-title a:hover {
+            color: var(--primary);
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .product-rating .stars {
+            display: flex;
+            gap: 2px;
+            color: var(--accent-yellow);
+            font-size: 12px;
+        }
+
+        .product-rating span {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .product-vendor {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 12px;
+        }
+
+        .product-vendor a {
+            color: var(--primary);
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-price .current {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .product-price .original {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-decoration: line-through;
+        }
+
+        .add-to-cart {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+        }
+
+        .pagination a,
+        .pagination span {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .pagination a {
+            background: var(--gray-100);
+            color: var(--dark);
+        }
+
+        .pagination a:hover,
+        .pagination a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .pagination span {
+            color: var(--gray-500);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0 0;
+            margin-top: 40px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-about .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: var(--gray-500);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .footer h4 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .app-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .app-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .app-btn i {
+            font-size: 28px;
+        }
+
+        .app-btn span {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .app-btn strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .footer-bottom {
+            padding: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .shop-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .nav-menu {
+                display: none;
+            }
+            .search-bar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .products-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .products-controls {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                    FreshMart
+                </a>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search for products...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <div class="header-action">
+                        <i class="far fa-heart"></i>
+                        <span>Wishlist</span>
+                        <div class="badge">3</div>
+                    </div>
+                    <a href="cart.html" class="header-action">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                        <div class="badge">5</div>
+                    </a>
+                    <a href="login.html" class="header-action">
+                        <i class="far fa-user"></i>
+                        <span>Account</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="categories-btn">
+                    <i class="fas fa-th-large"></i>
+                    Browse All Categories
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html" class="active">Shop</a></li>
+                    <li><a href="vendors.html">Vendors</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="hotline">
+                        <div class="hotline-icon"><i class="fas fa-headset"></i></div>
+                        <div class="hotline-text">
+                            <span>24/7 Support</span>
+                            <strong>+263 78 123 4567</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <span>/</span>
+                <span class="current">Shop</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shop Section -->
+    <section class="shop-section">
+        <div class="container">
+            <div class="shop-layout">
+                <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Categories -->
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-list"></i> Categories</h3>
+                        <ul class="category-list">
+                            <li><a href="#" class="active">All Products <span>1,568</span></a></li>
+                            <li><a href="#">Fresh Vegetables <span>156</span></a></li>
+                            <li><a href="#">Fruits & Nuts <span>134</span></a></li>
+                            <li><a href="#">Meat & Poultry <span>98</span></a></li>
+                            <li><a href="#">Dairy & Eggs <span>78</span></a></li>
+                            <li><a href="#">Bakery <span>65</span></a></li>
+                            <li><a href="#">Beverages <span>124</span></a></li>
+                            <li><a href="#">Frozen Foods <span>87</span></a></li>
+                            <li><a href="#">Snacks <span>143</span></a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-dollar-sign"></i> Filter by Price</h3>
+                        <div class="price-slider">
+                            <div class="price-inputs">
+                                <div class="price-input">
+                                    <label>Min</label>
+                                    <input type="number" value="0" placeholder="$0">
+                                </div>
+                                <div class="price-input">
+                                    <label>Max</label>
+                                    <input type="number" value="500" placeholder="$500">
+                                </div>
+                            </div>
+                            <div class="range-slider">
+                                <div class="fill"></div>
+                            </div>
+                            <button class="filter-btn">Apply Filter</button>
+                        </div>
+                    </div>
+
+                    <!-- Brands -->
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-tags"></i> Brands</h3>
+                        <ul class="checkbox-list">
+                            <li>
+                                <label>
+                                    <input type="checkbox" checked>
+                                    Nature's Best
+                                    <span>(45)</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox">
+                                    Organic Valley
+                                    <span>(32)</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox">
+                                    Fresh Farms
+                                    <span>(28)</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox">
+                                    Green Garden
+                                    <span>(24)</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox">
+                                    Local Harvest
+                                    <span>(19)</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Rating Filter -->
+                    <div class="sidebar-widget">
+                        <h3><i class="fas fa-star"></i> By Rating</h3>
+                        <ul class="checkbox-list">
+                            <li>
+                                <label class="rating-filter">
+                                    <input type="checkbox">
+                                    <span class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                    <span>(85)</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="rating-filter">
+                                    <input type="checkbox">
+                                    <span class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                    <span>(156)</span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="rating-filter">
+                                    <input type="checkbox">
+                                    <span class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </span>
+                                    <span>(78)</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Banner -->
+                    <div class="sidebar-banner">
+                        <h3>Weekend Sale!</h3>
+                        <p>Fresh organic vegetables</p>
+                        <div class="discount">40%</div>
+                        <p>OFF</p>
+                    </div>
+                </aside>
+
+                <!-- Products Area -->
+                <div class="products-area">
+                    <!-- Products Header -->
+                    <div class="products-header">
+                        <div class="products-count">
+                            We found <strong>1,568</strong> products available for you
+                        </div>
+                        <div class="products-controls">
+                            <div class="view-toggle">
+                                <button class="view-btn active"><i class="fas fa-th"></i></button>
+                                <button class="view-btn"><i class="fas fa-list"></i></button>
+                            </div>
+                            <div class="sort-select">
+                                <label>Sort by:</label>
+                                <select>
+                                    <option>Featured</option>
+                                    <option>Price: Low to High</option>
+                                    <option>Price: High to Low</option>
+                                    <option>Newest</option>
+                                    <option>Best Selling</option>
+                                    <option>Top Rated</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-grid">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="product-badge hot">Hot</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1518977676601-b28d136957bc?w=300&h=300&fit=crop" alt="Organic Bananas">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Fruits</div>
+                                <h3 class="product-title"><a href="product-detail.html">Organic Bananas</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>(4.9)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Nature Food</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$4.99</span>
+                                        <span class="original">$6.99</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 2 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="product-badge sale">-25%</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&h=300&fit=crop" alt="Fresh Avocados">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Fruits</div>
+                                <h3 class="product-title"><a href="product-detail.html">Fresh Avocados</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>(4.7)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Country Crock</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$8.99</span>
+                                        <span class="original">$11.99</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 3 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="product-badge organic">Organic</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300&h=300&fit=crop" alt="Fresh Strawberries">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Fruits</div>
+                                <h3 class="product-title"><a href="product-detail.html">Fresh Strawberries</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>(5.0)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Fresh Farms</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$6.49</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 4 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="product-badge new">New</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?w=300&h=300&fit=crop" alt="Fresh Broccoli">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Vegetables</div>
+                                <h3 class="product-title"><a href="product-detail.html">Fresh Broccoli</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span>(4.2)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Green Garden</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$3.99</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 5 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=300&h=300&fit=crop" alt="Fresh Milk">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Dairy</div>
+                                <h3 class="product-title"><a href="product-detail.html">Fresh Whole Milk</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span>(4.6)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Organic Valley</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$5.49</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 6 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="product-badge sale">-30%</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1568702846914-96b305d2uj96?w=300&h=300&fit=crop" alt="Chicken Breast">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Meat</div>
+                                <h3 class="product-title"><a href="product-detail.html">Chicken Breast</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>(4.9)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Local Harvest</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$12.99</span>
+                                        <span class="original">$18.99</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 7 -->
+                        <div class="product-card">
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop" alt="Sourdough Bread">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Bakery</div>
+                                <h3 class="product-title"><a href="product-detail.html">Sourdough Bread</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span>(4.3)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Baker's Delight</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$4.99</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product 8 -->
+                        <div class="product-card">
+                            <div class="product-badges">
+                                <span class="product-badge hot">Hot</span>
+                                <span class="product-badge organic">Organic</span>
+                            </div>
+                            <div class="product-image">
+                                <img src="https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=300&h=300&fit=crop" alt="Fresh Eggs">
+                                <div class="product-actions">
+                                    <div class="product-action"><i class="far fa-heart"></i></div>
+                                    <div class="product-action"><i class="fas fa-sync-alt"></i></div>
+                                    <div class="product-action"><i class="far fa-eye"></i></div>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="product-category">Dairy</div>
+                                <h3 class="product-title"><a href="product-detail.html">Organic Free Range Eggs</a></h3>
+                                <div class="product-rating">
+                                    <div class="stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span>(5.0)</span>
+                                </div>
+                                <div class="product-vendor">By <a href="#">Farm Fresh</a></div>
+                                <div class="product-footer">
+                                    <div class="product-price">
+                                        <span class="current">$7.99</span>
+                                    </div>
+                                    <button class="add-to-cart"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <a href="#"><i class="fas fa-chevron-left"></i></a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span>...</span>
+                        <a href="#">12</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                        FreshMart
+                    </a>
+                    <p>Your trusted multi-vendor grocery marketplace. Fresh produce, competitive prices, and fast delivery right to your doorstep.</p>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 123 Fresh Street, Harare, Zimbabwe</span>
+                        <span><i class="fas fa-phone"></i> +263 78 123 4567</span>
+                        <span><i class="fas fa-envelope"></i> support@freshmart.co.zw</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="login.html">Sign In</a></li>
+                        <li><a href="cart.html">View Cart</a></li>
+                        <li><a href="wishlist.html">My Wishlist</a></li>
+                        <li><a href="#">Track My Order</a></li>
+                        <li><a href="#">Help Ticket</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Vendor</h4>
+                    <ul class="footer-links">
+                        <li><a href="register.html">Become a Vendor</a></li>
+                        <li><a href="vendors.html">All Vendors</a></li>
+                        <li><a href="#">Vendor Guidelines</a></li>
+                        <li><a href="#">Our Suppliers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Install App</h4>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>Get it on</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 FreshMart. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

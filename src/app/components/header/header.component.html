@@ -1,0 +1,280 @@
+<!-- Header Wrapper - Fixed positioning for entire header -->
+<div class="fixed top-0 left-0 right-0 z-[1000]">
+<!-- Top Bar - Dark bar with contact info -->
+<div class="bg-[#1c352c] text-white py-2.5 text-[13px]">
+  <div class="container mx-auto px-5">
+    <div class="flex justify-between items-center flex-wrap gap-4">
+      <div class="hidden md:flex items-center gap-6">
+        <!-- Shop Selector -->
+        <app-shop-selector></app-shop-selector>
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Mon-Sun: 6:00 AM - 6:00 PM
+        </span>
+      </div>
+      <div class="flex items-center gap-5">
+        <a routerLink="/about" class="hover:text-fresh-500 transition-colors">About Us</a>
+        <a routerLink="/profile" class="hover:text-fresh-500 transition-colors">My Account</a>
+        <a routerLink="/wishlist" class="hover:text-fresh-500 transition-colors">Wishlist</a>
+        <a routerLink="/check-order" class="hover:text-fresh-500 transition-colors">Order Tracking</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Header -->
+<header class="bg-white py-5 shadow-sm">
+  <div class="container mx-auto px-5">
+    <div class="flex items-center gap-10">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center gap-3">
+        <img
+          src="logo.png"
+          alt="Snappy Fresh"
+          class="h-12 object-contain"
+        />
+      </a>
+
+      <!-- Search Bar -->
+      <div class="flex-1 hidden md:flex items-center bg-gray-100 rounded-full p-1 max-w-[600px]">
+        <select class="py-3 px-5 border-none bg-transparent text-[14px] text-gray-700 border-r border-gray-300 cursor-pointer outline-none">
+          <option>All Categories</option>
+          <option *ngFor="let category of categories" [value]="category.number">{{ category.groupName }}</option>
+        </select>
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (keydown.enter)="search()"
+          class="flex-1 py-3 px-5 border-none bg-transparent text-[15px] outline-none"
+          placeholder="Search for products..."
+        />
+        <button
+          (click)="search()"
+          class="w-12 h-12 border-none bg-fresh-500 text-white rounded-full cursor-pointer text-lg transition-all hover:bg-fresh-600 hover:scale-105 flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="flex items-center gap-6 ml-auto">
+        <!-- Wishlist -->
+        <a routerLink="/wishlist" class="hidden md:flex flex-col items-center gap-1 relative cursor-pointer group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#1c352c] group-hover:text-fresh-500 transition-colors"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+          <span class="text-[12px] text-gray-600">Wishlist</span>
+          <div *ngIf="wishlistCount > 0" class="absolute -top-2 -right-2 w-5 h-5 bg-coral-500 text-white rounded-full text-[11px] font-semibold flex items-center justify-center">{{wishlistCount}}</div>
+        </a>
+
+        <!-- Cart -->
+        <a routerLink="/cart" class="flex flex-col items-center gap-1 relative cursor-pointer group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#1c352c] group-hover:text-fresh-500 transition-colors"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span class="text-[12px] text-gray-600">Cart</span>
+          <div *ngIf="itemCount > 0" class="absolute -top-2 -right-2 w-5 h-5 bg-coral-500 text-white rounded-full text-[11px] font-semibold flex items-center justify-center">{{itemCount}}</div>
+        </a>
+
+        <!-- Account -->
+        <a [routerLink]="authenticated ? '/profile' : '/login'" class="hidden md:flex flex-col items-center gap-1 cursor-pointer group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#1c352c] group-hover:text-fresh-500 transition-colors"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          <span class="text-[12px] text-gray-600">Account</span>
+        </a>
+
+        <!-- Mobile Menu Button -->
+        <button
+          class="md:hidden flex items-center justify-center w-10 h-10 text-[#1c352c] hover:bg-gray-100 rounded-lg transition-colors"
+          (click)="menuOpen = !menuOpen"
+        >
+          <svg *ngIf="!menuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <svg *ngIf="menuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation Bar -->
+<nav class="bg-white border-b border-gray-200 hidden md:block shadow-sm relative">
+  <div class="container mx-auto px-5">
+    <div class="flex items-center gap-8">
+      <!-- Browse All Categories Button -->
+      <div class="relative">
+        <button
+          (click)="toggleDepartmentSidebar()"
+          class="flex items-center gap-3 bg-fresh-500 text-white py-4 px-6 rounded-[12px] font-semibold cursor-pointer transition-all hover:bg-fresh-600">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+          Browse All Categories
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <!-- Nav Menu -->
+      <ul class="flex items-center gap-9 list-none">
+        <li>
+          <a routerLink="/" class="py-5 font-medium text-[#1c352c] hover:text-fresh-500 transition-colors">
+            Home
+          </a>
+        </li>
+        <li>
+          <a routerLink="/store" class="py-5 font-medium text-[#1c352c] hover:text-fresh-500 transition-colors">
+            Shop
+          </a>
+        </li>
+        <li>
+          <button (click)="toggleServicesDrawer()" class="py-5 font-medium text-[#1c352c] hover:text-fresh-500 transition-colors flex items-center gap-1">
+            Services
+            <span class="text-[10px] bg-coral-500 text-white px-1.5 py-0.5 rounded-full font-bold">NEW</span>
+          </button>
+        </li>
+        <li>
+          <a routerLink="/contact-us" class="py-5 font-medium text-[#1c352c] hover:text-fresh-500 transition-colors">
+            Contact Us
+          </a>
+        </li>
+        <li>
+          <a routerLink="/faq" class="py-5 font-medium text-[#1c352c] hover:text-fresh-500 transition-colors">
+            FAQ
+          </a>
+        </li>
+      </ul>
+
+      <!-- Hotline -->
+      <a href="tel:+263782978460" class="ml-auto flex items-center gap-3 hover:opacity-80 transition-opacity">
+        <div class="w-[45px] h-[45px] bg-fresh-50 rounded-full flex items-center justify-center text-fresh-500 text-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <span class="block text-[12px] text-gray-600">Call Us</span>
+          <strong class="text-lg text-fresh-500">+263 782 978 460</strong>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mega Menu -->
+  <app-mega-menu
+    [isOpen]="showMegaMenu"
+    (close)="closeMegaMenu()">
+  </app-mega-menu>
+</nav>
+
+<!-- Mobile Menu -->
+<div *ngIf="menuOpen" class="md:hidden bg-white border-b border-gray-200 shadow-sm">
+  <div class="px-4 py-4 space-y-2">
+    <!-- Mobile Search -->
+    <div class="relative mb-4">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (keydown.enter)="search(); menuOpen = false"
+        class="w-full pl-10 pr-4 py-3 bg-gray-100 rounded-full text-gray-800 placeholder-gray-400 focus:outline-none"
+        placeholder="Search products"
+      />
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </div>
+
+    <a routerLink="/" (click)="menuOpen = false" class="flex items-center gap-3 px-4 py-3 text-[#1c352c] hover:bg-gray-50 rounded-lg">Home</a>
+    <a routerLink="/store" (click)="menuOpen = false" class="flex items-center gap-3 px-4 py-3 text-[#1c352c] hover:bg-gray-50 rounded-lg">Shop</a>
+    <button (click)="toggleServicesDrawer(); menuOpen = false" class="w-full flex items-center justify-between px-4 py-3 text-[#1c352c] hover:bg-gray-50 rounded-lg">
+      <span class="flex items-center gap-3">Services</span>
+      <span class="text-[10px] bg-coral-500 text-white px-2 py-0.5 rounded-full font-bold">NEW</span>
+    </button>
+    <a routerLink="/contact-us" (click)="menuOpen = false" class="flex items-center gap-3 px-4 py-3 text-[#1c352c] hover:bg-gray-50 rounded-lg">Contact</a>
+    <a *ngIf="!authenticated" routerLink="/login" (click)="menuOpen = false" class="flex items-center gap-3 px-4 py-3 bg-fresh-500 text-white rounded-lg font-medium">Sign In / Sign Up</a>
+    <a *ngIf="authenticated" routerLink="/profile" (click)="menuOpen = false" class="flex items-center gap-3 px-4 py-3 bg-fresh-500 text-white rounded-lg font-medium">My Account</a>
+  </div>
+</div>
+</div>
+<!-- End Fixed Header Wrapper -->
+
+<!-- Department Sidebar Overlay -->
+<div
+  *ngIf="showDepartmentSidebar"
+  class="fixed inset-0 bg-black/50 z-[1200] transition-opacity"
+  (click)="toggleDepartmentSidebar()"
+></div>
+
+<!-- Department Sidebar Panel -->
+<aside
+  *ngIf="showDepartmentSidebar"
+  class="fixed top-0 left-0 h-full w-80 bg-white z-[1201] shadow-2xl overflow-hidden">
+  <div class="flex items-center justify-between p-4 bg-fresh-500">
+    <h2 class="text-lg font-bold text-white">Shop by Category</h2>
+    <button (click)="toggleDepartmentSidebar()" class="text-white hover:text-fresh-100 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+
+  <nav class="overflow-y-auto h-[calc(100%-64px)]">
+    <!-- Loading State -->
+    <div *ngIf="isLoadingCategories" class="flex items-center justify-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-[#42af57]"></div>
+    </div>
+
+    <!-- Categories from API -->
+    <ul *ngIf="!isLoadingCategories && categories.length > 0">
+      <!-- All Products Option -->
+      <li>
+        <a routerLink="/store" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100 bg-fresh-500 text-white hover:bg-fresh-600">
+          <div class="w-[70px] h-[70px] rounded-full bg-white/20 flex items-center justify-center text-4xl">🛒</div>
+          <div class="flex-1">
+            <span class="font-medium text-[14px]">All Products</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </li>
+      <li *ngFor="let category of categories">
+        <a routerLink="/store" [queryParams]="{group: category.number}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
+          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">{{ getCategoryEmoji(category.groupName) }}</div>
+          <div class="flex-1">
+            <span class="font-medium text-[14px]">{{ category.groupName }}</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Fallback if no categories -->
+    <ul *ngIf="!isLoadingCategories && categories.length === 0">
+      <li>
+        <a routerLink="/store" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100 bg-fresh-500 text-white hover:bg-fresh-600">
+          <div class="w-[70px] h-[70px] rounded-full bg-white/20 flex items-center justify-center text-4xl">🛒</div>
+          <div class="flex-1"><span class="font-medium text-[14px]">All Products</span></div>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/store" [queryParams]="{category: 118}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
+          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">🍞</div>
+          <div class="flex-1"><span class="font-medium text-[14px]">Bread</span></div>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/store" [queryParams]="{category: 109}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
+          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">🧀</div>
+          <div class="flex-1"><span class="font-medium text-[14px]">Cheese Product</span></div>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/store" [queryParams]="{category: 112}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
+          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">🍦</div>
+          <div class="flex-1"><span class="font-medium text-[14px]">Fresh Cream</span></div>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/store" [queryParams]="{category: 111}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
+          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">🥛</div>
+          <div class="flex-1"><span class="font-medium text-[14px]">Fresh Milk Product</span></div>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/store" [queryParams]="{category: 107}" (click)="toggleDepartmentSidebar()" class="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 border-b border-gray-100">
+          <div class="w-[70px] h-[70px] rounded-full bg-gray-100 flex items-center justify-center text-4xl">🥄</div>
+          <div class="flex-1"><span class="font-medium text-[14px]">Yoghurt Product</span></div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- Services Drawer -->
+<app-services-drawer
+  [isOpen]="showServicesDrawer"
+  (close)="showServicesDrawer = false">
+</app-services-drawer>

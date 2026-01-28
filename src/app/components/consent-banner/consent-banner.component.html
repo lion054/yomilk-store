@@ -1,0 +1,9 @@
+<div class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-5 z-[999] shadow-lg" *ngIf="showBanner">
+  <div class="max-w-6xl mx-auto flex justify-between items-center flex-wrap gap-5">
+    <p class="m-0 flex-1 text-base">We use cookies and analytics to improve your experience. Do you consent to tracking for analytics purposes?</p>
+    <div class="flex gap-2.5">
+      <button class="bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 border-none rounded cursor-pointer text-base transition-colors duration-300" (click)="accept()">Accept</button>
+      <button class="bg-red-500 hover:bg-red-700 text-white px-5 py-2.5 border-none rounded cursor-pointer text-base transition-colors duration-300" (click)="reject()">Reject</button>
+    </div>
+  </div>
+</div>

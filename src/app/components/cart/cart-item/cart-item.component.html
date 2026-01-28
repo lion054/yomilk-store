@@ -1,0 +1,130 @@
+<!--<div class="rounded-xl flex md:min-h-28 h-full max-w-md bg-white shadow-sm border hover:shadow-md transition-all duration-300 my-5 overflow-hidden group">-->
+<!--  &lt;!&ndash; Image Section &ndash;&gt;-->
+<!--  <div class="md:w-1/4 w-full flex items-center justify-center p-3">-->
+<!--    <div class="relative aspect-square w-full h-full overflow-hidden rounded-lg">-->
+<!--      <img-->
+<!--        [src]="cartItem.image ? cartItem.image : 'assets/images/woocommerce-placeholder.webp'"-->
+<!--        (error)="'assets/images/woocommerce-placeholder.webp'"-->
+<!--        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"-->
+<!--        alt="{{cartItem.itemName}}"-->
+<!--      />-->
+<!--      <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Content Section &ndash;&gt;-->
+<!--  <div class="md:w-3/4 w-full h-full p-4 relative">-->
+<!--    &lt;!&ndash; Remove Button &ndash;&gt;-->
+<!--    <button-->
+<!--      class="absolute top-3 right-3 p-2 rounded-full hover:bg-red-50 text-gray-500 hover:text-red-600 transition-all duration-200"-->
+<!--      (click)="removeItem(index)"-->
+<!--      aria-label="Remove item"-->
+<!--    >-->
+<!--      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2">-->
+<!--        <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>-->
+<!--        <line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>-->
+<!--      </svg>-->
+<!--    </button>-->
+
+<!--    &lt;!&ndash; Product Details &ndash;&gt;-->
+<!--    <h1 class="text-lg font-semibold text-gray-800 mb-1 pr-8">{{cartItem.itemName}} <span class="text-sm font-normal text-gray-500">({{cartItem.uom.uomName}})</span></h1>-->
+<!--    <div class="text-sm text-gray-600 mb-3">{{cartItem.currency}} {{cartItem.uom.price | number: '1.2-2'}} / {{cartItem.uom.uomName}}</div>-->
+
+<!--    &lt;!&ndash; Quantity Controls &ndash;&gt;-->
+<!--    <div class="absolute bottom-3 right-3 flex items-center space-x-2">-->
+<!--      <button-->
+<!--        (click)="decrementQuantity()"-->
+<!--        class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"-->
+<!--        aria-label="Decrease quantity"-->
+<!--      >-->
+<!--        <span class="text-gray-600">−</span>-->
+<!--      </button>-->
+
+<!--      <span class="w-8 text-center text-gray-700">{{cartItem.quantity}}</span>-->
+
+<!--      <button-->
+<!--        (click)="incrementQuantity()"-->
+<!--        class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"-->
+<!--        aria-label="Increase quantity"-->
+<!--      >-->
+<!--        <span class="text-gray-600">+</span>-->
+<!--      </button>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Total Price &ndash;&gt;-->
+<!--    <div class="text-lg font-bold text-gray-900 pt-2">-->
+<!--      Total: <span class="text-blue-600">{{cartItem.currency}} {{cartItem.uom.price * cartItem.quantity | number: '1.2-2'}}</span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div class="rounded-xl flex md:min-h-28 h-full max-w-md bg-white shadow-sm border hover:shadow-md transition-all duration-300 my-5 overflow-hidden group">
+  <!-- Image Section -->
+  <div class="md:w-1/4 w-28 md:h-full overflow-hidden flex items-center justify-center p-3 sm:p-2">
+    <div class="relative w-full h-full overflow-hidden rounded-lg">
+      <img
+        [src]="cartItem.image ? cartItem.image : 'assets/images/woocommerce-placeholder.webp'"
+        (error)="'assets/images/woocommerce-placeholder.webp'"
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 sm:group-hover:scale-100"
+        alt="{{cartItem.itemName}}"
+      />
+      <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300"></div>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="md:w-3/4 w-full h-full p-4 relative flex flex-col justify-between">
+    <!-- Remove Button - 44px min touch target -->
+    <button
+      class="absolute top-2 right-2 w-11 h-11 flex items-center justify-center rounded-full hover:bg-red-50 active:bg-red-100 text-gray-400 hover:text-red-500 transition-all duration-200 touch-manipulation"
+      (click)="removeItem(index)"
+      aria-label="Remove item from cart"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="lucide lucide-trash-2">
+        <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+        <line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>
+      </svg>
+    </button>
+
+    <!-- Product Details -->
+    <div class="pr-12">
+      <h2 class="text-base md:text-lg font-semibold text-gray-800 mb-1 line-clamp-2">
+        {{cartItem.itemName}}
+      </h2>
+      <p class="text-sm text-gray-500 mb-1">({{cartItem.uom.uomName}})</p>
+      <div class="text-sm text-gray-600">
+        {{cartItem.currency}} {{cartItem.uom.price | number: '1.2-2'}} / {{cartItem.uom.uomName}}
+      </div>
+    </div>
+
+    <!-- Bottom Row: Total & Quantity Controls -->
+    <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+      <!-- Total Price -->
+      <div class="text-base md:text-lg font-bold text-gray-900">
+        <span class="text-[#42af57]">{{cartItem.currency}} {{cartItem.uom.price * cartItem.quantity | number: '1.2-2'}}</span>
+      </div>
+
+      <!-- Quantity Controls - 44px min touch targets -->
+      <div class="flex items-center gap-1">
+        <button
+          (click)="decrementQuantity()"
+          class="w-11 h-11 flex items-center justify-center bg-gray-100 rounded-xl hover:bg-gray-200 active:bg-gray-300 transition-colors duration-200 touch-manipulation"
+          aria-label="Decrease quantity"
+        >
+          <span class="text-gray-600 text-xl font-medium">−</span>
+        </button>
+
+        <span class="w-10 text-center text-gray-700 font-semibold text-lg">{{cartItem.quantity}}</span>
+
+        <button
+          (click)="incrementQuantity()"
+          class="w-11 h-11 flex items-center justify-center bg-[#42af57] rounded-xl hover:bg-[#3d9332] active:bg-[#2d7025] transition-colors duration-200 touch-manipulation"
+          aria-label="Increase quantity"
+        >
+          <span class="text-white text-xl font-medium">+</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

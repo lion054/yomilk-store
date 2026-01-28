@@ -1,0 +1,31 @@
+<Section class="w-full flex flex-col items-center justify-center">
+  <h1 class="text-3xl my-10 text-primary-500">{{title}}</h1>
+  <!--  List of product cards-->
+  <div *ngIf="products.length>0">
+    <section class="md:p-10 p-2.5 flex flex-wrap  2xl:justify-center justify-center">
+      @for (product of products; track product) {
+      <app-product-card [product]="product"></app-product-card>
+      }
+    </section>
+  </div>
+
+  <div *ngIf="products.length==0" class="md:p-10 p-1 flex flex-wrap  2xl:justify-center justify-center gap-5">
+    @for (product of arr; track product) {
+    <div class=" md:w-80">
+      <div class="h-full border-2 border-gray-200 rounded-lg overflow-hidden">
+        <div class="lg:h-60 bg-gray-300 animate-pulse md:h-36 w-full object-cover object-center"></div>
+        <div class="p-6">
+          <h2 class="bg-gray-400 animate-pulse h-4 w-1/4 mb-2"></h2>
+          <p class="leading-relaxed mb-3 w-full h-3 animate-pulse bg-gray-400"></p>
+          <div class="flex items-center flex-wrap ">
+            <span class="bg-accent-100 w-16 mt-2 h-6 animate-pulse mr-3 px-2 inline-flex items-center ml-auto leading-none text-sm pr-5 py-1">
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</Section>
+

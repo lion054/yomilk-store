@@ -1,0 +1,401 @@
+<!-- Home Page - Elegant Grocery Store Layout -->
+
+<!-- Hero Slider Section -->
+<app-hero-slider></app-hero-slider>
+
+<!-- Promotional Banner Cards (3-column) -->
+<app-promo-cards></app-promo-cards>
+
+<!-- Popular Products Section with Category Tabs -->
+<app-popular-products></app-popular-products>
+
+<!-- Features Strip -->
+<app-features-strip></app-features-strip>
+
+<!-- Product Shelves by Category -->
+<div class="bg-white py-12">
+  <ng-container *ngIf="categories">
+    @for (cat of categories; track cat; let i = $index) {
+      <!-- Only show first 2 categories -->
+      @if (i < 2) {
+        <app-product-shelf-alt
+          title="{{cat.groupName}}"
+          [itemCount]="10"
+          itemGroupCode="{{cat['number']}}">
+        </app-product-shelf-alt>
+      }
+    }
+  </ng-container>
+</div>
+
+<!-- B2B Order Schedules Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-5">
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+      <div>
+        <div class="flex items-center gap-3 mb-2">
+          <h2 class="text-[28px] md:text-[32px] font-bold text-[#253D4E] font-outfit">Order Schedules</h2>
+          <span class="px-3 py-1 bg-[#42af57]/10 text-[#42af57] text-sm font-semibold rounded-full">
+            <i class="fas fa-building mr-1"></i>
+            B2B
+          </span>
+        </div>
+        <p class="text-gray-500 text-sm">Place your business orders before the schedule closes</p>
+        <div class="w-16 h-1 bg-[#42af57] rounded-full mt-3"></div>
+      </div>
+      <a [routerLink]="isLoggedIn ? '/b2b/schedules' : '/login'" class="inline-flex items-center gap-2 text-[#42af57] font-semibold hover:gap-3 transition-all">
+        {{ isLoggedIn ? 'View All Schedules' : 'Login to Order' }}
+        <i class="fas fa-arrow-right text-sm"></i>
+      </a>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoadingSchedules" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let i of [1,2,3,4]" class="bg-white rounded-2xl p-6 animate-pulse border border-gray-100">
+        <div class="h-16 w-16 bg-gray-200 rounded-xl mb-4"></div>
+        <div class="h-5 bg-gray-200 rounded w-3/4 mb-3"></div>
+        <div class="h-4 bg-gray-100 rounded w-1/2 mb-4"></div>
+        <div class="flex gap-2 mb-4">
+          <div class="h-8 bg-gray-100 rounded flex-1"></div>
+          <div class="h-8 bg-gray-100 rounded flex-1"></div>
+          <div class="h-8 bg-gray-100 rounded flex-1"></div>
+          <div class="h-8 bg-gray-100 rounded flex-1"></div>
+        </div>
+        <div class="h-10 bg-gray-200 rounded-xl"></div>
+      </div>
+    </div>
+
+    <!-- Schedules Grid -->
+    <div *ngIf="!isLoadingSchedules && orderSchedules.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div *ngFor="let schedule of orderSchedules; let i = index"
+           class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-[#42af57]/30">
+        <!-- Schedule Header with Icon -->
+        <div class="p-5 bg-gradient-to-br" [ngClass]="getScheduleColor(i)">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center text-2xl shadow-sm">
+              {{ getScheduleIcon(schedule.Remark) }}
+            </div>
+            <span class="px-2.5 py-1 bg-white/90 text-[#42af57] text-xs font-semibold rounded-full shadow-sm">
+              <i class="fas fa-clock mr-1"></i>
+              Open
+            </span>
+          </div>
+          <h3 class="text-[15px] font-bold text-[#253D4E] mb-1 line-clamp-1 group-hover:text-[#42af57] transition-colors">
+            {{ schedule.Remark || 'Order Schedule #' + schedule.DocNum }}
+          </h3>
+          <p class="text-xs text-gray-500">
+            <i class="fas fa-hashtag mr-1"></i>
+            Schedule #{{ schedule.DocNum }}
+          </p>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="px-5 py-4 border-b border-gray-100">
+          <p class="text-xs text-gray-500 mb-2 text-center font-medium">
+            <i class="fas fa-hourglass-half mr-1 text-[#F74B81]"></i>
+            Closes In
+          </p>
+          <div class="flex gap-1.5" *ngIf="scheduleCountdowns[schedule.DocEntry]">
+            <div class="flex-1 bg-gray-50 px-2 py-2 rounded-lg text-center">
+              <span class="block text-lg font-bold text-[#F74B81]">{{ scheduleCountdowns[schedule.DocEntry].days | number:'2.0-0' }}</span>
+              <small class="text-[9px] text-gray-500 uppercase font-medium">Days</small>
+            </div>
+            <div class="flex-1 bg-gray-50 px-2 py-2 rounded-lg text-center">
+              <span class="block text-lg font-bold text-[#F74B81]">{{ scheduleCountdowns[schedule.DocEntry].hours | number:'2.0-0' }}</span>
+              <small class="text-[9px] text-gray-500 uppercase font-medium">Hrs</small>
+            </div>
+            <div class="flex-1 bg-gray-50 px-2 py-2 rounded-lg text-center">
+              <span class="block text-lg font-bold text-[#F74B81]">{{ scheduleCountdowns[schedule.DocEntry].mins | number:'2.0-0' }}</span>
+              <small class="text-[9px] text-gray-500 uppercase font-medium">Min</small>
+            </div>
+            <div class="flex-1 bg-gray-50 px-2 py-2 rounded-lg text-center">
+              <span class="block text-lg font-bold text-[#F74B81]">{{ scheduleCountdowns[schedule.DocEntry].secs | number:'2.0-0' }}</span>
+              <small class="text-[9px] text-gray-500 uppercase font-medium">Sec</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Schedule Info -->
+        <div class="p-5">
+          <!-- Delivery Info -->
+          <div class="flex items-center gap-2 text-sm text-gray-600 mb-3">
+            <i class="fas fa-truck text-[#42af57]"></i>
+            <span>Delivery: {{ schedule.StartDeliveryDate | date:'MMM d' }} - {{ schedule.EndDeliveryDate | date:'MMM d' }}</span>
+          </div>
+
+          <!-- Delivery Days Chips -->
+          <div class="flex flex-wrap gap-1.5 mb-4" *ngIf="schedule.AvailableDeliveryDates && schedule.AvailableDeliveryDates.length > 0">
+            <span *ngFor="let date of schedule.AvailableDeliveryDates.slice(0, 3)"
+                  class="px-2 py-0.5 bg-[#42af57]/10 text-[#42af57] text-xs font-medium rounded">
+              {{ date | date:'EEE' : undefined : 'en-US' }}
+            </span>
+            <span *ngIf="schedule.AvailableDeliveryDates.length > 3"
+                  class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs font-medium rounded">
+              +{{ schedule.AvailableDeliveryDates.length - 3 }}
+            </span>
+          </div>
+
+          <!-- Order Button -->
+          <a [routerLink]="isLoggedIn ? '/b2b/new-order' : '/login'"
+             [queryParams]="isLoggedIn ? { schedule: schedule.DocEntry } : {}"
+             class="block w-full py-3 text-center rounded-xl font-semibold text-sm transition-all"
+             [ngClass]="isLoggedIn ? 'bg-[#42af57] text-white hover:bg-[#3d9332]' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'">
+            <i class="fas mr-2" [ngClass]="isLoggedIn ? 'fa-shopping-cart' : 'fa-lock'"></i>
+            {{ isLoggedIn ? 'Place Order' : 'Login to Order' }}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoadingSchedules && orderSchedules.length === 0" class="bg-white rounded-2xl p-12 text-center border border-gray-100">
+      <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="fas fa-calendar-times text-gray-400 text-3xl"></i>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">No Open Schedules</h3>
+      <p class="text-gray-500 mb-6">Check back later for new ordering windows</p>
+      <a routerLink="/store" class="inline-flex items-center gap-2 bg-[#42af57] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#3d9332] transition-all">
+        <i class="fas fa-store"></i>
+        Browse Store
+      </a>
+    </div>
+
+    <!-- B2B Info Banner -->
+    <div class="mt-8 bg-gradient-to-r from-[#1c352c] to-[#2d5241] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center">
+          <i class="fas fa-handshake text-white text-2xl"></i>
+        </div>
+        <div class="text-white">
+          <h3 class="font-bold text-lg">Business Partner?</h3>
+          <p class="text-white/70 text-sm">Access exclusive pricing, scheduled orders & dedicated support</p>
+        </div>
+      </div>
+      <a [routerLink]="isLoggedIn ? '/b2b' : '/login'"
+         class="inline-flex items-center gap-2 bg-[#42af57] text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-[#3d9332] transition-all whitespace-nowrap">
+        <i class="fas fa-arrow-right"></i>
+        {{ isLoggedIn ? 'Go to B2B Portal' : 'Login to Access' }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Our Vendors Section - Multi-Vendor Grid -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-5">
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+      <div>
+        <h2 class="text-[28px] md:text-[32px] font-bold text-[#253D4E] font-outfit mb-2">Our Vendors</h2>
+        <p class="text-gray-500">Quality products from trusted partners</p>
+        <div class="w-16 h-1 bg-[#42af57] rounded-full mt-3"></div>
+      </div>
+      <a routerLink="/vendors" class="inline-flex items-center gap-2 text-[#42af57] font-semibold hover:gap-3 transition-all">
+        View All Vendors
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- Vendors Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let vendor of vendors; let i = index"
+           class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100">
+
+        <!-- Vendor Header with Gradient -->
+        <div class="relative h-32 p-6 flex items-end"
+             [ngClass]="getVendorGradient(i)">
+          <!-- Background Pattern -->
+          <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-white rounded-full -translate-y-1/2 translate-x-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-white rounded-full translate-y-1/2 -translate-x-1/2"></div>
+          </div>
+
+          <!-- Badge -->
+          <span *ngIf="vendor.badge === 'featured'"
+                class="absolute top-4 right-4 px-2 py-1 bg-white/90 text-amber-600 text-[10px] font-bold rounded-full flex items-center gap-1 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Featured
+          </span>
+          <span *ngIf="vendor.badge === 'verified'"
+                class="absolute top-4 right-4 px-2 py-1 bg-white/90 text-blue-600 text-[10px] font-bold rounded-full flex items-center gap-1 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Verified
+          </span>
+          <span *ngIf="vendor.badge === 'new'"
+                class="absolute top-4 right-4 px-2 py-1 bg-white/90 text-emerald-600 text-[10px] font-bold rounded-full shadow-sm">
+            New
+          </span>
+
+          <!-- Logo -->
+          <div class="relative z-10 w-20 h-20 bg-white rounded-xl shadow-lg flex items-center justify-center p-3 -mb-10 group-hover:scale-105 transition-transform">
+            <img [src]="vendor.logo" [alt]="vendor.name" class="w-full h-full object-contain" />
+          </div>
+        </div>
+
+        <!-- Vendor Info -->
+        <div class="pt-12 px-6 pb-6">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#42af57] transition-colors">{{ vendor.name }}</h3>
+              <p class="text-sm text-gray-500 flex items-center gap-1 mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                {{ vendor.address }}
+              </p>
+            </div>
+            <!-- Rating -->
+            <div class="flex items-center gap-1 bg-amber-50 px-2 py-1 rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="#f59e0b" stroke-width="1"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="text-sm font-semibold text-amber-700">{{ vendor.rating }}</span>
+            </div>
+          </div>
+
+          <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ vendor.description }}</p>
+
+          <!-- Stats Row -->
+          <div class="flex items-center justify-between py-4 border-y border-gray-100 mb-4">
+            <div class="text-center">
+              <span class="block text-lg font-bold text-[#42af57]">{{ vendor.products }}+</span>
+              <span class="text-[11px] text-gray-500">Products</span>
+            </div>
+            <div class="w-px h-8 bg-gray-200"></div>
+            <div class="text-center">
+              <span class="block text-lg font-bold text-blue-600">{{ vendor.positive }}%</span>
+              <span class="text-[11px] text-gray-500">Satisfaction</span>
+            </div>
+            <div class="w-px h-8 bg-gray-200"></div>
+            <div class="text-center">
+              <span class="block text-lg font-bold text-purple-600">{{ vendor.orders }}</span>
+              <span class="text-[11px] text-gray-500">Orders</span>
+            </div>
+          </div>
+
+          <!-- Features Tags -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span *ngFor="let feature of vendor.features?.slice(0, 3)"
+                  class="px-2 py-1 bg-gray-100 text-gray-600 text-[11px] rounded-full">
+              {{ feature }}
+            </span>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex gap-2">
+            <a routerLink="/store" [queryParams]="{vendor: vendor.code}"
+               class="flex-1 py-2.5 bg-[#42af57] text-white text-center rounded-xl text-sm font-semibold hover:bg-[#3d9332] transition-all flex items-center justify-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/></svg>
+              Visit Store
+            </a>
+            <a *ngIf="vendor.hasB2B" routerLink="/login"
+               class="px-4 py-2.5 border-2 border-[#42af57] text-[#42af57] rounded-xl text-sm font-semibold hover:bg-[#42af57] hover:text-white transition-all flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h.01"/><path d="M9 12h.01"/><path d="M9 15h.01"/><path d="M9 18h.01"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Become a Vendor CTA Card -->
+      <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden border-2 border-dashed border-gray-300 flex flex-col items-center justify-center p-8 text-center min-h-[400px]">
+        <div class="w-16 h-16 bg-[#42af57]/10 rounded-2xl flex items-center justify-center mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Become a Vendor</h3>
+        <p class="text-gray-500 text-sm mb-6 max-w-[200px]">Join our marketplace and reach thousands of customers</p>
+        <a routerLink="/become-a-vendor" class="inline-flex items-center gap-2 px-6 py-3 bg-[#42af57] text-white rounded-xl font-semibold hover:bg-[#3d9332] transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          Get Started
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Promotional Banners Section - Pastel Design with Blended Images -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Banner 1 - Fresh Meat (Warm Beige) -->
+      <div class="group rounded-2xl min-h-[220px] flex flex-col justify-center hover:shadow-xl transition-all duration-300 relative overflow-hidden bg-gradient-to-br from-[#fff8e1] to-[#ffe0b2]">
+        <div class="relative z-10 p-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-2 font-outfit max-w-[55%]">Premium Meat<br>& Poultry</h3>
+          <p class="text-gray-600 text-sm mb-5 max-w-[50%]">Quality cuts delivered fresh</p>
+          <a routerLink="/store" class="inline-flex items-center gap-2 bg-[#e53935] text-white px-5 py-2.5 rounded-full font-semibold text-sm w-fit hover:bg-[#c62828] transition-all group-hover:gap-3">
+            Shop Now
+            <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+        <!-- Product Image - Blended into background -->
+        <div class="absolute right-[-20px] bottom-[-20px] w-[55%] h-[110%] group-hover:scale-105 transition-transform duration-300">
+          <img src="assets/images/meat.jpg" alt="Fresh Meat" class="w-full h-full object-cover object-center rounded-[30px] drop-shadow-2xl" style="mask-image: linear-gradient(to left, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);" />
+        </div>
+      </div>
+
+      <!-- Banner 2 - Farm Fresh (Light Green) -->
+      <div class="group rounded-2xl min-h-[220px] flex flex-col justify-center hover:shadow-xl transition-all duration-300 relative overflow-hidden bg-gradient-to-br from-[#e8f5e9] to-[#c8e6c9]">
+        <div class="relative z-10 p-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-2 font-outfit max-w-[55%]">100% Farm<br>Fresh Products</h3>
+          <p class="text-gray-600 text-sm mb-5 max-w-[50%]">Natural and healthy choices</p>
+          <a routerLink="/store" class="inline-flex items-center gap-2 bg-[#42af57] text-white px-5 py-2.5 rounded-full font-semibold text-sm w-fit hover:bg-[#4a9a48] transition-all group-hover:gap-3">
+            Explore
+            <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+        <!-- Product Image - Blended into background -->
+        <div class="absolute right-[-20px] bottom-[-20px] w-[55%] h-[110%] group-hover:scale-105 transition-transform duration-300">
+          <img src="assets/images/farm-fresh-card-min.jpg" alt="Farm Fresh" class="w-full h-full object-cover object-center rounded-[30px] drop-shadow-2xl" style="mask-image: linear-gradient(to left, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);" />
+        </div>
+      </div>
+
+      <!-- Banner 3 - Fast Delivery (Light Blue) -->
+      <div class="group rounded-2xl min-h-[220px] flex flex-col justify-center hover:shadow-xl transition-all duration-300 relative overflow-hidden bg-gradient-to-br from-[#e3f2fd] to-[#bbdefb]">
+        <div class="relative z-10 p-8">
+          <h3 class="text-xl font-bold text-gray-800 mb-2 font-outfit max-w-[55%]">Express<br>Delivery</h3>
+          <p class="text-gray-600 text-sm mb-5 max-w-[50%]">Same day delivery available</p>
+          <a routerLink="/store" class="inline-flex items-center gap-2 border-2 border-[#42af57] text-[#42af57] px-5 py-2 rounded-full font-semibold text-sm w-fit hover:bg-[#42af57] hover:text-white transition-all group-hover:gap-3">
+            Order Now
+            <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+        <!-- Product Image - Blended into background -->
+        <div class="absolute right-[-20px] bottom-[-20px] w-[55%] h-[110%] group-hover:scale-105 transition-transform duration-300">
+          <img src="assets/images/delivery-image.jpg" alt="Fast Delivery" class="w-full h-full object-cover object-center rounded-[30px] drop-shadow-2xl" style="mask-image: linear-gradient(to left, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Banner -->
+<section class="bg-gradient-to-r from-[#42af57] to-[#3d9332] pt-20 pb-16 relative overflow-hidden">
+  <!-- Background decorations -->
+  <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-white/5 rounded-full"></div>
+
+  <div class="container mx-auto px-5 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+      <!-- Text -->
+      <div class="text-center lg:text-left max-w-xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 font-outfit">
+          Stay Home & Get Your Daily Needs
+        </h2>
+        <p class="text-white/80 text-lg">Subscribe to our newsletter and get 15% off your first order!</p>
+      </div>
+
+      <!-- Form -->
+      <div class="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+        <div class="relative flex-1 lg:w-[380px]">
+          <i class="fas fa-envelope absolute left-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          <input
+            type="email"
+            placeholder="Enter your email address"
+            class="w-full pl-12 pr-5 py-4 rounded-full text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#8dc1ed] text-sm shadow-lg"
+          />
+        </div>
+        <button class="bg-[#8dc1ed] hover:bg-[#015a9e] text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl text-sm whitespace-nowrap hover:scale-105">
+          Subscribe
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,87 @@
+<div class="mb-8 w-full py-5" *ngIf="step != 5">
+  <!-- Main container with steps and lines -->
+  <div class="flex items-center justify-between">
+    <!-- Customer Info Step -->
+    <div class="flex flex-col items-center">
+      <div
+        (click)="goToStep(1)"
+        class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 relative z-10"
+        [ngClass]="{
+          'bg-blue-600 text-white': step >= 1,
+          'bg-gray-200 text-gray-600': step < 1
+        }"
+      >
+        <span *ngIf="step > 1" class="text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </span>
+        <span *ngIf="step <= 1">1</span>
+      </div>
+      <div class="text-sm font-medium mt-2" [ngClass]="{'text-blue-600': step == 1, 'text-gray-700': step != 1}">
+         Details
+      </div>
+    </div>
+
+    <!-- Connector Line 1-2 -->
+    <div class="flex-1 flex items-center">
+      <div
+        class="h-0.5 w-full transition-all duration-300"
+        [ngClass]="{'bg-blue-600': step > 1, 'bg-gray-200': step <= 1}"
+      ></div>
+    </div>
+
+    <!-- Address Step -->
+    <div class="flex flex-col items-center">
+      <div
+        (click)="goToStep(2)"
+        class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 relative z-10"
+        [ngClass]="{
+          'bg-blue-600 text-white': step >= 2,
+          'bg-gray-200 text-gray-600': step < 2
+        }"
+      >
+        <span *ngIf="step > 2" class="text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </span>
+        <span *ngIf="step <= 2">2</span>
+      </div>
+      <div class="text-sm font-medium mt-2" [ngClass]="{'text-blue-600': step == 2, 'text-gray-700': step != 2}">
+        Address
+      </div>
+    </div>
+
+    <!-- Connector Line 2-3 -->
+    <div class="flex-1 flex items-center">
+      <div
+        class="h-0.5 w-full transition-all duration-300"
+        [ngClass]="{'bg-blue-600': step > 2, 'bg-gray-200': step <= 2}"
+      ></div>
+    </div>
+
+    <!-- Payment Step -->
+    <div class="flex flex-col items-center">
+      <div
+        (click)="goToStep(3)"
+        class="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 relative z-10"
+        [ngClass]="{
+          'bg-blue-600 text-white': step >= 3,
+          'bg-gray-200 text-gray-600': step < 3
+        }"
+      >
+        <span *ngIf="step > 3" class="text-white">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+        </span>
+        <span *ngIf="step <= 3">3</span>
+      </div>
+      <div class="text-sm font-medium mt-2" [ngClass]="{'text-blue-600': step == 3, 'text-gray-700': step != 3}">
+        Payment
+      </div>
+    </div>
+  </div>
+</div>
+

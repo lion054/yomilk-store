@@ -1,0 +1,36 @@
+.breadcrumb {
+  background: var(--gray-100);
+  padding: 15px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.breadcrumb-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+
+  a {
+    color: var(--gray-600);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+      color: var(--primary);
+    }
+
+    i {
+      font-size: 12px;
+    }
+  }
+
+  .separator {
+    color: var(--gray-400);
+  }
+
+  .current {
+    color: var(--dark);
+    font-weight: 500;
+  }
+}

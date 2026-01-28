@@ -1,0 +1,8 @@
+.two-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5; /* Adjust as needed */
+  height: calc(2 * 1.5em); /* Two lines of content */
+}

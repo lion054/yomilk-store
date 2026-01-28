@@ -1,0 +1,546 @@
+<!-- Modern Sign Up Page - Clean Minimalist Design -->
+<section class="min-h-screen flex">
+  <!-- Left Side - Branding (Hidden on mobile) -->
+  <div class="hidden lg:flex lg:w-2/5 bg-gradient-to-br from-fresh-700 via-fresh-600 to-fresh-800 relative overflow-hidden sticky top-0 h-screen">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+      <div class="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 flex flex-col justify-between p-12 w-full">
+      <!-- Logo Area -->
+      <div>
+        <a routerLink="/" class="inline-block">
+          <img src="logo.png" alt="Snappy Fresh" class="h-12 w-auto brightness-0 invert" />
+        </a>
+      </div>
+
+      <!-- Main Content -->
+      <div class="max-w-lg">
+        <h1 class="text-4xl xl:text-5xl font-bold text-white leading-tight mb-6">
+          Join thousands of happy customers
+        </h1>
+        <p class="text-fresh-100 text-lg mb-8">
+          Create your account and start shopping for fresh groceries today.
+        </p>
+
+        <!-- Benefits -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <span class="text-white font-medium">Personal account management</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <span class="text-white font-medium">Save multiple delivery addresses</span>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <span class="text-white font-medium">Track orders and view history</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-fresh-200 text-sm">
+        Trusted by thousands of customers since 2012
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Side - Sign Up Form -->
+  <div class="w-full lg:w-3/5 bg-gray-50 py-8 md:py-12">
+    <div class="max-w-2xl mx-auto px-6 md:px-12">
+      <!-- Mobile Logo -->
+      <div class="lg:hidden text-center mb-8">
+        <a routerLink="/" class="inline-block">
+          <img src="logo.png" alt="Snappy Fresh" class="h-10 w-auto mx-auto" />
+        </a>
+      </div>
+
+      <!-- Form Card -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 md:p-10">
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Create your account</h2>
+          <p class="text-gray-500">Fill in your details to get started</p>
+        </div>
+
+        <!-- Form -->
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-6">
+
+          <!-- Personal Information Section -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-6 h-6 bg-fresh-100 text-fresh-700 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+              Personal Information
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="firstName">First Name *</label>
+                <input
+                  id="firstName"
+                  type="text"
+                  formControlName="firstName"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="John"
+                />
+                <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="mt-1 text-sm text-red-500">
+                  First name is required
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="lastName">Last Name *</label>
+                <input
+                  id="lastName"
+                  type="text"
+                  formControlName="lastName"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="Doe"
+                />
+                <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="mt-1 text-sm text-red-500">
+                  Last name is required
+                </div>
+              </div>
+            </div>
+
+            <!-- Company Checkbox -->
+            <div class="flex items-center gap-3 py-2">
+              <input
+                id="isCompany"
+                type="checkbox"
+                formControlName="isCompany"
+                class="w-5 h-5 text-fresh-600 border-gray-300 rounded focus:ring-fresh-500"
+              />
+              <label for="isCompany" class="text-sm text-gray-700">Register as a company</label>
+            </div>
+
+            <!-- Company Name (Conditional) -->
+            <div *ngIf="registerForm.value['isCompany']">
+              <label class="block text-sm font-medium text-gray-700 mb-2" for="companyName">Company Name</label>
+              <input
+                id="companyName"
+                type="text"
+                formControlName="companyName"
+                class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                placeholder="Your Company Ltd"
+              />
+            </div>
+          </div>
+
+          <!-- Contact Information Section -->
+          <div class="space-y-4 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-6 h-6 bg-fresh-100 text-fresh-700 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+              Contact Information
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="email">Email Address *</label>
+                <input
+                  id="email"
+                  type="email"
+                  formControlName="email"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="you&#64;example.com"
+                />
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="mt-1 text-sm text-red-500">
+                  <div *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</div>
+                  <div *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="phoneNumber">Phone Number *</label>
+                <ngx-intl-tel-input
+                  [cssClass]="'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none'"
+                  [preferredCountries]="[CountryISO.Zimbabwe, CountryISO.Zambia, CountryISO.SouthAfrica]"
+                  [enableAutoCountrySelect]="true"
+                  [enablePlaceholder]="true"
+                  [searchCountryFlag]="true"
+                  [customPlaceholder]="'077 123 4567'"
+                  [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                  [selectFirstCountry]="false"
+                  [selectedCountryISO]="CountryISO.Zimbabwe"
+                  [maxLength]="15"
+                  [phoneValidation]="true"
+                  [inputId]="'phoneNumber'"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  formControlName="phoneNumber"
+                ></ngx-intl-tel-input>
+                <div *ngIf="registerForm.get('phoneNumber')?.invalid && registerForm.get('phoneNumber')?.touched" class="mt-1 text-sm text-red-500">
+                  Phone number is required
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="whatsAppNumber">WhatsApp Number (Optional)</label>
+                <ngx-intl-tel-input
+                  [cssClass]="'w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none'"
+                  [preferredCountries]="[CountryISO.Zimbabwe, CountryISO.Zambia, CountryISO.SouthAfrica]"
+                  [enableAutoCountrySelect]="true"
+                  [enablePlaceholder]="true"
+                  [searchCountryFlag]="true"
+                  [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                  [selectFirstCountry]="false"
+                  [selectedCountryISO]="CountryISO.Zimbabwe"
+                  [maxLength]="15"
+                  [phoneValidation]="true"
+                  [inputId]="'whatsAppNumber'"
+                  id="whatsAppNumber"
+                  name="whatsAppNumber"
+                  formControlName="whatsAppNumber"
+                ></ngx-intl-tel-input>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Information (Conditional) -->
+          <div *ngIf="registerForm.value['isCompany']" class="space-y-4 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Business Details</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="tin">TIN (Optional)</label>
+                <input
+                  id="tin"
+                  type="text"
+                  formControlName="tin"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="Tax ID Number"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="vatNumber">VAT Number (Optional)</label>
+                <input
+                  id="vatNumber"
+                  type="text"
+                  formControlName="vatNumber"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="VAT Number"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Billing Address Section -->
+          <div class="space-y-4 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-6 h-6 bg-fresh-100 text-fresh-700 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+              Billing Address
+            </h3>
+
+            <div formGroupName="billToAddress" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="billCountry">Country *</label>
+                  <select
+                    id="billCountry"
+                    formControlName="countryCode"
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  >
+                    <option value="">Select Country</option>
+                    <option *ngFor="let country of countries" [value]="country.countryCode">{{ country.countryName }}</option>
+                  </select>
+                </div>
+
+                <div *ngIf="billCities.length > 0">
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="billCity">City *</label>
+                  <select
+                    id="billCity"
+                    formControlName="city"
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  >
+                    <option value="">Select City</option>
+                    <option *ngFor="let city of billCities" [value]="city.name">{{ city.name }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="billSuburb">Suburb *</label>
+                <ng-select
+                  id="billSuburb"
+                  [items]="billSuburbs"
+                  bindLabel="name"
+                  bindValue="name"
+                  placeholder="Select suburb"
+                  formControlName="suburb"
+                  class="custom-ng-select"
+                  [clearable]="false"
+                >
+                </ng-select>
+                <div *ngIf="registerForm.get('billToAddress.suburb')?.invalid && registerForm.get('billToAddress.suburb')?.touched" class="mt-1 text-sm text-red-500">
+                  Suburb is required
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="billAddressLine1">Street Address *</label>
+                <input
+                  id="billAddressLine1"
+                  type="text"
+                  formControlName="addressLine1"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="123 Main Street"
+                />
+                <div *ngIf="registerForm.get('billToAddress.addressLine1')?.invalid && registerForm.get('billToAddress.addressLine1')?.touched" class="mt-1 text-sm text-red-500">
+                  Address is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Separate Shipping Checkbox -->
+          <div class="flex items-center gap-3 py-2">
+            <input
+              (change)="onSeparateShippingChange()"
+              id="isSeparateShipping"
+              type="checkbox"
+              formControlName="isSeparateShipping"
+              class="w-5 h-5 text-fresh-600 border-gray-300 rounded focus:ring-fresh-500"
+            />
+            <label for="isSeparateShipping" class="text-sm text-gray-700">Use different shipping address</label>
+          </div>
+
+          <!-- Shipping Address Section (Conditional) -->
+          <div *ngIf="registerForm.value.isSeparateShipping" class="space-y-4 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Shipping Address</h3>
+
+            <div formGroupName="shipToAddress" class="space-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="shipCountry">Country *</label>
+                  <select
+                    id="shipCountry"
+                    formControlName="countryCode"
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  >
+                    <option value="">Select Country</option>
+                    <option *ngFor="let country of countries" [value]="country.countryCode">{{ country.countryName }}</option>
+                  </select>
+                </div>
+
+                <div *ngIf="shipCities.length > 0">
+                  <label class="block text-sm font-medium text-gray-700 mb-2" for="shipCity">City *</label>
+                  <select
+                    id="shipCity"
+                    formControlName="city"
+                    class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  >
+                    <option value="">Select City</option>
+                    <option *ngFor="let city of shipCities" [value]="city.name">{{ city.name }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="shipSuburb">Suburb *</label>
+                <ng-select
+                  id="shipSuburb"
+                  [items]="shipSuburbs"
+                  bindLabel="name"
+                  bindValue="name"
+                  placeholder="Select suburb"
+                  formControlName="suburb"
+                  class="custom-ng-select"
+                  [clearable]="false"
+                >
+                </ng-select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="shipAddressLine1">Street Address *</label>
+                <input
+                  id="shipAddressLine1"
+                  type="text"
+                  formControlName="addressLine1"
+                  class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                  placeholder="456 Secondary Street"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Notes -->
+          <div class="pt-4 border-t border-gray-100">
+            <label class="block text-sm font-medium text-gray-700 mb-2" for="notes">Additional Notes (Optional)</label>
+            <textarea
+              id="notes"
+              formControlName="notes"
+              rows="3"
+              class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none resize-none"
+              placeholder="Any special requests or notes..."
+            ></textarea>
+          </div>
+
+          <!-- Password Section -->
+          <div class="space-y-4 pt-4 border-t border-gray-100">
+            <h3 class="text-sm font-semibold text-gray-900 uppercase tracking-wider flex items-center gap-2">
+              <span class="w-6 h-6 bg-fresh-100 text-fresh-700 rounded-full flex items-center justify-center text-xs font-bold">4</span>
+              Create Password
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="password">Password *</label>
+                <div class="relative">
+                  <input
+                    id="password"
+                    [type]="showPassword ? 'text' : 'password'"
+                    formControlName="password"
+                    class="w-full px-4 py-3 pr-12 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                    placeholder="Create password"
+                  />
+                  <button
+                    type="button"
+                    class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600"
+                    (click)="showPassword = !showPassword"
+                    tabindex="-1"
+                  >
+                    <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                    </svg>
+                    <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.957 9.957 0 013.153-4.568m3.435-1.747A9.978 9.978 0 0112 5c4.478 0 8.268 2.943 9.542 7a9.953 9.953 0 01-1.149 2.527M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="mt-2 text-sm text-red-500 space-y-1">
+                  <div *ngIf="registerForm.get('password')?.errors?.['required']">Password is required</div>
+                  <div *ngIf="registerForm.get('password')?.errors?.['minlength']">Minimum 8 characters</div>
+                  <div *ngIf="registerForm.get('password')?.errors?.['missingUppercase']">Include uppercase letter</div>
+                  <div *ngIf="registerForm.get('password')?.errors?.['missingSpecialChar']">Include special character</div>
+                  <div *ngIf="registerForm.get('password')?.errors?.['missingNumber']">Include a number</div>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="confirmPassword">Confirm Password *</label>
+                <div class="relative">
+                  <input
+                    id="confirmPassword"
+                    [type]="showPassword ? 'text' : 'password'"
+                    formControlName="confirmPassword"
+                    class="w-full px-4 py-3 pr-12 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200 focus:bg-white focus:border-fresh-500 focus:ring-2 focus:ring-fresh-500/20 focus:outline-none"
+                    placeholder="Confirm password"
+                  />
+                </div>
+                <div *ngIf="registerForm.get('confirmPassword')?.touched" class="mt-2 text-sm text-red-500">
+                  <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Please confirm your password</div>
+                  <div *ngIf="registerForm.errors?.['mismatch']">Passwords do not match</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Password Requirements -->
+            <div class="bg-gray-50 rounded-xl p-4">
+              <p class="text-xs text-gray-500 mb-2">Password must contain:</p>
+              <div class="grid grid-cols-2 gap-2 text-xs text-gray-600">
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-fresh-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  Minimum 8 characters
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-fresh-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  One uppercase letter
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-fresh-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  One number
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3 h-3 text-fresh-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                  One special character
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <div class="flex items-center gap-3 text-red-700">
+              <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="text-sm">{{ errorMessage }}</span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            [disabled]="registerForm.invalid || isLoading"
+            class="w-full bg-fresh-600 hover:bg-fresh-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-fresh-600/25 hover:shadow-xl hover:shadow-fresh-600/30"
+          >
+            <span *ngIf="!isLoading">Create Account</span>
+            <svg *ngIf="isLoading" class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+
+          <!-- Sign In Link -->
+          <div class="text-center pt-4 border-t border-gray-100">
+            <p class="text-gray-600">
+              Already have an account?
+              <a routerLink="/login" class="text-fresh-600 hover:text-fresh-700 font-semibold transition-colors">Sign in</a>
+            </p>
+          </div>
+
+          <!-- Business Partner Link -->
+          <div class="text-center">
+            <p class="text-sm text-gray-500">
+              Already a business partner?
+              <a routerLink="/register" class="text-fresh-600 hover:text-fresh-700 font-medium transition-colors">Partner Portal</a>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Back to Home -->
+      <div class="text-center mt-6">
+        <a routerLink="/" class="text-sm text-gray-500 hover:text-fresh-600 transition-colors flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 19-7-7 7-7"/>
+            <path d="M19 12H5"/>
+          </svg>
+          Back to home
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - FreshMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2cb569;
+            --primary-dark: #1e9c54;
+            --primary-light: #e8f7ef;
+            --secondary: #ff6b35;
+            --secondary-light: #fff4f0;
+            --accent-yellow: #ffc107;
+            --accent-red: #e53935;
+            --dark: #1a1a2e;
+            --dark-light: #3d3d5c;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 50px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--gray-100);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        img { max-width: 100%; height: auto; }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+        }
+
+        .checkout-steps {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+
+        .step.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .step.completed {
+            color: var(--primary);
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .step.active .step-number,
+        .step.completed .step-number {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .step-divider {
+            width: 40px;
+            height: 2px;
+            background: var(--gray-300);
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .secure-badge i {
+            color: var(--primary);
+        }
+
+        /* Checkout Section */
+        .checkout-section {
+            padding: 40px 0;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Form Sections */
+        .checkout-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-section {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+        }
+
+        .form-section h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-section h3 i {
+            color: var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 15px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .form-control::placeholder {
+            color: var(--gray-500);
+        }
+
+        select.form-control {
+            cursor: pointer;
+            appearance: none;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c757d' d='M6 8L1 3h10z'/%3E%3C/svg%3E") no-repeat right 15px center;
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Shipping Methods */
+        .shipping-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .shipping-method {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .shipping-method:hover {
+            border-color: var(--primary);
+        }
+
+        .shipping-method.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .shipping-method input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .shipping-info {
+            flex: 1;
+        }
+
+        .shipping-info h4 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .shipping-info p {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .shipping-price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .shipping-price.free {
+            color: var(--primary);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .payment-method input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .payment-icon {
+            width: 50px;
+            height: 35px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-icon img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .payment-info h4 {
+            font-size: 15px;
+        }
+
+        /* Card Details */
+        .card-details {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+        }
+
+        .card-icons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card-icons img {
+            height: 30px;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            position: sticky;
+            top: 20px;
+        }
+
+        .order-summary h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .order-items {
+            margin-bottom: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-item-image {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .order-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .order-item-qty {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .order-item-info {
+            flex: 1;
+        }
+
+        .order-item-info h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .order-item-info span {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .order-item-price {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .summary-row span {
+            color: var(--gray-600);
+        }
+
+        .summary-row strong {
+            color: var(--dark);
+        }
+
+        .summary-row.discount strong {
+            color: var(--accent-red);
+        }
+
+        .summary-row.total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--gray-200);
+            font-size: 18px;
+        }
+
+        .summary-row.total strong {
+            font-family: 'Outfit', sans-serif;
+            font-size: 26px;
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .place-order-btn {
+            margin-top: 25px;
+            padding: 18px;
+            font-size: 17px;
+        }
+
+        .secure-checkout {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .secure-checkout i {
+            color: var(--primary);
+        }
+
+        .back-to-cart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .back-to-cart:hover {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer p {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+            .order-summary {
+                position: static;
+                order: -1;
+            }
+            .checkout-steps {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .header-content {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .form-section {
+                padding: 20px;
+            }
+            .order-summary {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                    FreshMart
+                </a>
+                
+                <div class="checkout-steps">
+                    <div class="step completed">
+                        <span class="step-number"><i class="fas fa-check"></i></span>
+                        Cart
+                    </div>
+                    <div class="step-divider"></div>
+                    <div class="step active">
+                        <span class="step-number">2</span>
+                        Checkout
+                    </div>
+                    <div class="step-divider"></div>
+                    <div class="step">
+                        <span class="step-number">3</span>
+                        Confirmation
+                    </div>
+                </div>
+
+                <div class="secure-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    Secure Checkout
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="checkout-layout">
+                <!-- Checkout Form -->
+                <form class="checkout-form">
+                    <!-- Billing Details -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-user"></i> Billing Details</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">First Name *</label>
+                                <input type="text" id="first-name" class="form-control" placeholder="John">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name *</label>
+                                <input type="text" id="last-name" class="form-control" placeholder="Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" class="form-control" placeholder="john@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone *</label>
+                                <input type="tel" id="phone" class="form-control" placeholder="+263 78 123 4567">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="address">Street Address *</label>
+                                <input type="text" id="address" class="form-control" placeholder="123 Main Street">
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" class="form-control" placeholder="Harare">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State/Province</label>
+                                <input type="text" id="state" class="form-control" placeholder="Harare Province">
+                            </div>
+                            <div class="form-group">
+                                <label for="country">Country *</label>
+                                <select id="country" class="form-control">
+                                    <option value="">Select country</option>
+                                    <option value="ZW" selected>Zimbabwe</option>
+                                    <option value="ZA">South Africa</option>
+                                    <option value="BW">Botswana</option>
+                                    <option value="MZ">Mozambique</option>
+                                    <option value="ZM">Zambia</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zip">Zip/Postal Code</label>
+                                <input type="text" id="zip" class="form-control" placeholder="00263">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="notes">Order Notes (Optional)</label>
+                                <textarea id="notes" class="form-control" placeholder="Notes about your order, e.g. special delivery instructions"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Method -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-truck"></i> Shipping Method</h3>
+                        <div class="shipping-methods">
+                            <label class="shipping-method selected">
+                                <input type="radio" name="shipping" value="free" checked>
+                                <div class="shipping-info">
+                                    <h4>Free Shipping</h4>
+                                    <p>Delivery in 5-7 business days</p>
+                                </div>
+                                <span class="shipping-price free">FREE</span>
+                            </label>
+                            <label class="shipping-method">
+                                <input type="radio" name="shipping" value="express">
+                                <div class="shipping-info">
+                                    <h4>Express Delivery</h4>
+                                    <p>Delivery in 2-3 business days</p>
+                                </div>
+                                <span class="shipping-price">$5.00</span>
+                            </label>
+                            <label class="shipping-method">
+                                <input type="radio" name="shipping" value="same-day">
+                                <div class="shipping-info">
+                                    <h4>Same Day Delivery</h4>
+                                    <p>Order before 12pm for same day delivery</p>
+                                </div>
+                                <span class="shipping-price">$10.00</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="form-section">
+                        <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                        <div class="payment-methods">
+                            <label class="payment-method selected">
+                                <input type="radio" name="payment" value="card" checked>
+                                <div class="payment-icon">
+                                    <i class="far fa-credit-card" style="font-size: 24px; color: var(--primary);"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>Credit / Debit Card</h4>
+                                </div>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="paypal">
+                                <div class="payment-icon">
+                                    <i class="fab fa-paypal" style="font-size: 28px; color: #003087;"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>PayPal</h4>
+                                </div>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="ecocash">
+                                <div class="payment-icon">
+                                    <i class="fas fa-mobile-alt" style="font-size: 24px; color: var(--primary);"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>EcoCash</h4>
+                                </div>
+                            </label>
+                            <label class="payment-method">
+                                <input type="radio" name="payment" value="cod">
+                                <div class="payment-icon">
+                                    <i class="fas fa-money-bill-wave" style="font-size: 24px; color: var(--primary);"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <h4>Cash on Delivery</h4>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Card Details -->
+                        <div class="card-details" id="cardDetails">
+                            <div class="card-icons">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="card-number">Card Number *</label>
+                                    <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9012 3456">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="card-name">Name on Card *</label>
+                                    <input type="text" id="card-name" class="form-control" placeholder="JOHN DOE">
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiry">Expiry Date *</label>
+                                    <input type="text" id="expiry" class="form-control" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV *</label>
+                                    <input type="text" id="cvv" class="form-control" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    
+                    <div class="order-items">
+                        <div class="order-item">
+                            <div class="order-item-image">
+                                <img src="https://images.unsplash.com/photo-1518977676601-b28d136957bc?w=150&h=150&fit=crop" alt="Organic Bananas">
+                                <span class="order-item-qty">2</span>
+                            </div>
+                            <div class="order-item-info">
+                                <h4>Organic Bananas</h4>
+                                <span>1kg × 2</span>
+                            </div>
+                            <span class="order-item-price">$9.98</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-item-image">
+                                <img src="https://images.unsplash.com/photo-1553279768-865429fa0078?w=150&h=150&fit=crop" alt="Fresh Avocados">
+                                <span class="order-item-qty">1</span>
+                            </div>
+                            <div class="order-item-info">
+                                <h4>Fresh Avocados</h4>
+                                <span>Pack of 4</span>
+                            </div>
+                            <span class="order-item-price">$8.99</span>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-item-image">
+                                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=150&h=150&fit=crop" alt="Fresh Milk">
+                                <span class="order-item-qty">2</span>
+                            </div>
+                            <div class="order-item-info">
+                                <h4>Fresh Whole Milk</h4>
+                                <span>1L × 2</span>
+                            </div>
+                            <span class="order-item-price">$10.98</span>
+                        </div>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <strong>$29.95</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <strong>Free</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (5%)</span>
+                        <strong>$1.50</strong>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <strong>$31.45</strong>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary place-order-btn">
+                        <i class="fas fa-lock"></i>
+                        Place Order - $31.45
+                    </button>
+
+                    <div class="secure-checkout">
+                        <i class="fas fa-shield-alt"></i>
+                        Your payment info is secure
+                    </div>
+
+                    <a href="cart.html" class="back-to-cart">
+                        <i class="fas fa-arrow-left"></i>
+                        Return to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 FreshMart. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle card details based on payment method
+        document.querySelectorAll('input[name="payment"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const cardDetails = document.getElementById('cardDetails');
+                if (this.value === 'card') {
+                    cardDetails.style.display = 'block';
+                } else {
+                    cardDetails.style.display = 'none';
+                }
+                
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.classList.remove('selected');
+                });
+                this.closest('.payment-method').classList.add('selected');
+            });
+        });
+
+        // Shipping method selection
+        document.querySelectorAll('input[name="shipping"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.shipping-method').forEach(method => {
+                    method.classList.remove('selected');
+                });
+                this.closest('.shipping-method').classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendors - FreshMart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2cb569;
+            --primary-dark: #1e9c54;
+            --primary-light: #e8f7ef;
+            --secondary: #ff6b35;
+            --secondary-light: #fff4f0;
+            --accent-yellow: #ffc107;
+            --accent-red: #e53935;
+            --dark: #1a1a2e;
+            --dark-light: #3d3d5c;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 50px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            padding: 4px;
+            max-width: 500px;
+            margin: 0 30px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-btn {
+            width: 48px;
+            height: 48px;
+            border: none;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .header-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .header-action i {
+            font-size: 22px;
+            color: var(--dark);
+        }
+
+        .header-action span {
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .header-action .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 20px;
+            height: 20px;
+            background: var(--secondary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-action:hover i {
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        .nav-bar {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .categories-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary);
+            color: var(--white);
+            padding: 16px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .categories-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 20px 0;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary);
+        }
+
+        .nav-right {
+            margin-left: auto;
+        }
+
+        .hotline {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hotline-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .hotline-text span {
+            display: block;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        .hotline-text strong {
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: var(--gray-100);
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .breadcrumb-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .breadcrumb-content a {
+            color: var(--gray-600);
+        }
+
+        .breadcrumb-content a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumb-content span {
+            color: var(--gray-400);
+        }
+
+        .breadcrumb-content .current {
+            color: var(--dark);
+        }
+
+        /* Vendors Page Header */
+        .page-header {
+            padding: 50px 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--gray-100) 100%);
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--gray-600);
+            font-size: 16px;
+        }
+
+        /* Vendor Search */
+        .vendor-search {
+            padding: 30px 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .vendor-search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            background: var(--gray-100);
+            border-radius: var(--radius-full);
+            padding: 6px;
+        }
+
+        .vendor-search-bar input {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            background: transparent;
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .vendor-search-bar button {
+            padding: 14px 30px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .vendor-search-bar button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .filter-info {
+            color: var(--gray-600);
+        }
+
+        .filter-info strong {
+            color: var(--primary);
+        }
+
+        .filter-options {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .filter-select {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-select label {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .filter-select select {
+            padding: 10px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .filter-select select:focus {
+            border-color: var(--primary);
+        }
+
+        /* Vendors Grid */
+        .vendors-section {
+            padding: 40px 0;
+        }
+
+        .vendors-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .vendor-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 25px;
+            position: relative;
+            transition: var(--transition);
+            border: 2px solid var(--gray-200);
+        }
+
+        .vendor-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-5px);
+        }
+
+        .vendor-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .vendor-badge.featured {
+            background: var(--secondary);
+            color: var(--white);
+        }
+
+        .vendor-badge.verified {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .vendor-badge.mall {
+            background: var(--accent-red);
+            color: var(--white);
+        }
+
+        .vendor-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--gray-100);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+        }
+
+        .vendor-info {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .vendor-since {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-bottom: 5px;
+        }
+
+        .vendor-name {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .vendor-name a:hover {
+            color: var(--primary);
+        }
+
+        .vendor-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+            color: var(--accent-yellow);
+            font-size: 12px;
+        }
+
+        .rating-count {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .vendor-products {
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .vendor-details {
+            padding: 15px 0;
+            border-top: 1px solid var(--gray-200);
+            margin-top: 15px;
+        }
+
+        .vendor-detail {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .vendor-detail:last-child {
+            margin-bottom: 0;
+        }
+
+        .vendor-detail i {
+            color: var(--primary);
+            width: 16px;
+            margin-top: 3px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 40px 0;
+        }
+
+        .pagination a,
+        .pagination span {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .pagination a {
+            background: var(--gray-100);
+            color: var(--dark);
+        }
+
+        .pagination a:hover,
+        .pagination a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .pagination span {
+            color: var(--gray-500);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .newsletter-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-text {
+            color: var(--white);
+        }
+
+        .newsletter-text h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-text p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .newsletter-form input {
+            width: 350px;
+            padding: 18px 24px;
+            border: none;
+            border-radius: var(--radius-full);
+            font-family: inherit;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .newsletter-form .btn {
+            background: var(--secondary);
+            padding: 18px 35px;
+            border-radius: var(--radius-full);
+            width: auto;
+            margin-top: 0;
+        }
+
+        .newsletter-form .btn:hover {
+            background: #e55a28;
+        }
+
+        /* Features Strip */
+        .features {
+            padding: 40px 0;
+            background: var(--gray-100);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 55px;
+            height: 55px;
+            background: var(--primary-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .feature-text h4 {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 80px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-about .logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-about p {
+            color: var(--gray-500);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-contact span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        .footer-contact i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .footer h4 {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: var(--white);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .app-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .app-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 12px 20px;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+
+        .app-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .app-btn i {
+            font-size: 28px;
+        }
+
+        .app-btn span {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .app-btn strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .footer-bottom {
+            padding: 25px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .vendors-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .vendors-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .nav-menu {
+                display: none;
+            }
+            .newsletter-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .search-bar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            .filter-bar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            .filter-options {
+                flex-wrap: wrap;
+            }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .newsletter-form {
+                flex-direction: column;
+                width: 100%;
+            }
+            .newsletter-form input {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .vendors-grid {
+                grid-template-columns: 1fr;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                    FreshMart
+                </a>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Search for vendors...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <div class="header-action">
+                        <i class="far fa-heart"></i>
+                        <span>Wishlist</span>
+                        <div class="badge">3</div>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                        <div class="badge">5</div>
+                    </div>
+                    <div class="header-action">
+                        <i class="far fa-user"></i>
+                        <span>Account</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="categories-btn">
+                    <i class="fas fa-th-large"></i>
+                    Browse All Categories
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="vendors.html" class="active">Vendors</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-right">
+                    <div class="hotline">
+                        <div class="hotline-icon"><i class="fas fa-headset"></i></div>
+                        <div class="hotline-text">
+                            <span>24/7 Support</span>
+                            <strong>+263 78 123 4567</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                <span>/</span>
+                <span class="current">Vendors List</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Vendors List</h1>
+            <p>Discover trusted vendors offering fresh products in your area</p>
+        </div>
+    </section>
+
+    <!-- Vendor Search -->
+    <section class="vendor-search">
+        <div class="container">
+            <div class="vendor-search-bar">
+                <input type="text" placeholder="Search vendors (by name or ID)...">
+                <button><i class="fas fa-search"></i> Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vendors Section -->
+    <section class="vendors-section">
+        <div class="container">
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="filter-info">
+                    We have <strong>780</strong> vendors now
+                </div>
+                <div class="filter-options">
+                    <div class="filter-select">
+                        <label>Show:</label>
+                        <select>
+                            <option>30</option>
+                            <option>60</option>
+                            <option>90</option>
+                        </select>
+                    </div>
+                    <div class="filter-select">
+                        <label>Sort by:</label>
+                        <select>
+                            <option>Featured</option>
+                            <option>Newest</option>
+                            <option>Rating</option>
+                            <option>Products</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vendors Grid -->
+            <div class="vendors-grid" style="margin-top: 30px;">
+                <!-- Vendor 1 -->
+                <div class="vendor-card">
+                    <span class="vendor-badge mall">Mall</span>
+                    <div class="vendor-logo">🥬</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2018</span>
+                        <h3 class="vendor-name"><a href="#">Nature Food</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(5.0)</span>
+                        </div>
+                        <span class="vendor-products">380 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Fresh Road, Harare, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 78 123 4567</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 2 -->
+                <div class="vendor-card">
+                    <span class="vendor-badge featured">Featured</span>
+                    <div class="vendor-logo">🍎</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2015</span>
+                        <h3 class="vendor-name"><a href="#">Country Crock</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(4.8)</span>
+                        </div>
+                        <span class="vendor-products">18 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>45 Farm Lane, Bulawayo, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 77 234 5678</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 3 -->
+                <div class="vendor-card">
+                    <span class="vendor-badge verified">Verified</span>
+                    <div class="vendor-logo">🥕</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2019</span>
+                        <h3 class="vendor-name"><a href="#">Hambger Hel</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(4.3)</span>
+                        </div>
+                        <span class="vendor-products">43 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>78 Market St, Mutare, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 76 345 6789</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 4 -->
+                <div class="vendor-card">
+                    <span class="vendor-badge mall">Mall</span>
+                    <div class="vendor-logo">🍕</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2012</span>
+                        <h3 class="vendor-name"><a href="#">Totino's Pizza</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(5.0)</span>
+                        </div>
+                        <span class="vendor-products">380 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>12 Pizza Ave, Harare, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 78 456 7890</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 5 -->
+                <div class="vendor-card">
+                    <div class="vendor-logo">🍜</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2012</span>
+                        <h3 class="vendor-name"><a href="#">Maruchan Ramen</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(4.0)</span>
+                        </div>
+                        <span class="vendor-products">56 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>34 Noodle Lane, Harare, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 78 567 8901</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 6 -->
+                <div class="vendor-card">
+                    <span class="vendor-badge featured">Featured</span>
+                    <div class="vendor-logo">🥗</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2012</span>
+                        <h3 class="vendor-name"><a href="#">USA Noodle Soup</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="rating-count">(4.5)</span>
+                        </div>
+                        <span class="vendor-products">380 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>56 Soup Street, Bulawayo, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 77 678 9012</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 7 -->
+                <div class="vendor-card">
+                    <div class="vendor-logo">🥧</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2012</span>
+                        <h3 class="vendor-name"><a href="#">Red Baron Pizza</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="rating-count">(4.0)</span>
+                        </div>
+                        <span class="vendor-products">380 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>89 Baron Rd, Gweru, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 75 789 0123</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+
+                <!-- Vendor 8 -->
+                <div class="vendor-card">
+                    <span class="vendor-badge verified">Verified</span>
+                    <div class="vendor-logo">🥪</div>
+                    <div class="vendor-info">
+                        <span class="vendor-since">Since 2012</span>
+                        <h3 class="vendor-name"><a href="#">Mrs. Smith's Pie</a></h3>
+                        <div class="vendor-rating">
+                            <div class="stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="rating-count">(4.9)</span>
+                        </div>
+                        <span class="vendor-products">380 products</span>
+                    </div>
+                    <div class="vendor-details">
+                        <div class="vendor-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>23 Baker St, Masvingo, Zimbabwe</span>
+                        </div>
+                        <div class="vendor-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>+263 79 890 1234</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-store"></i> Visit Store
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="active">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <span>...</span>
+                <a href="#">6</a>
+                <a href="#"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Stay Home & Get Your Daily Needs</h2>
+                    <p>Subscribe to our newsletter and get 15% off your first order!</p>
+                </div>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-text">
+                        <h4>Free Delivery</h4>
+                        <p>Orders over $50</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💰</div>
+                    <div class="feature-text">
+                        <h4>Best Prices</h4>
+                        <p>Guaranteed savings</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎁</div>
+                    <div class="feature-text">
+                        <h4>Daily Deals</h4>
+                        <p>Up to 50% off</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-text">
+                        <h4>Secure Payment</h4>
+                        <p>100% protected</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-text">
+                        <h4>Easy Returns</h4>
+                        <p>30 day guarantee</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon"><i class="fas fa-leaf"></i></div>
+                        FreshMart
+                    </a>
+                    <p>Your trusted multi-vendor grocery marketplace. Fresh produce, competitive prices, and fast delivery right to your doorstep.</p>
+                    <div class="footer-contact">
+                        <span><i class="fas fa-map-marker-alt"></i> 123 Fresh Street, Harare, Zimbabwe</span>
+                        <span><i class="fas fa-phone"></i> +263 78 123 4567</span>
+                        <span><i class="fas fa-envelope"></i> support@freshmart.co.zw</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Delivery Information</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Account</h4>
+                    <ul class="footer-links">
+                        <li><a href="login.html">Sign In</a></li>
+                        <li><a href="#">View Cart</a></li>
+                        <li><a href="#">My Wishlist</a></li>
+                        <li><a href="#">Track My Order</a></li>
+                        <li><a href="#">Help Ticket</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Vendor</h4>
+                    <ul class="footer-links">
+                        <li><a href="register.html">Become a Vendor</a></li>
+                        <li><a href="vendors.html">All Vendors</a></li>
+                        <li><a href="#">Vendor Guidelines</a></li>
+                        <li><a href="#">Our Suppliers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Install App</h4>
+                    <div class="app-buttons">
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-apple"></i>
+                            <div>
+                                <span>Download on the</span>
+                                <strong>App Store</strong>
+                            </div>
+                        </a>
+                        <a href="#" class="app-btn">
+                            <i class="fab fa-google-play"></i>
+                            <div>
+                                <span>Get it on</span>
+                                <strong>Google Play</strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 FreshMart. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!--<div class="w-full bg-white rounded-lg  overflow-hidden w-full p-32">-->
+<!--  <div class="p-6 bg-gradient-to-r from-primary/10 to-primary/5">-->
+<!--    <h2 class="text-2xl font-bold text-gray-800 mb-2">Areas We Currently Serve</h2>-->
+<!--    <p class="text-gray-600 mb-4">-->
+<!--      We deliver to {{ totalSuburbs }} suburbs across Harare, Zimbabwe. Delivery fees are calculated based on your distance from our distribution center.-->
+<!--    </p>-->
+<!--  </div>-->
+
+<!--  <div class="h-[500px] w-full z-0" leaflet [leafletOptions]="options" [leafletLayers]="layers"></div>-->
+
+<!--  <div class="p-6 bg-gray-50">-->
+<!--    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">-->
+<!--      <div>-->
+<!--        <h3 class="text-lg font-semibold text-gray-800 mb-2">How Delivery Works</h3>-->
+<!--        <p class="text-gray-600">-->
+<!--          Our delivery fees are calculated based on your location. We offer same-day delivery for orders placed before 12pm, and next-day delivery for all other orders.-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div>-->
+<!--        <h3 class="text-lg font-semibold text-gray-800 mb-2">Delivery Pricing</h3>-->
+<!--        <ul class="list-disc pl-5 text-gray-600">-->
+<!--          <li>0-5km: $2</li>-->
+<!--          <li>5-10km: $4</li>-->
+<!--          <li>10-15km: $6</li>-->
+<!--          <li>15km+: $8</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<!--<div class="w-full bg-white rounded-lg overflow-hidden">-->
+<!--  <div class="p-4 md:p-6 bg-gradient-to-r from-primary/10 to-primary/5">-->
+<!--    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">Areas We Currently Serve</h2>-->
+<!--    <p class="text-sm md:text-base text-gray-600 mb-4">-->
+<!--      We deliver to {{ totalSuburbs }} suburbs across Harare, Zimbabwe. Delivery fees are calculated based on your distance from our distribution center.-->
+<!--    </p>-->
+<!--  </div>-->
+
+<!--  <div class="h-[300px] md:h-[500px] w-full z-0" leaflet [leafletOptions]="options" [leafletLayers]="layers"></div>-->
+
+<!--  <div class="p-4 md:p-6 bg-gray-50">-->
+<!--    <div class="grid grid-cols-1 gap-4 md:gap-6">-->
+<!--      <div>-->
+<!--        <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2">How Delivery Works</h3>-->
+<!--        <p class="text-sm md:text-base text-gray-600">-->
+<!--          Our delivery fees are calculated based on your location. We offer same-day delivery for orders placed before 12pm, and next-day delivery for all other orders.-->
+<!--        </p>-->
+<!--      </div>-->
+<!--      <div class="mt-4 md:mt-0">-->
+<!--        <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2">Delivery Pricing</h3>-->
+<!--        <ul class="list-disc pl-5 text-sm md:text-base text-gray-600">-->
+<!--          <li>0-5km: $2</li>-->
+<!--          <li>5-10km: $4</li>-->
+<!--          <li>10-15km: $6</li>-->
+<!--          <li>15km+: $8</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div  class="w-full bg-white rounded-lg overflow-hidden md:p-20 max-wscreen-2xl">
+  <div class="p-4 md:p-6 bg-gradient-to-r from-primary/10 to-primary/5">
+    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">Areas We Currently Serve</h2>
+    <p class="text-sm md:text-base text-gray-600 mb-4">
+      We deliver to {{ (totalSuburbs > 0)? totalSuburbs : '' }} suburbs across Harare, Zimbabwe. Delivery fees are calculated based on your distance from our distribution center.
+    </p>
+  </div>
+
+  <div *ngIf="zones.length > 0" class="h-[300px] md:h-[500px] w-full z-0"
+       leaflet
+       id="map"
+       [leafletOptions]="options"
+       [leafletLayers]="layers"
+       (leafletMapReady)="onMapReady($event)"></div>
+
+  <div class="p-4 md:p-6 bg-gray-50">
+    <div class="grid grid-cols-1 gap-4 md:gap-6">
+      <div>
+        <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2">How Delivery Works</h3>
+        <p class="text-sm md:text-base text-gray-600">
+          Our delivery fees are calculated based on your location.
+        </p>
+      </div>
+<!--      <div class="mt-4 md:mt-0">-->
+<!--        <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2">Delivery Pricing</h3>-->
+<!--        <ul class="list-disc pl-5 text-sm md:text-base text-gray-600">-->
+<!--          <li>0-5km: $2</li>-->
+<!--          <li>5-10km: $4</li>-->
+<!--          <li>10-15km: $6</li>-->
+<!--          <li>15km+: $8</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+    </div>
+  </div>
+</div>
+

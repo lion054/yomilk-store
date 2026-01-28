@@ -1,0 +1,8 @@
+/* Promo Cards Styles */
+.promo-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.promo-card:hover {
+  transform: translateY(-4px);
+}

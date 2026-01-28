@@ -1,0 +1,234 @@
+<!-- Contact Us Page - FreshMart Design -->
+
+<!-- Breadcrumb -->
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+
+<!-- Page Header -->
+<section class="page-header bg-gradient-to-r from-[#42af57] to-[#3d9332] py-12">
+  <div class="container mx-auto px-5">
+    <div class="text-center text-white">
+      <h1 class="text-4xl font-bold mb-4 font-outfit">Contact Us</h1>
+      <p class="text-white/80 text-lg max-w-2xl mx-auto">
+        Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Location Cards -->
+<section class="py-12 bg-gray-100">
+  <div class="container mx-auto px-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div *ngFor="let location of locations" class="location-card bg-white rounded-[20px] p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+        <div class="location-icon w-[70px] h-[70px] bg-[#e8f7ef] rounded-full flex items-center justify-center text-4xl mx-auto mb-4">
+          {{ location.icon }}
+        </div>
+        <h3 class="text-lg font-semibold text-[#1c352c] mb-2">{{ location.name }}</h3>
+        <p class="text-gray-600 text-sm mb-4">{{ location.address }}</p>
+        <div class="space-y-2 text-sm">
+          <p class="flex items-center justify-center gap-2">
+            <i class="fas fa-phone text-[#42af57]"></i>
+            <a href="tel:{{ location.phone }}" class="text-[#1c352c] hover:text-[#42af57]">{{ location.phone }}</a>
+          </p>
+          <p class="flex items-center justify-center gap-2">
+            <i class="fas fa-envelope text-[#42af57]"></i>
+            <a href="mailto:{{ location.email }}" class="text-[#1c352c] hover:text-[#42af57]">{{ location.email }}</a>
+          </p>
+          <p class="flex items-center justify-center gap-2 text-gray-500">
+            <i class="fas fa-clock text-[#42af57]"></i>
+            {{ location.hours }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Form & Map Section -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Contact Form -->
+      <div class="contact-form-wrapper">
+        <h2 class="text-3xl font-bold text-[#1c352c] mb-2 font-outfit">Send us a Message</h2>
+        <p class="text-gray-600 mb-8">Fill out the form below and we'll get back to you within 24 hours.</p>
+
+        <form (ngSubmit)="onSubmit()" class="space-y-5">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="form-group">
+              <label class="block text-sm font-medium text-[#1c352c] mb-2">Full Name *</label>
+              <input
+                type="text"
+                [(ngModel)]="contactForm.name"
+                name="name"
+                required
+                class="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef]"
+                placeholder="Your full name"
+              />
+            </div>
+            <div class="form-group">
+              <label class="block text-sm font-medium text-[#1c352c] mb-2">Email Address *</label>
+              <input
+                type="email"
+                [(ngModel)]="contactForm.email"
+                name="email"
+                required
+                class="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef]"
+                placeholder="you@example.com"
+              />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="form-group">
+              <label class="block text-sm font-medium text-[#1c352c] mb-2">Phone Number</label>
+              <input
+                type="tel"
+                [(ngModel)]="contactForm.phone"
+                name="phone"
+                class="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef]"
+                placeholder="+263 7XX XXX XXX"
+              />
+            </div>
+            <div class="form-group">
+              <label class="block text-sm font-medium text-[#1c352c] mb-2">Subject *</label>
+              <select
+                [(ngModel)]="contactForm.subject"
+                name="subject"
+                required
+                class="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-[#1c352c] transition-all focus:border-[#42af57] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef] cursor-pointer"
+              >
+                <option value="">Select a subject</option>
+                <option value="general">General Inquiry</option>
+                <option value="order">Order Support</option>
+                <option value="delivery">Delivery Issue</option>
+                <option value="vendor">Become a Vendor</option>
+                <option value="feedback">Feedback</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="block text-sm font-medium text-[#1c352c] mb-2">Your Message *</label>
+            <textarea
+              [(ngModel)]="contactForm.message"
+              name="message"
+              required
+              rows="6"
+              class="w-full px-5 py-4 bg-white border-2 border-gray-200 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef] resize-none"
+              placeholder="How can we help you?"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-[0_4px_15px_rgba(44,181,105,0.4)]"
+          >
+            <i class="fas fa-paper-plane"></i>
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- Quick Info -->
+      <div class="quick-info-wrapper">
+        <h2 class="text-3xl font-bold text-[#1c352c] mb-2 font-outfit">Find Us</h2>
+        <p class="text-gray-600 mb-8">Visit our office or warehouse locations.</p>
+
+        <!-- Quick Info Cards -->
+        <div class="space-y-4">
+          <div class="p-6 bg-[#e8f7ef] rounded-[20px]">
+            <h4 class="font-semibold text-[#1c352c] mb-4">Quick Information</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div class="flex items-start gap-3">
+                <i class="fas fa-clock text-[#42af57] mt-1"></i>
+                <div>
+                  <span class="font-medium text-[#1c352c]">Business Hours</span>
+                  <p class="text-gray-600">Mon-Sun: 6:00 AM - 6:00 PM</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <i class="fas fa-truck text-[#42af57] mt-1"></i>
+                <div>
+                  <span class="font-medium text-[#1c352c]">Delivery Hours</span>
+                  <p class="text-gray-600">Mon-Sun: 6:00 AM - 8:00 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-white border-2 border-gray-100 rounded-[20px]">
+            <h4 class="font-semibold text-[#1c352c] mb-4">Our Address</h4>
+            <div class="flex items-start gap-3 text-sm">
+              <i class="fas fa-map-marker-alt text-[#42af57] mt-1"></i>
+              <div>
+                <span class="font-medium text-[#1c352c]">Head Office & Warehouse</span>
+                <p class="text-gray-600">185 Lorely Close, Msasa, Harare, Zimbabwe</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-6 bg-white border-2 border-gray-100 rounded-[20px]">
+            <h4 class="font-semibold text-[#1c352c] mb-4">Contact Details</h4>
+            <div class="space-y-3 text-sm">
+              <div class="flex items-center gap-3">
+                <i class="fas fa-phone text-[#42af57]"></i>
+                <a href="tel:+263782978460" class="text-[#1c352c] hover:text-[#42af57]">+263 782 978 460</a>
+              </div>
+              <div class="flex items-center gap-3">
+                <i class="fas fa-envelope text-[#42af57]"></i>
+                <a href="mailto:support@snappyfresh.net" class="text-[#1c352c] hover:text-[#42af57]">support&#64;snappyfresh.net</a>
+              </div>
+              <div class="flex items-center gap-3">
+                <i class="fab fa-whatsapp text-[#42af57]"></i>
+                <a href="https://wa.me/263782978460" target="_blank" class="text-[#1c352c] hover:text-[#42af57]">WhatsApp Us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Delivery Zones Map -->
+<section class="py-12 bg-gray-100">
+  <div class="container mx-auto px-5">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold text-[#1c352c] mb-4 font-outfit">Delivery Zones</h2>
+      <p class="text-gray-600">Check if we deliver to your area</p>
+    </div>
+    <app-delivery-zones-map></app-delivery-zones-map>
+  </div>
+</section>
+
+<!-- Features Strip -->
+<app-features-strip></app-features-strip>
+
+<!-- CTA Section -->
+<section class="py-16 bg-gradient-to-r from-[#8dc1ed] to-[#015a9e]">
+  <div class="container mx-auto px-5 text-center">
+    <h2 class="text-3xl font-bold text-white mb-4 font-outfit">Need Immediate Help?</h2>
+    <p class="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
+      Our customer support team is available 24/7 to assist you with any questions or concerns.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a
+        href="tel:+263782978460"
+        class="inline-flex items-center justify-center gap-2 bg-white text-[#8dc1ed] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      >
+        <i class="fas fa-phone"></i>
+        Call Us Now
+      </a>
+      <a
+        href="https://wa.me/263782978460"
+        target="_blank"
+        class="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#1da851] transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      >
+        <i class="fab fa-whatsapp"></i>
+        WhatsApp Us
+      </a>
+    </div>
+  </div>
+</section>

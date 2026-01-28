@@ -1,0 +1,452 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Snappy Fresh Design System - CSS Variables */
+:root {
+  /* Primary Colors - Green */
+  --primary: #42af57;
+  --primary-dark: #215724;
+  --primary-light: #dfed93;
+  --chateau-green: #42af57;
+  --everglade: #215724;
+  --atlantis: #9cb32f;
+  --primrose: #dfed93;
+
+  /* Secondary Colors - Blue */
+  --secondary: #8dc1ed;
+  --secondary-light: #e8fafd;
+  --jordy-blue: #8dc1ed;
+
+  /* Accent Colors - Red */
+  --accent-yellow: #ffc107;
+  --accent-red: #fe2623;
+  --cardinal: #c22523;
+  --carnation: #f65d53;
+  --red-orange: #fe2623;
+
+  /* Dark Colors */
+  --dark: #1c352c;
+  --dark-light: #215724;
+  --timber-green: #1c352c;
+
+  /* Gray Scale */
+  --gray-100: #f8f9fa;
+  --gray-200: #e9ecef;
+  --gray-300: #dee2e6;
+  --gray-400: #ced4da;
+  --gray-500: #adb5bd;
+  --gray-600: #6c757d;
+  --gray-700: #495057;
+  --white: #ffffff;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 50px;
+
+  /* Transitions */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container */
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(66, 175, 87, 0.4);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--white);
+}
+
+.btn-secondary:hover {
+  background: #015a9e;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Form Controls */
+.form-control {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 15px;
+  transition: var(--transition);
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+.form-control::placeholder {
+  color: var(--gray-500);
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--dark);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge-primary {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.badge-secondary {
+  background: var(--secondary-light);
+  color: var(--secondary);
+}
+
+/* Card */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+
+/* Section Styling */
+.section {
+  padding: 80px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: 36px;
+  margin-bottom: 15px;
+  color: var(--dark);
+}
+
+.section-header p {
+  color: var(--gray-600);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+@font-face {
+  font-family: "titles";
+  src: url("./assets/fonts/BubblegumSans-Regular.ttf") format('truetype');
+  font-weight:normal;
+  font-style:normal;
+}
+
+
+
+@font-face {
+ font-family: "quicksand";
+ src: url("./assets/fonts/Quicksand-VariableFont_wght.ttf") format('truetype');
+ font-weight: normal;
+ font-style: normal;
+}
+
+body {
+  font-family: 'quicksand', sans-serif;
+}
+
+/* Dark Mode Color Scheme */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Dark Mode CSS Variables Override */
+html.dark {
+  --primary: #4ade80;
+  --primary-dark: #22c55e;
+  --primary-light: #1a3d2c;
+
+  --dark: #f3f4f6;
+  --dark-light: #e5e7eb;
+
+  --gray-100: #1f2937;
+  --gray-200: #374151;
+  --gray-300: #4b5563;
+  --gray-400: #6b7280;
+  --gray-500: #9ca3af;
+  --gray-600: #d1d5db;
+  --gray-700: #e5e7eb;
+  --white: #111827;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+}
+
+/* Dark Mode Base Styles */
+html.dark body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* Dark Mode Component Overrides */
+html.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-gray-50 {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-gray-100 {
+  background-color: #334155 !important;
+}
+
+html.dark .text-gray-900,
+html.dark .text-\[\#1c352c\] {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-gray-800 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-gray-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-gray-500 {
+  color: #64748b !important;
+}
+
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-gray-300 {
+  border-color: #334155 !important;
+}
+
+/* Dark Mode Card Styles */
+html.dark .card,
+html.dark [class*="rounded-xl"][class*="bg-white"],
+html.dark [class*="rounded-2xl"][class*="bg-white"],
+html.dark [class*="rounded-\[20px\]"][class*="bg-white"] {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+/* Dark Mode Form Inputs */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.dark textarea {
+  background-color: #334155 !important;
+  border-color: #475569 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark input:focus,
+html.dark select:focus,
+html.dark textarea:focus {
+  border-color: #4ade80 !important;
+  background-color: #1e293b !important;
+}
+
+/* Dark Mode Navigation */
+html.dark header,
+html.dark nav {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+/* Dark Mode Footer */
+html.dark footer {
+  background-color: #0f172a !important;
+}
+
+/* Dark Mode Modals/Dialogs */
+html.dark [role="dialog"] .bg-white {
+  background-color: #1e293b !important;
+}
+
+/* Dark Mode Dropdown */
+html.dark .ng-dropdown-panel {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .ng-dropdown-panel .ng-option {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .ng-dropdown-panel .ng-option:hover,
+html.dark .ng-dropdown-panel .ng-option.ng-option-marked {
+  background-color: #334155 !important;
+}
+
+/* Dark Mode Scrollbar */
+html.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Dark Mode Selection */
+html.dark ::selection {
+  background-color: #4ade80;
+  color: #0f172a;
+}
+
+/* Smooth Transition for Dark Mode Toggle */
+body,
+.bg-white,
+.bg-gray-50,
+.bg-gray-100,
+header,
+footer,
+nav,
+input,
+select,
+textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hide scrollbar utility for horizontal scrollable areas */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Smooth scroll behavior */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+/* Animation for shimmer loading effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
