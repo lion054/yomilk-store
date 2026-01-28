@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, HostListener} from '@angular/core';
 import {CurrencyService} from "../../core/services/currency/currency.service";
 import {CommonModule, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -56,6 +56,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchSuggestions: any[] = [];
   showSuggestions: boolean = false;
   isLoadingSuggestions: boolean = false;
+
+  // Scroll state
+  isScrolled: boolean = false;
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    this.isScrolled = window.pageYOffset > 50;
+  }
 
   // Categories from API
   categories: any[] = [];
