@@ -1,6 +1,11 @@
 <!-- Modern Product Card - Glassmorphism Design -->
 <div class="product-card w-full bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group relative overflow-hidden border border-gray-100/50"
-     (click)="navigateToProduct()">
+     (click)="navigateToProduct()"
+     role="article"
+     [attr.aria-label]="'Product: ' + product.itemName + ', Price: ' + product.currency + activeUoM.price"
+     tabindex="0"
+     (keydown.enter)="navigateToProduct()"
+     (keydown.space)="$event.preventDefault(); navigateToProduct()">
 
   <!-- Product Image Section -->
   <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 rounded-t-2xl">
@@ -20,17 +25,33 @@
       loading="lazy"
     />
 
-    <!-- Quick Add Button (Top Right) - Glassmorphism Style -->
-    <button
-      *ngIf="stockLevel !== 'Sold Out'"
-      (click)="addToCart(); $event.stopPropagation()"
-      class="absolute top-3 right-3 w-10 h-10 bg-white/80 backdrop-blur-md hover:bg-[#42af57] text-[#42af57] hover:text-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 z-20 border border-white/50"
-      aria-label="Add to cart">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M5 12h14"/>
-        <path d="M12 5v14"/>
-      </svg>
-    </button>
+    <!-- Action Buttons Row (Top Right) -->
+    <div class="absolute top-3 right-3 flex gap-2 z-20 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+      <!-- Quick View Button -->
+      <button
+        (click)="openQuickView(); $event.stopPropagation()"
+        class="w-10 h-10 bg-white/80 backdrop-blur-md hover:bg-blue-500 text-blue-500 hover:text-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50"
+        aria-label="Quick view product"
+        title="Quick view">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+
+      <!-- Quick Add Button -->
+      <button
+        *ngIf="stockLevel !== 'Sold Out'"
+        (click)="addToCart(); $event.stopPropagation()"
+        class="w-10 h-10 bg-white/80 backdrop-blur-md hover:bg-[#42af57] text-[#42af57] hover:text-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 border border-white/50"
+        aria-label="Add to cart"
+        title="Add to cart">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="M12 5v14"/>
+        </svg>
+      </button>
+    </div>
 
     <!-- Wishlist Button (Top Left) -->
     <button

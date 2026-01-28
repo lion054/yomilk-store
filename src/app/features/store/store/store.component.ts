@@ -11,6 +11,8 @@ import {SeoService} from "../../../core/services/seo/seo.service";
 import {Subject, debounceTime, distinctUntilChanged, filter, takeUntil} from 'rxjs';
 import {BreadcrumbComponent} from "../../../components/breadcrumb/breadcrumb.component";
 import {FeaturesStripComponent} from "../../../components/features-strip/features-strip.component";
+import {ProductSkeletonComponent} from "../../../components/product-skeleton/product-skeleton.component";
+import {ProductQuickViewComponent} from "../../../components/product-quick-view/product-quick-view.component";
 
 @Component({
   selector: 'app-store',
@@ -21,7 +23,9 @@ import {FeaturesStripComponent} from "../../../components/features-strip/feature
     FormsModule,
     CategoryListComponent,
     BreadcrumbComponent,
-    FeaturesStripComponent
+    FeaturesStripComponent,
+    ProductSkeletonComponent,
+    ProductQuickViewComponent
   ],
   templateUrl: './store.component.html',
   styleUrl: './store.component.scss'
@@ -45,6 +49,10 @@ export class StoreComponent implements OnInit, OnDestroy{
    itemGroups: any;
    activeItemGroup:any = "";
    currentCategoryName: string = 'Shop';
+
+  // Quick view modal
+  showQuickView: boolean = false;
+  selectedProduct: any = null;
 
   private searchSubject = new Subject<string>();
   private destroy$ = new Subject<void>();
@@ -267,6 +275,16 @@ export class StoreComponent implements OnInit, OnDestroy{
   //
   //   return result;
   // }
+
+  openQuickView(product: any) {
+    this.selectedProduct = product;
+    this.showQuickView = true;
+  }
+
+  closeQuickView() {
+    this.showQuickView = false;
+    this.selectedProduct = null;
+  }
 
 
   search() {

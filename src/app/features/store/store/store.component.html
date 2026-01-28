@@ -163,21 +163,14 @@
       <div class="flex-1">
         <!-- Products Loading State -->
         <div *ngIf="loading" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
-          <div *ngFor="let item of arr" class="bg-white rounded-[20px] overflow-hidden shadow-sm">
-            <div class="aspect-square bg-gray-200 animate-pulse"></div>
-            <div class="p-4">
-              <div class="h-4 bg-gray-200 rounded animate-pulse mb-2"></div>
-              <div class="h-3 bg-gray-200 rounded animate-pulse w-2/3 mb-3"></div>
-              <div class="h-6 bg-gray-200 rounded animate-pulse w-1/2"></div>
-            </div>
-          </div>
+          <app-product-skeleton *ngFor="let item of arr"></app-product-skeleton>
         </div>
 
         <!-- Products Grid -->
         <ng-container *ngIf="!loading && !isError">
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-4">
             @for (product of products; track product.itemCode) {
-              <app-product-card [product]="product"></app-product-card>
+              <app-product-card [product]="product" (quickViewTriggered)="openQuickView($event)"></app-product-card>
             }
           </div>
 
@@ -245,3 +238,11 @@
 
 <!-- Features Strip -->
 <app-features-strip></app-features-strip>
+
+<!-- Quick View Modal -->
+<app-product-quick-view
+  *ngIf="showQuickView"
+  [product]="selectedProduct"
+  [isOpen]="showQuickView"
+  (closed)="closeQuickView()">
+</app-product-quick-view>

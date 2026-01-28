@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, OnDestroy, ViewChild, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {CurrencyService} from "../../../core/services/currency/currency.service";
 import {CurrencyPipe, DecimalPipe, NgClass, NgFor, NgForOf, NgIf, NgStyle} from "@angular/common";
@@ -30,6 +30,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   @Input()
   product:any;
+  @Output() quickViewTriggered = new EventEmitter<any>();
+
   uoms: any = []
   activeUoM: any;
   insertedUom: boolean = false;
@@ -125,6 +127,10 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   toggleWishlist() {
     this.wishlistService.toggleWishlist(this.product);
+  }
+
+  openQuickView() {
+    this.quickViewTriggered.emit(this.product);
   }
 
   ngOnDestroy() {
