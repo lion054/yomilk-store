@@ -15,6 +15,8 @@ import {B2bService, StoreOrderSchedule} from "../../core/services/b2b/b2b.servic
 import {AuthService} from "../../core/services/auth/auth.service";
 import {VendorsService, Vendor} from "../../core/services/vendors/vendors.service";
 import {Subject, takeUntil} from 'rxjs';
+import {TopVendorsComponent} from "../../components/top-vendors/top-vendors.component";
+import {ExploreCategoriesComponent} from "../../components/explore-categories/explore-categories.component";
 
 @Component({
   selector: 'app-home',
@@ -30,6 +32,8 @@ import {Subject, takeUntil} from 'rxjs';
     PromoCardsComponent,
     PopularProductsComponent,
     FeaturesStripComponent,
+    TopVendorsComponent,
+    ExploreCategoriesComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
