@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchQuery: string = '';
   menuOpen: boolean = false;
 
-  // New Checkers-style properties
+  // Department sidebar properties
   showDepartmentSidebar: boolean = false;
   showServicesDrawer: boolean = false;
   showMegaMenu: boolean = false;
