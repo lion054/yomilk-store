@@ -28,10 +28,10 @@
 </section>
 
 <!-- Main Store Layout -->
-<section *ngIf="!isB2bRoute" [@fadeIn] class="w-full min-h-screen flex flex-col">
-  <app-header></app-header>
-  <!-- Spacer for fixed header: mobile ~126px (top-bar 44px + header 82px), desktop ~194px (+ nav 68px) -->
-  <main id="main-content" class="w-full pt-[126px] md:pt-[194px] flex-grow">
+<section *ngIf="!isB2bRoute" [@fadeIn] class="w-full min-h-screen flex flex-col relative">
+  <app-header class="fixed top-0 left-0 right-0 z-[1000]"></app-header>
+  <!-- Spacer for fixed header: ~48px when scrolled (just nav bar) -->
+  <main id="main-content" class="w-full pt-[120px] md:pt-[150px] flex-grow">
     <router-outlet></router-outlet>
   </main>
   <app-footer></app-footer>
