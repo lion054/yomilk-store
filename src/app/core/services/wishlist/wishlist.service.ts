@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ToastService } from '../toast/toast.service';
+import { map } from 'rxjs/operators';
 import { WishlistItem } from '../../interfaces/interfaces';
+import { ToastService } from '../toast/toast.service';
+import { GoogleAnalyticsService } from '../google-analytics/google-analytics.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,46 +11,28 @@ import { WishlistItem } from '../../interfaces/interfaces';
 export class WishlistService {
   private wishlist = new BehaviorSubject<WishlistItem[]>([]);
   wishlistItems$ = this.wishlist.asObservable();
+  wishlistCount$ = this.wishlist.asObservable().pipe(
+    map(items => items.length)
+  );
 
-  private wishlistCountSubject = new BehaviorSubject<number>(0);
-  wishlistCount$ = this.wishlistCountSubject.asObservable();
-
-  constructor(private toastService: ToastService) {
-    this.loadFromStorage();
-  }
-
-  private loadFromStorage(): void {
+  constructor(
+    private toastService: ToastService,
+    private googleAnalyticsService: GoogleAnalyticsService
+  ) {
     const storedWishlist = localStorage.getItem('wishlist');
     if (storedWishlist) {
-      try {
-        const items = JSON.parse(storedWishlist);
-        this.wishlist.next(items);
-        this.wishlistCountSubject.next(items.length);
-      } catch {
-        localStorage.removeItem('wishlist');
-      }
+      this.wishlist.next(JSON.parse(storedWishlist));
     }
-  }
-
-  private saveToStorage(): void {
-    localStorage.setItem('wishlist', JSON.stringify(this.wishlist.value));
-    this.wishlistCountSubject.next(this.wishlist.value.length);
   }
 
   getWishlistItems(): WishlistItem[] {
     return this.wishlist.value;
   }
 
-  getWishlistCount(): number {
-    return this.wishlist.value.length;
-  }
+  addToWishlist(item: any, uom?: any): void {
+    const existingItem = this.wishlist.value.find((i) => i.itemCode === item.itemCode);
 
-  isInWishlist(itemCode: string): boolean {
-    return this.wishlist.value.some(item => item.itemCode === itemCode);
-  }
-
-  addToWishlist(item: any): void {
-    if (this.isInWishlist(item.itemCode)) {
+    if (existingItem) {
       this.toastService.info('Already in Wishlist', item.itemName);
       return;
     }
@@ -56,65 +40,78 @@ export class WishlistService {
     const wishlistItem: WishlistItem = {
       itemCode: item.itemCode,
       itemName: item.itemName,
-      image: item.image || '',
-      price: item.price || item.uoMs?.[0]?.price || 0,
-      currency: item.currency || item.uoMs?.[0]?.currency || 'USD',
+      image: item.image,
+      price: uom?.price || item.price,
+      currency: uom?.currency || item.currency,
       addedAt: new Date(),
-      uom: item.uoMs?.[0] || item.uom
+      uom: uom
     };
 
     const updatedWishlist = [...this.wishlist.value, wishlistItem];
     this.wishlist.next(updatedWishlist);
-    this.saveToStorage();
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+
+    // Track add to wishlist event
+    this.googleAnalyticsService.trackEcommerceEvent('add_to_wishlist', [{
+      item_id: item.itemCode,
+      item_name: item.itemName,
+      price: wishlistItem.price,
+      currency: wishlistItem.currency
+    }], wishlistItem.price, wishlistItem.currency);
 
     this.toastService.success('Added to Wishlist', item.itemName);
   }
 
   removeFromWishlist(itemCode: string): void {
     const item = this.wishlist.value.find(i => i.itemCode === itemCode);
-    const updatedWishlist = this.wishlist.value.filter(i => i.itemCode !== itemCode);
-    this.wishlist.next(updatedWishlist);
-    this.saveToStorage();
+    if (!item) return;
 
-    if (item) {
-      this.toastService.warning('Removed from Wishlist', item.itemName);
-    }
+    const updatedWishlist = this.wishlist.value.filter((i) => i.itemCode !== itemCode);
+    this.wishlist.next(updatedWishlist);
+    localStorage.setItem('wishlist', JSON.stringify(updatedWishlist));
+
+    // Track remove from wishlist event
+    this.googleAnalyticsService.trackEcommerceEvent('remove_from_wishlist', [{
+      item_id: item.itemCode,
+      item_name: item.itemName,
+      price: item.price,
+      currency: item.currency
+    }], item.price, item.currency);
+
+    this.toastService.warning('Removed from Wishlist', item.itemName);
   }
 
-  toggleWishlist(item: any): boolean {
-    if (this.isInWishlist(item.itemCode)) {
+  toggleWishlist(item: any, uom?: any): boolean {
+    const isInWishlist = this.isInWishlist(item.itemCode);
+
+    if (isInWishlist) {
       this.removeFromWishlist(item.itemCode);
       return false;
     } else {
-      this.addToWishlist(item);
+      this.addToWishlist(item, uom);
       return true;
     }
   }
 
+  isInWishlist(itemCode: string): boolean {
+    return this.wishlist.value.some((i) => i.itemCode === itemCode);
+  }
+
+  getCount(): number {
+    return this.wishlist.value.length;
+  }
+
+  getCount$(): Observable<number> {
+    return new Observable(observer => {
+      this.wishlist.subscribe(items => {
+        observer.next(items.length);
+      });
+    });
+  }
+
   clearWishlist(): void {
     this.wishlist.next([]);
-    this.saveToStorage();
+    localStorage.removeItem('wishlist');
     this.toastService.info('Wishlist Cleared', 'All items have been removed');
-  }
-
-  // Move item to cart (requires CartService integration)
-  moveToCart(itemCode: string, cartService: any): void {
-    const item = this.wishlist.value.find(i => i.itemCode === itemCode);
-    if (item) {
-      // Add to cart using the item's UoM
-      cartService.addToCart(item, item.uom);
-      // Remove from wishlist
-      this.removeFromWishlist(itemCode);
-    }
-  }
-
-  // Move all items to cart
-  moveAllToCart(cartService: any): void {
-    const items = [...this.wishlist.value];
-    items.forEach(item => {
-      cartService.addToCart(item, item.uom);
-    });
-    this.clearWishlist();
-    this.toastService.success('Added to Cart', `${items.length} items moved to cart`);
   }
 }
