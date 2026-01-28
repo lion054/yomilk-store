@@ -150,7 +150,7 @@
         <div class="mt-8 flex sm:justify-end">
           <div *ngIf="invoice.U_ONA_FiscalQrCode != null" class="flex flex-col items-center">
               <div class="block">
-                <qr-code value="{{invoice.U_ONA_FiscalQrCode}}" size="150" errorCorrectionLevel="M"></qr-code>
+                <qrcode [qrdata]="invoice.U_ONA_FiscalQrCode || ''" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
               </div>
             <a class="text-center" href="{{invoice.U_ONA_FiscalQrCode}}" target="_blank" >View</a>
           </div>

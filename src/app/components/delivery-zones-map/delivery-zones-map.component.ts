@@ -1,5 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import {Component, OnDestroy, OnInit, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import * as L from 'leaflet';
 import {CommonModule} from "@angular/common";
 import {GeolocationService} from "../../core/services/location/geolocation.service";
@@ -7,51 +6,31 @@ import {GeolocationService} from "../../core/services/location/geolocation.servi
 @Component({
   selector: 'app-delivery-zones-map',
   standalone: true,
-  imports: [CommonModule, LeafletModule],
+  imports: [CommonModule],
   templateUrl: './delivery-zones-map.component.html',
   styleUrl: './delivery-zones-map.component.css'
 })
-export class DeliveryZonesMapComponent implements OnInit, OnDestroy {
+export class DeliveryZonesMapComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('mapContainer', { static: false }) mapContainer!: ElementRef;
+
   deliveryLocations: any[] = [];
   zones: any[] = []
   private interactionTimeout: any;
-
   charges: any = []
-  // Leaflet map options
-  options = {
-    layers: [
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '© OpenStreetMap contributors'
-      })
-    ],
-    zoom: 12,
-    center: L.latLng(-17.8216, 31.0492) // Center of Harare
-  };
-
-  // Map layers
-  layers: L.Layer[] = [];
-  map: L.Map | null | any = null;
-
-
+  map: L.Map | null = null;
+  private markers: L.Marker[] = [];
 
   constructor(private geolocationService: GeolocationService) {}
 
   ngOnInit(): void {
-    // Initialize map with default data first
-    this.initializeMap();
-    // Enable interactions when clicked
-
-
-    // Then fetch and update with real data
+    // Fetch delivery zones data
     this.geolocationService.getDeliveryZones().subscribe({
       next: (response: any) => {
         if (response) {
-          // this.deliveryLocations = response.locations;
-          this.zones = response
-          // Clear existing layers and reinitialize
-          this.layers = [];
-          this.initializeMap();
+          this.zones = response;
+          if (this.map) {
+            this.updateMapMarkers();
+          }
         }
       },
       error: ({data}) => {
@@ -69,50 +48,59 @@ export class DeliveryZonesMapComponent implements OnInit, OnDestroy {
     })
   }
 
-  onMapReady(map: L.Map): void {
-    this.map = map;
-    // If we already have data, make sure it's displayed
-    if (this.zones.length > 0) {
+  ngAfterViewInit(): void {
+    // Initialize map after view is ready
+    setTimeout(() => {
       this.initializeMap();
-    }
+    }, 100);
   }
 
-  initializeMap(): void {
-    // Create a new layers array
-    const newLayers: L.Layer[] = [];
+  private initializeMap(): void {
+    if (this.map) {
+      return; // Map already initialized
+    }
 
-    // Create a marker for each suburb with location data
-    // this.deliveryLocations.forEach(country => {
-    //   country.cities.forEach(city => {
-    //     city.suburbs.forEach(suburb => {
-    //       if (suburb.location) {
-    //         // Create a custom pin icon
-    //         const pinIcon = L.divIcon({
-    //           className: 'custom-div-icon',
-    //           html: `<div class="marker-pin bg-primary" style="width: 30px; height: 30px; background-color: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white;">📍</div>`,
-    //           iconSize: [30, 30],
-    //           iconAnchor: [15, 30]
-    //         });
-    //
-    //         const marker = L.marker(
-    //           [suburb.location.latitude, suburb.location.longitude],
-    //           { icon: pinIcon }
-    //         ).bindPopup(`<b>${suburb.name}</b><br>We deliver here!`);
-    //
-    //         newLayers.push(marker);
-    //       }
-    //     });
-    //   });
-    // });
+    // Create map instance
+    this.map = L.map('delivery-map', {
+      center: L.latLng(-17.8216, 31.0492), // Harare center
+      zoom: 12,
+      dragging: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      touchZoom: false,
+      zoomControl: false
+    });
 
-    this.zones.forEach((zone:any) => {
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(this.map);
 
-      zone.locations.forEach((location:any) => {
-        if (location.latitude) {
-          // Create a custom pin icon
+    // Add markers if data is already loaded
+    if (this.zones.length > 0) {
+      this.updateMapMarkers();
+    }
+
+    // Enable interactions on click
+    this.map.on('click', () => this.enableInteractions());
+  }
+
+  private updateMapMarkers(): void {
+    if (!this.map) return;
+
+    // Clear existing markers
+    this.markers.forEach(marker => marker.remove());
+    this.markers = [];
+
+    // Add new markers
+    this.zones.forEach((zone: any) => {
+      zone.locations.forEach((location: any) => {
+        if (location.latitude && location.longitude) {
+          // Create custom pin icon
           const pinIcon = L.divIcon({
             className: 'custom-div-icon',
-            html: `<div class="marker-pin bg-primary" style="width: 30px; height: 30px; background-color: #191a1c; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white;"> 📍</div>`,
+            html: `<div class="marker-pin bg-primary" style="width: 30px; height: 30px; background-color: #191a1c; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white;">📍</div>`,
             iconSize: [30, 30],
             iconAnchor: [15, 30]
           });
@@ -122,51 +110,35 @@ export class DeliveryZonesMapComponent implements OnInit, OnDestroy {
             { icon: pinIcon }
           ).bindPopup(`<b>${location.suburb}</b><br>We deliver here in ${location.suburb}!`);
 
-          newLayers.push(marker);
+          if (this.map) {
+            marker.addTo(this.map);
+            this.markers.push(marker);
+          }
         }
       });
-    })
+    });
 
-
-
-
-    // Update the layers array
-    this.layers = [...newLayers];
-
-    // If the map is already initialized, manually add the layers
-    if (this.map) {
-      this.disableInteractions();
-      // Remove existing layers
-      this.map.eachLayer((layer:any) => {
-        if (layer instanceof L.Marker) {
-          this.map?.removeLayer(layer);
-        }
-      });
-
-      // Add new layers
-      newLayers.forEach(layer => {
-        layer.addTo(this.map as L.Map);
-      });
-
-      // Fit bounds if we have markers
-      if (newLayers.length > 0) {
-        const group = L.featureGroup(newLayers);
-        this.map.fitBounds(group.getBounds(), { padding: [30, 30] });
-      }
-
-
-      // Enable interactions when clicked
-      this.map.on('click', () => this.enableInteractions());
+    // Fit bounds if we have markers
+    if (this.markers.length > 0) {
+      const group = L.featureGroup(this.markers);
+      this.map.fitBounds(group.getBounds(), { padding: [30, 30] });
     }
+
+    this.disableInteractions();
   }
 
   private enableInteractions(): void {
+    if (!this.map) return;
+
     this.map.dragging.enable();
     this.map.scrollWheelZoom.enable();
     this.map.doubleClickZoom.enable();
     this.map.touchZoom.enable();
 
-    L.control.zoom().addTo(this.map); // Add zoom control
+    // Add zoom control if not already present
+    if (!this.map.zoomControl) {
+      L.control.zoom().addTo(this.map);
+    }
 
     // Auto-disable interactions after 5 seconds
     if (this.interactionTimeout) {
@@ -179,6 +151,8 @@ export class DeliveryZonesMapComponent implements OnInit, OnDestroy {
   }
 
   private disableInteractions(): void {
+    if (!this.map) return;
+
     this.map.dragging.disable();
     this.map.scrollWheelZoom.disable();
     this.map.doubleClickZoom.disable();
@@ -189,29 +163,24 @@ export class DeliveryZonesMapComponent implements OnInit, OnDestroy {
   get totalSuburbs(): number {
     let count = 0;
     this.zones.forEach(zone => {
-      // zone.locations.forEach((location:any) => {
-      //   count += location.suburbs.length;
-      // });
       count += zone.locations.length;
     });
     return count;
-    // return this.deliveryLocations.length;
   }
 
-
   ngOnDestroy(): void {
-  //   if (this.interactionTimeout) {
-  //     clearTimeout(this.interactionTimeout);
-  //   }
-  //   if (this.map) {
-  //     this.map.remove();
-  //     this.map = null;
-  //   }
-  //
-  //   // 👇 Clear the internal Leaflet ID to allow reuse
-  //   const mapContainer:any = document.getElementById('map'); // Replace 'map' with your actual element ID if different
-  //   if (mapContainer && mapContainer._leaflet_id) {
-  //     mapContainer._leaflet_id = undefined;
-  //   }
+    if (this.interactionTimeout) {
+      clearTimeout(this.interactionTimeout);
+    }
+
+    if (this.map) {
+      // Remove all markers
+      this.markers.forEach(marker => marker.remove());
+      this.markers = [];
+
+      // Remove map
+      this.map.remove();
+      this.map = null;
+    }
   }
 }

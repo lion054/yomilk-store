@@ -70,12 +70,7 @@
     </p>
   </div>
 
-  <div *ngIf="zones.length > 0" class="h-[300px] md:h-[500px] w-full z-0"
-       leaflet
-       id="map"
-       [leafletOptions]="options"
-       [leafletLayers]="layers"
-       (leafletMapReady)="onMapReady($event)"></div>
+  <div *ngIf="zones.length > 0" id="delivery-map" class="h-[300px] md:h-[500px] w-full z-0" #mapContainer></div>
 
   <div class="p-4 md:p-6 bg-gray-50">
     <div class="grid grid-cols-1 gap-4 md:gap-6">

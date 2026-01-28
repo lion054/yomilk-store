@@ -4,7 +4,7 @@ import {StoreService} from "../../../core/services/store/store.service";
 import {BrowserModule, DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AuthService} from "../../../core/services/auth/auth.service";
 import {DatePipe, DecimalPipe, NgIf} from "@angular/common";
-import {QrCodeModule} from "ng-qrcode";
+import {QRCodeComponent} from "angularx-qrcode";
 import {NgxPrintModule} from "ngx-print";
 
 @Component({
@@ -13,7 +13,7 @@ import {NgxPrintModule} from "ngx-print";
   imports: [
     RouterModule,
     NgIf,
-    QrCodeModule,
+    QRCodeComponent,
     DecimalPipe,
     NgxPrintModule,
     DatePipe
