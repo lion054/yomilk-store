@@ -18,7 +18,7 @@ import { Shop } from '../../core/interfaces/interfaces';
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
         </svg>
-        <span class="max-w-[150px] truncate">{{ activeShop?.name || 'Select Store' }}</span>
+        <span class="max-w-[150px] truncate">{{ userAddress || activeShop?.name || 'My delivery address' }}</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [class.rotate-180]="isOpen">
           <path d="m6 9 6 6 6-6"/>
         </svg>
@@ -31,8 +31,8 @@ import { Shop } from '../../core/interfaces/interfaces';
 
         <!-- Header with User Location -->
         <div class="p-4 bg-gradient-to-r from-[#42af57] to-[#2d7a2d]">
-          <h3 class="font-bold text-white text-lg">Select Store</h3>
-          <p class="text-white/70 text-xs mt-1">Choose a store for delivery or pickup</p>
+          <h3 class="font-bold text-white text-lg">{{ userAddress ? 'Delivering to' : 'Select Delivery Address' }}</h3>
+          <p class="text-white/70 text-xs mt-1">{{ userAddress ? 'Choose a store for your order' : 'Set your location and select a store' }}</p>
 
           <!-- User Location Section -->
           <div class="mt-3 p-3 bg-white/10 backdrop-blur-sm rounded-xl">
@@ -48,7 +48,7 @@ import { Shop } from '../../core/interfaces/interfaces';
                 </svg>
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-[10px] text-white/60 uppercase tracking-wide font-medium">Deliver to</p>
+                <p class="text-[10px] text-white/60 uppercase tracking-wide font-medium">Your Location</p>
                 <p *ngIf="userAddress" class="text-white text-sm font-medium truncate">{{ userAddress }}</p>
                 <p *ngIf="!userAddress && !isLoadingLocation && !locationError" class="text-white/80 text-sm">
                   <button (click)="detectLocation()" class="underline hover:no-underline">Detect my location</button>

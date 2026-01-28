@@ -44,6 +44,7 @@ export class StoreComponent implements OnInit, OnDestroy{
   group:any
    itemGroups: any;
    activeItemGroup:any = "";
+   currentCategoryName: string = 'Shop';
 
   private searchSubject = new Subject<string>();
   private destroy$ = new Subject<void>();
@@ -117,6 +118,7 @@ export class StoreComponent implements OnInit, OnDestroy{
             this.itemGroups = response;
             const matchedGroup = this.itemGroups.find((item: any) => item.number.toString() === this.filterExtension);
             // this.activeItemGroup = matchedGroup ? matchedGroup.number : '';
+            this.currentCategoryName = matchedGroup ? matchedGroup.name : 'Shop';
             this.fetchProducts();
           })
         })
