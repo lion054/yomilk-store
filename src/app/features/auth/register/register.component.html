@@ -109,7 +109,7 @@
             </svg>
             Business Partner
           </div>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#1c352c] mb-2 font-outfit">Activate Account</h2>
+          <h2 class="text-2xl md:text-3xl font-bold text-[dark] mb-2 font-outfit">Activate Account</h2>
           <p class="text-gray-500">Enter your registered business email</p>
         </div>
 
@@ -117,7 +117,7 @@
         <form [formGroup]="registerForm" (ngSubmit)="onRegister()" class="space-y-5">
           <!-- Email Field -->
           <div>
-            <label class="block text-sm font-semibold text-[#1c352c] mb-2" for="email">
+            <label class="block text-sm font-semibold text-[dark] mb-2" for="email">
               Business Email Address
             </label>
             <div class="relative">
@@ -130,23 +130,29 @@
                 id="email"
                 type="email"
                 formControlName="email"
-                class="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:bg-white focus:border-[#8dc1ed] focus:outline-none"
+                class="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl text-[dark] placeholder-gray-400 transition-all focus:bg-white focus:border-[#8dc1ed] focus:outline-none"
                 placeholder="business@company.com"
-              />
+                />
             </div>
-            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
-                 class="mt-2 text-sm text-red-500 flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
-              </svg>
-              <span *ngIf="registerForm.get('email')?.errors?.['required']">Email is required</span>
-              <span *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email</span>
-            </div>
+            @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+              <div
+                class="mt-2 text-sm text-red-500 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
+                </svg>
+                @if (registerForm.get('email')?.errors?.['required']) {
+                  <span>Email is required</span>
+                }
+                @if (registerForm.get('email')?.errors?.['email']) {
+                  <span>Please enter a valid email</span>
+                }
+              </div>
+            }
           </div>
 
           <!-- Password Field -->
           <div>
-            <label class="block text-sm font-semibold text-[#1c352c] mb-2" for="password">
+            <label class="block text-sm font-semibold text-[dark] mb-2" for="password">
               Create Password
             </label>
             <div class="relative">
@@ -159,40 +165,50 @@
                 [type]="showPassword ? 'text' : 'password'"
                 id="password"
                 formControlName="password"
-                class="w-full pl-12 pr-12 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:bg-white focus:border-[#8dc1ed] focus:outline-none"
+                class="w-full pl-12 pr-12 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl text-[dark] placeholder-gray-400 transition-all focus:bg-white focus:border-[#8dc1ed] focus:outline-none"
                 placeholder="Create a secure password"
-              />
+                />
               <button
                 type="button"
                 class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-gray-600 transition-colors"
                 (click)="showPassword = !showPassword"
                 tabindex="-1"
-              >
-                <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
-                </svg>
-                <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
-                  <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>
-                </svg>
+                >
+                @if (!showPassword) {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                  </svg>
+                }
+                @if (showPassword) {
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+                    <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/>
+                  </svg>
+                }
               </button>
             </div>
-            <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid"
-                 class="mt-2 text-sm text-red-500 space-y-1">
-              <div *ngIf="registerForm.get('password')?.errors?.['required']" class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
-                Password is required
+            @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+              <div
+                class="mt-2 text-sm text-red-500 space-y-1">
+                @if (registerForm.get('password')?.errors?.['required']) {
+                  <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+                    Password is required
+                  </div>
+                }
+                @if (registerForm.get('password')?.errors?.['minlength']) {
+                  <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+                    Minimum 8 characters
+                  </div>
+                }
               </div>
-              <div *ngIf="registerForm.get('password')?.errors?.['minlength']" class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
-                Minimum 8 characters
-              </div>
-            </div>
+            }
           </div>
 
           <!-- Confirm Password Field -->
           <div>
-            <label class="block text-sm font-semibold text-[#1c352c] mb-2" for="confirmPassword">
+            <label class="block text-sm font-semibold text-[dark] mb-2" for="confirmPassword">
               Confirm Password
             </label>
             <div class="relative">
@@ -205,20 +221,26 @@
                 [type]="showPassword ? 'text' : 'password'"
                 id="confirmPassword"
                 formControlName="confirmPassword"
-                class="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:bg-white focus:border-[#8dc1ed] focus:outline-none"
+                class="w-full pl-12 pr-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-xl text-[dark] placeholder-gray-400 transition-all focus:bg-white focus:border-[#8dc1ed] focus:outline-none"
                 placeholder="Confirm your password"
-              />
+                />
             </div>
-            <div *ngIf="registerForm.get('confirmPassword')?.touched" class="mt-2 text-sm text-red-500">
-              <div *ngIf="registerForm.get('confirmPassword')?.errors?.['required']" class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
-                Please confirm your password
+            @if (registerForm.get('confirmPassword')?.touched) {
+              <div class="mt-2 text-sm text-red-500">
+                @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+                  <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+                    Please confirm your password
+                  </div>
+                }
+                @if (registerForm.errors?.['mismatch']) {
+                  <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+                    Passwords do not match
+                  </div>
+                }
               </div>
-              <div *ngIf="registerForm.errors?.['mismatch']" class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
-                Passwords do not match
-              </div>
-            </div>
+            }
           </div>
 
           <!-- Password Requirements -->
@@ -226,25 +248,25 @@
             <p class="text-xs text-gray-500 mb-3 font-semibold">Password must contain:</p>
             <div class="grid grid-cols-2 gap-2 text-xs">
               <span class="flex items-center gap-2 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
                 </svg>
                 8+ characters
               </span>
               <span class="flex items-center gap-2 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
                 </svg>
                 Uppercase letter
               </span>
               <span class="flex items-center gap-2 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
                 </svg>
                 One number
               </span>
               <span class="flex items-center gap-2 text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
                 </svg>
                 Special character
@@ -253,34 +275,40 @@
           </div>
 
           <!-- Error Message -->
-          <div *ngIf="errorMessage" class="bg-red-50 border border-red-100 rounded-xl p-4">
-            <div class="flex items-center gap-3 text-red-600">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
-                <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
-              </svg>
-              <span class="text-sm font-medium">{{ errorMessage }}</span>
+          @if (errorMessage) {
+            <div class="bg-red-50 border border-red-100 rounded-xl p-4">
+              <div class="flex items-center gap-3 text-red-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                  <circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>
+                </svg>
+                <span class="text-sm font-medium">{{ errorMessage }}</span>
+              </div>
             </div>
-          </div>
+          }
 
           <!-- Submit Button -->
           <button
             type="submit"
             [disabled]="isLoading || registerForm.invalid"
             class="w-full bg-[#8dc1ed] hover:bg-[#015a9e] disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed text-white font-semibold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-[#8dc1ed]/25"
-          >
-            <span *ngIf="!isLoading" class="flex items-center gap-2">
-              Activate Account
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-              </svg>
-            </span>
-            <span *ngIf="isLoading" class="flex items-center gap-2">
-              <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Creating account...
-            </span>
+            >
+            @if (!isLoading) {
+              <span class="flex items-center gap-2">
+                Activate Account
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                </svg>
+              </span>
+            }
+            @if (isLoading) {
+              <span class="flex items-center gap-2">
+                <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Creating account...
+              </span>
+            }
           </button>
         </form>
 
@@ -297,8 +325,8 @@
         <!-- Sign In Button -->
         <a
           routerLink="/login"
-          class="block w-full text-center bg-white border-2 border-[#42af57] text-[#42af57] hover:bg-[#42af57] hover:text-white font-semibold py-4 px-6 rounded-xl transition-all"
-        >
+          class="block w-full text-center bg-white border-2 border-[fresh-500] text-[fresh-500] hover:bg-[fresh-500] hover:text-white font-semibold py-4 px-6 rounded-xl transition-all"
+          >
           Sign in to your account
         </a>
 
@@ -306,7 +334,7 @@
         <div class="mt-6 text-center">
           <p class="text-sm text-gray-500">
             Not a business partner?
-            <a routerLink="/register-complete" class="text-[#42af57] hover:text-[#4ea34a] font-semibold transition-colors">
+            <a routerLink="/register-complete" class="text-[fresh-500] hover:text-[#4ea34a] font-semibold transition-colors">
               Create personal account
             </a>
           </p>
@@ -315,7 +343,7 @@
 
       <!-- Back to Home -->
       <div class="text-center mt-6">
-        <a routerLink="/" class="text-sm text-gray-500 hover:text-[#42af57] transition-colors inline-flex items-center gap-2">
+        <a routerLink="/" class="text-sm text-gray-500 hover:text-[fresh-500] transition-colors inline-flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
           </svg>

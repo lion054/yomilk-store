@@ -70,7 +70,9 @@
     </p>
   </div>
 
-  <div *ngIf="zones.length > 0" id="delivery-map" class="h-[300px] md:h-[500px] w-full z-0" #mapContainer></div>
+  @if (zones.length > 0) {
+    <div id="delivery-map" class="h-[300px] md:h-[500px] w-full z-0" #mapContainer></div>
+  }
 
   <div class="p-4 md:p-6 bg-gray-50">
     <div class="grid grid-cols-1 gap-4 md:gap-6">
@@ -80,16 +82,16 @@
           Our delivery fees are calculated based on your location.
         </p>
       </div>
-<!--      <div class="mt-4 md:mt-0">-->
-<!--        <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2">Delivery Pricing</h3>-->
-<!--        <ul class="list-disc pl-5 text-sm md:text-base text-gray-600">-->
-<!--          <li>0-5km: $2</li>-->
-<!--          <li>5-10km: $4</li>-->
-<!--          <li>10-15km: $6</li>-->
-<!--          <li>15km+: $8</li>-->
-<!--        </ul>-->
-<!--      </div>-->
-    </div>
-  </div>
+      <!--      <div class="mt-4 md:mt-0">-->
+      <!--        <h3 class="text-base md:text-lg font-semibold text-gray-800 mb-2">Delivery Pricing</h3>-->
+      <!--        <ul class="list-disc pl-5 text-sm md:text-base text-gray-600">-->
+      <!--          <li>0-5km: $2</li>-->
+      <!--          <li>5-10km: $4</li>-->
+      <!--          <li>10-15km: $6</li>-->
+      <!--          <li>15km+: $8</li>-->
+    <!--        </ul>-->
+  <!--      </div>-->
+</div>
+</div>
 </div>
 

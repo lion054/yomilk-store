@@ -4,570 +4,578 @@
 <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
 
 <!-- Success Message -->
-<div *ngIf="isSubmitted" class="min-h-[60vh] flex items-center justify-center py-16 px-5">
-  <div class="text-center max-w-lg">
-    <div class="w-24 h-24 bg-[#42af57]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-      <i class="fas fa-check-circle text-5xl text-[#42af57]"></i>
-    </div>
-    <h2 class="text-3xl font-bold text-[#1c352c] mb-4 font-outfit">Application Submitted!</h2>
-    <p class="text-gray-600 mb-8">
-      Thank you for applying to become a Snappy Fresh vendor. Our team will review your application and get back to you within 24-48 hours.
-    </p>
-    <div class="bg-gray-100 rounded-xl p-6 mb-8 text-left">
-      <h4 class="font-semibold text-[#1c352c] mb-3">What happens next?</h4>
-      <ul class="space-y-2 text-gray-600 text-sm">
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check text-[#42af57] mt-1"></i>
-          <span>You'll receive a confirmation email shortly</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check text-[#42af57] mt-1"></i>
-          <span>Our team will verify your business details</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check text-[#42af57] mt-1"></i>
-          <span>We'll contact you via phone or WhatsApp for any clarifications</span>
-        </li>
-        <li class="flex items-start gap-2">
-          <i class="fas fa-check text-[#42af57] mt-1"></i>
-          <span>Once approved, you'll get access to your vendor dashboard</span>
-        </li>
-      </ul>
-    </div>
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a routerLink="/" class="inline-flex items-center justify-center gap-2 bg-[#42af57] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#3d9332] transition-all">
-        <i class="fas fa-home"></i>
-        Back to Home
-      </a>
-      <a routerLink="/store" class="inline-flex items-center justify-center gap-2 border-2 border-[#42af57] text-[#42af57] px-6 py-3 rounded-xl font-semibold hover:bg-[#42af57] hover:text-white transition-all">
-        <i class="fas fa-store"></i>
-        Browse Store
-      </a>
+@if (isSubmitted) {
+  <div class="min-h-[60vh] flex items-center justify-center py-16 px-5">
+    <div class="text-center max-w-lg">
+      <div class="w-24 h-24 bg-[fresh-500]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+        <i class="fas fa-check-circle text-5xl text-[fresh-500]"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-[dark] mb-4 font-outfit">Application Submitted!</h2>
+      <p class="text-gray-600 mb-8">
+        Thank you for applying to become a Snappy Fresh vendor. Our team will review your application and get back to you within 24-48 hours.
+      </p>
+      <div class="bg-gray-100 rounded-xl p-6 mb-8 text-left">
+        <h4 class="font-semibold text-[dark] mb-3">What happens next?</h4>
+        <ul class="space-y-2 text-gray-600 text-sm">
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check text-[fresh-500] mt-1"></i>
+            <span>You'll receive a confirmation email shortly</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check text-[fresh-500] mt-1"></i>
+            <span>Our team will verify your business details</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check text-[fresh-500] mt-1"></i>
+            <span>We'll contact you via phone or WhatsApp for any clarifications</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <i class="fas fa-check text-[fresh-500] mt-1"></i>
+            <span>Once approved, you'll get access to your vendor dashboard</span>
+          </li>
+        </ul>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/" class="inline-flex items-center justify-center gap-2 bg-[fresh-500] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[fresh-600] transition-all">
+          <i class="fas fa-home"></i>
+          Back to Home
+        </a>
+        <a routerLink="/store" class="inline-flex items-center justify-center gap-2 border-2 border-[fresh-500] text-[fresh-500] px-6 py-3 rounded-xl font-semibold hover:bg-[fresh-500] hover:text-white transition-all">
+          <i class="fas fa-store"></i>
+          Browse Store
+        </a>
+      </div>
     </div>
   </div>
-</div>
+}
 
 <!-- Main Content -->
-<div *ngIf="!isSubmitted">
-  <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-[#42af57] via-[#3d9332] to-[#2d7025] py-20 overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-10 left-10 w-32 h-32 border-4 border-white rounded-full"></div>
-      <div class="absolute top-40 right-20 w-20 h-20 border-4 border-white rounded-full"></div>
-      <div class="absolute bottom-20 left-1/4 w-16 h-16 border-4 border-white rounded-full"></div>
-      <div class="absolute bottom-10 right-1/3 w-24 h-24 border-4 border-white rounded-full"></div>
-    </div>
-
-    <div class="container mx-auto px-5 relative z-10">
-      <div class="max-w-3xl mx-auto text-center text-white">
-        <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6">
-          <i class="fas fa-handshake mr-2"></i>
-          Partner With Us
-        </span>
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 font-outfit">
-          Become a Snappy Fresh Vendor
-        </h1>
-        <p class="text-xl text-white/90 mb-8">
-          Join Zimbabwe's fastest-growing online grocery marketplace. Reach thousands of customers and grow your business with us.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            (click)="scrollToForm()"
-            class="inline-flex items-center justify-center gap-2 bg-white text-[#42af57] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all hover:-translate-y-0.5 hover:shadow-lg"
-          >
-            <i class="fas fa-rocket"></i>
-            Apply Now
-          </button>
-          <a
-            routerLink="/vendors"
-            class="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[#42af57] transition-all"
-          >
-            <i class="fas fa-store"></i>
-            View Our Vendors
-          </a>
-        </div>
+@if (!isSubmitted) {
+  <div>
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-[fresh-500] via-[fresh-600] to-[#2d7025] py-20 overflow-hidden">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 border-4 border-white rounded-full"></div>
+        <div class="absolute top-40 right-20 w-20 h-20 border-4 border-white rounded-full"></div>
+        <div class="absolute bottom-20 left-1/4 w-16 h-16 border-4 border-white rounded-full"></div>
+        <div class="absolute bottom-10 right-1/3 w-24 h-24 border-4 border-white rounded-full"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- Benefits Section -->
-  <section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-5">
-      <div class="text-center mb-12">
-        <span class="inline-block bg-[#42af57]/10 text-[#42af57] px-4 py-2 rounded-full text-sm font-semibold mb-4">
-          Why Sell With Us
-        </span>
-        <h2 class="text-3xl font-bold text-[#1c352c] font-outfit">Benefits of Becoming a Vendor</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          *ngFor="let benefit of benefits"
-          class="bg-white rounded-2xl p-6 border-2 border-transparent hover:border-[#42af57] hover:shadow-lg transition-all"
-        >
-          <div class="w-14 h-14 bg-[#42af57]/10 rounded-xl flex items-center justify-center mb-4">
-            <i [class]="benefit.icon + ' text-2xl text-[#42af57]'"></i>
-          </div>
-          <h3 class="text-lg font-semibold text-[#1c352c] mb-2">{{ benefit.title }}</h3>
-          <p class="text-gray-600 text-sm">{{ benefit.description }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How It Works -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-5">
-      <div class="text-center mb-12">
-        <span class="inline-block bg-[#8dc1ed]/20 text-[#015a9e] px-4 py-2 rounded-full text-sm font-semibold mb-4">
-          Simple Process
-        </span>
-        <h2 class="text-3xl font-bold text-[#1c352c] font-outfit">How It Works</h2>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div
-          *ngFor="let step of howItWorks; let i = index"
-          class="relative text-center"
-        >
-          <!-- Connector Line -->
-          <div
-            *ngIf="i < howItWorks.length - 1"
-            class="hidden lg:block absolute top-10 left-1/2 w-full h-0.5 bg-gray-200"
-          ></div>
-
-          <!-- Step Number -->
-          <div class="relative w-20 h-20 bg-gradient-to-br from-[#42af57] to-[#3d9332] rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <i [class]="step.icon + ' text-2xl text-white'"></i>
-            <span class="absolute -top-2 -right-2 w-8 h-8 bg-[#8dc1ed] rounded-full flex items-center justify-center text-white font-bold text-sm">
-              {{ step.step }}
-            </span>
-          </div>
-
-          <h3 class="text-lg font-semibold text-[#1c352c] mb-2">{{ step.title }}</h3>
-          <p class="text-gray-600 text-sm">{{ step.description }}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Registration Form Section -->
-  <section id="vendor-form" class="py-16 bg-gray-50">
-    <div class="container mx-auto px-5">
-      <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-12">
-          <span class="inline-block bg-[#42af57]/10 text-[#42af57] px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            <i class="fas fa-edit mr-2"></i>
-            Vendor Application
+      <div class="container mx-auto px-5 relative z-10">
+        <div class="max-w-3xl mx-auto text-center text-white">
+          <span class="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            <i class="fas fa-handshake mr-2"></i>
+            Partner With Us
           </span>
-          <h2 class="text-3xl font-bold text-[#1c352c] font-outfit">Register Your Business</h2>
-          <p class="text-gray-600 mt-4">Fill out the form below to apply as a vendor. It only takes a few minutes.</p>
-        </div>
-
-        <!-- Progress Steps -->
-        <div class="flex items-center justify-center mb-10">
-          <div class="flex items-center">
-            <!-- Step 1 -->
-            <div
-              class="flex items-center cursor-pointer"
-              (click)="goToStep(1)"
-            >
-              <div
-                class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
-                [ngClass]="currentStep >= 1 ? 'bg-[#42af57] text-white' : 'bg-gray-200 text-gray-500'"
+          <h1 class="text-4xl md:text-5xl font-bold mb-6 font-outfit">
+            Become a Snappy Fresh Vendor
+          </h1>
+          <p class="text-xl text-white/90 mb-8">
+            Join Zimbabwe's fastest-growing online grocery marketplace. Reach thousands of customers and grow your business with us.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              (click)="scrollToForm()"
+              class="inline-flex items-center justify-center gap-2 bg-white text-[fresh-500] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all hover:-translate-y-0.5 hover:shadow-lg"
               >
-                <i *ngIf="currentStep > 1" class="fas fa-check"></i>
-                <span *ngIf="currentStep <= 1">1</span>
-              </div>
-              <span class="ml-2 text-sm font-medium hidden sm:inline" [ngClass]="currentStep >= 1 ? 'text-[#42af57]' : 'text-gray-500'">
-                Contact Info
-              </span>
-            </div>
-
-            <!-- Connector -->
-            <div class="w-12 sm:w-20 h-0.5 mx-2" [ngClass]="currentStep > 1 ? 'bg-[#42af57]' : 'bg-gray-200'"></div>
-
-            <!-- Step 2 -->
-            <div
-              class="flex items-center cursor-pointer"
-              (click)="goToStep(2)"
-            >
-              <div
-                class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
-                [ngClass]="currentStep >= 2 ? 'bg-[#42af57] text-white' : 'bg-gray-200 text-gray-500'"
+              <i class="fas fa-rocket"></i>
+              Apply Now
+            </button>
+            <a
+              routerLink="/vendors"
+              class="inline-flex items-center justify-center gap-2 border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-[fresh-500] transition-all"
               >
-                <i *ngIf="currentStep > 2" class="fas fa-check"></i>
-                <span *ngIf="currentStep <= 2">2</span>
-              </div>
-              <span class="ml-2 text-sm font-medium hidden sm:inline" [ngClass]="currentStep >= 2 ? 'text-[#42af57]' : 'text-gray-500'">
-                Business Details
-              </span>
-            </div>
-
-            <!-- Connector -->
-            <div class="w-12 sm:w-20 h-0.5 mx-2" [ngClass]="currentStep > 2 ? 'bg-[#42af57]' : 'bg-gray-200'"></div>
-
-            <!-- Step 3 -->
-            <div
-              class="flex items-center cursor-pointer"
-              (click)="goToStep(3)"
-            >
-              <div
-                class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
-                [ngClass]="currentStep >= 3 ? 'bg-[#42af57] text-white' : 'bg-gray-200 text-gray-500'"
-              >
-                3
-              </div>
-              <span class="ml-2 text-sm font-medium hidden sm:inline" [ngClass]="currentStep >= 3 ? 'text-[#42af57]' : 'text-gray-500'">
-                Confirm
-              </span>
-            </div>
+              <i class="fas fa-store"></i>
+              View Our Vendors
+            </a>
           </div>
         </div>
-
-        <!-- Form Card -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-10">
-          <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">
-
-            <!-- Step 1: Contact Information -->
-            <div *ngIf="currentStep === 1" class="space-y-6">
-              <h3 class="text-xl font-semibold text-[#1c352c] mb-6 flex items-center gap-2">
-                <i class="fas fa-user text-[#42af57]"></i>
-                Contact Information
-              </h3>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Business Name -->
-                <div class="md:col-span-2">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Business Name <span class="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    formControlName="businessName"
-                    placeholder="e.g., Fresh Farm Produce"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all"
-                    [ngClass]="f['businessName'].touched && f['businessName'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  />
-                  <p *ngIf="f['businessName'].touched && f['businessName'].invalid" class="text-red-500 text-sm mt-1">
-                    Please enter a valid business name (min 3 characters)
-                  </p>
+      </div>
+    </section>
+    <!-- Benefits Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-5">
+        <div class="text-center mb-12">
+          <span class="inline-block bg-[fresh-500]/10 text-[fresh-500] px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            Why Sell With Us
+          </span>
+          <h2 class="text-3xl font-bold text-[dark] font-outfit">Benefits of Becoming a Vendor</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          @for (benefit of benefits; track benefit) {
+            <div
+              class="bg-white rounded-2xl p-6 border-2 border-transparent hover:border-[fresh-500] hover:shadow-lg transition-all"
+              >
+              <div class="w-14 h-14 bg-[fresh-500]/10 rounded-xl flex items-center justify-center mb-4">
+                <i [class]="benefit.icon + ' text-2xl text-[fresh-500]'"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-[dark] mb-2">{{ benefit.title }}</h3>
+              <p class="text-gray-600 text-sm">{{ benefit.description }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+    <!-- How It Works -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-5">
+        <div class="text-center mb-12">
+          <span class="inline-block bg-[#8dc1ed]/20 text-[#015a9e] px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            Simple Process
+          </span>
+          <h2 class="text-3xl font-bold text-[dark] font-outfit">How It Works</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          @for (step of howItWorks; track step; let i = $index) {
+            <div
+              class="relative text-center"
+              >
+              <!-- Connector Line -->
+              @if (i < howItWorks.length - 1) {
+                <div
+                  class="hidden lg:block absolute top-10 left-1/2 w-full h-0.5 bg-gray-200"
+                ></div>
+              }
+              <!-- Step Number -->
+              <div class="relative w-20 h-20 bg-gradient-to-br from-fresh-500 to-fresh-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <i [class]="step.icon + ' text-2xl text-white'"></i>
+                <span class="absolute -top-2 -right-2 w-8 h-8 bg-[#8dc1ed] rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  {{ step.step }}
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-[dark] mb-2">{{ step.title }}</h3>
+              <p class="text-gray-600 text-sm">{{ step.description }}</p>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+    <!-- Registration Form Section -->
+    <section id="vendor-form" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-5">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-12">
+            <span class="inline-block bg-[fresh-500]/10 text-[fresh-500] px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              <i class="fas fa-edit mr-2"></i>
+              Vendor Application
+            </span>
+            <h2 class="text-3xl font-bold text-[dark] font-outfit">Register Your Business</h2>
+            <p class="text-gray-600 mt-4">Fill out the form below to apply as a vendor. It only takes a few minutes.</p>
+          </div>
+          <!-- Progress Steps -->
+          <div class="flex items-center justify-center mb-10">
+            <div class="flex items-center">
+              <!-- Step 1 -->
+              <div
+                class="flex items-center cursor-pointer"
+                (click)="goToStep(1)"
+                >
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
+                  [ngClass]="currentStep >= 1 ? 'bg-[fresh-500] text-white' : 'bg-gray-200 text-gray-500'"
+                  >
+                  @if (currentStep > 1) {
+                    <i class="fas fa-check"></i>
+                  }
+                  @if (currentStep <= 1) {
+                    <span>1</span>
+                  }
                 </div>
-
-                <!-- Owner Name -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Owner / Contact Person <span class="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    formControlName="ownerName"
-                    placeholder="Full name"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all"
-                    [ngClass]="f['ownerName'].touched && f['ownerName'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  />
-                  <p *ngIf="f['ownerName'].touched && f['ownerName'].invalid" class="text-red-500 text-sm mt-1">
-                    Please enter the owner's name
-                  </p>
+                <span class="ml-2 text-sm font-medium hidden sm:inline" [ngClass]="currentStep >= 1 ? 'text-[fresh-500]' : 'text-gray-500'">
+                  Contact Info
+                </span>
+              </div>
+              <!-- Connector -->
+              <div class="w-12 sm:w-20 h-0.5 mx-2" [ngClass]="currentStep > 1 ? 'bg-[fresh-500]' : 'bg-gray-200'"></div>
+              <!-- Step 2 -->
+              <div
+                class="flex items-center cursor-pointer"
+                (click)="goToStep(2)"
+                >
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
+                  [ngClass]="currentStep >= 2 ? 'bg-[fresh-500] text-white' : 'bg-gray-200 text-gray-500'"
+                  >
+                  @if (currentStep > 2) {
+                    <i class="fas fa-check"></i>
+                  }
+                  @if (currentStep <= 2) {
+                    <span>2</span>
+                  }
                 </div>
-
-                <!-- Email -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address <span class="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    formControlName="email"
-                    placeholder="business@email.com"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all"
-                    [ngClass]="f['email'].touched && f['email'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  />
-                  <p *ngIf="f['email'].touched && f['email'].invalid" class="text-red-500 text-sm mt-1">
-                    Please enter a valid email address
-                  </p>
+                <span class="ml-2 text-sm font-medium hidden sm:inline" [ngClass]="currentStep >= 2 ? 'text-[fresh-500]' : 'text-gray-500'">
+                  Business Details
+                </span>
+              </div>
+              <!-- Connector -->
+              <div class="w-12 sm:w-20 h-0.5 mx-2" [ngClass]="currentStep > 2 ? 'bg-[fresh-500]' : 'bg-gray-200'"></div>
+              <!-- Step 3 -->
+              <div
+                class="flex items-center cursor-pointer"
+                (click)="goToStep(3)"
+                >
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
+                  [ngClass]="currentStep >= 3 ? 'bg-[fresh-500] text-white' : 'bg-gray-200 text-gray-500'"
+                  >
+                  3
                 </div>
-
-                <!-- Phone -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number <span class="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    formControlName="phone"
-                    placeholder="+263 77 123 4567"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all"
-                    [ngClass]="f['phone'].touched && f['phone'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  />
-                  <p *ngIf="f['phone'].touched && f['phone'].invalid" class="text-red-500 text-sm mt-1">
-                    Please enter a valid phone number
-                  </p>
-                </div>
-
-                <!-- WhatsApp -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    WhatsApp Number <span class="text-gray-400">(Optional)</span>
-                  </label>
-                  <input
-                    type="tel"
-                    formControlName="whatsapp"
-                    placeholder="+263 77 123 4567"
-                    class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#42af57] focus:outline-none transition-all"
-                  />
-                </div>
+                <span class="ml-2 text-sm font-medium hidden sm:inline" [ngClass]="currentStep >= 3 ? 'text-[fresh-500]' : 'text-gray-500'">
+                  Confirm
+                </span>
               </div>
             </div>
-
-            <!-- Step 2: Business Details -->
-            <div *ngIf="currentStep === 2" class="space-y-6">
-              <h3 class="text-xl font-semibold text-[#1c352c] mb-6 flex items-center gap-2">
-                <i class="fas fa-store text-[#42af57]"></i>
-                Business Details
-              </h3>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Address -->
-                <div class="md:col-span-2">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Business Address <span class="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    formControlName="address"
-                    placeholder="Street address"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all"
-                    [ngClass]="f['address'].touched && f['address'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  />
-                </div>
-
-                <!-- City -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    City <span class="text-red-500">*</span>
-                  </label>
-                  <select
-                    formControlName="city"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all cursor-pointer"
-                    [ngClass]="f['city'].touched && f['city'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  >
-                    <option value="">Select city</option>
-                    <option value="harare">Harare</option>
-                    <option value="bulawayo">Bulawayo</option>
-                    <option value="chitungwiza">Chitungwiza</option>
-                    <option value="mutare">Mutare</option>
-                    <option value="gweru">Gweru</option>
-                    <option value="masvingo">Masvingo</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <!-- Business Type -->
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Business Type <span class="text-red-500">*</span>
-                  </label>
-                  <select
-                    formControlName="businessType"
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all cursor-pointer"
-                    [ngClass]="f['businessType'].touched && f['businessType'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  >
-                    <option value="">Select business type</option>
-                    <option *ngFor="let type of businessTypes" [value]="type.value">
-                      {{ type.icon }} {{ type.label }}
-                    </option>
-                  </select>
-                </div>
-
-                <!-- Product Categories -->
-                <div class="md:col-span-2">
-                  <label class="block text-sm font-medium text-gray-700 mb-3">
-                    Product Categories <span class="text-gray-400">(Select all that apply)</span>
-                  </label>
-                  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                    <div
-                      *ngFor="let category of productCategories"
-                      (click)="toggleCategory(category)"
-                      class="px-3 py-2 rounded-lg text-sm text-center cursor-pointer transition-all border-2"
-                      [ngClass]="category.selected ? 'bg-[#42af57] text-white border-[#42af57]' : 'bg-gray-100 text-gray-700 border-transparent hover:border-[#42af57]'"
-                    >
-                      {{ category.label }}
+          </div>
+          <!-- Form Card -->
+          <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-10">
+            <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">
+              <!-- Step 1: Contact Information -->
+              @if (currentStep === 1) {
+                <div class="space-y-6">
+                  <h3 class="text-xl font-semibold text-[dark] mb-6 flex items-center gap-2">
+                    <i class="fas fa-user text-[fresh-500]"></i>
+                    Contact Information
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Business Name -->
+                    <div class="md:col-span-2">
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Business Name <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        formControlName="businessName"
+                        placeholder="e.g., Fresh Farm Produce"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all"
+                        [ngClass]="f['businessName'].touched && f['businessName'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        />
+                      @if (f['businessName'].touched && f['businessName'].invalid) {
+                        <p class="text-red-500 text-sm mt-1">
+                          Please enter a valid business name (min 3 characters)
+                        </p>
+                      }
+                    </div>
+                    <!-- Owner Name -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Owner / Contact Person <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        formControlName="ownerName"
+                        placeholder="Full name"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all"
+                        [ngClass]="f['ownerName'].touched && f['ownerName'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        />
+                      @if (f['ownerName'].touched && f['ownerName'].invalid) {
+                        <p class="text-red-500 text-sm mt-1">
+                          Please enter the owner's name
+                        </p>
+                      }
+                    </div>
+                    <!-- Email -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        formControlName="email"
+                        placeholder="business@email.com"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all"
+                        [ngClass]="f['email'].touched && f['email'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        />
+                      @if (f['email'].touched && f['email'].invalid) {
+                        <p class="text-red-500 text-sm mt-1">
+                          Please enter a valid email address
+                        </p>
+                      }
+                    </div>
+                    <!-- Phone -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Phone Number <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        formControlName="phone"
+                        placeholder="+263 77 123 4567"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all"
+                        [ngClass]="f['phone'].touched && f['phone'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        />
+                      @if (f['phone'].touched && f['phone'].invalid) {
+                        <p class="text-red-500 text-sm mt-1">
+                          Please enter a valid phone number
+                        </p>
+                      }
+                    </div>
+                    <!-- WhatsApp -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        WhatsApp Number <span class="text-gray-400">(Optional)</span>
+                      </label>
+                      <input
+                        type="tel"
+                        formControlName="whatsapp"
+                        placeholder="+263 77 123 4567"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all"
+                        />
                     </div>
                   </div>
                 </div>
-
-                <!-- Description -->
-                <div class="md:col-span-2">
-                  <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Business Description <span class="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    formControlName="description"
-                    rows="4"
-                    placeholder="Tell us about your business, products, and what makes you unique..."
-                    class="w-full px-4 py-3 border-2 rounded-xl focus:border-[#42af57] focus:outline-none transition-all resize-none"
-                    [ngClass]="f['description'].touched && f['description'].invalid ? 'border-red-500' : 'border-gray-200'"
-                  ></textarea>
-                  <p class="text-gray-500 text-sm mt-1">Minimum 50 characters</p>
-                  <p *ngIf="f['description'].touched && f['description'].invalid" class="text-red-500 text-sm mt-1">
-                    Please provide a description (min 50 characters)
-                  </p>
+              }
+              <!-- Step 2: Business Details -->
+              @if (currentStep === 2) {
+                <div class="space-y-6">
+                  <h3 class="text-xl font-semibold text-[dark] mb-6 flex items-center gap-2">
+                    <i class="fas fa-store text-[fresh-500]"></i>
+                    Business Details
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Address -->
+                    <div class="md:col-span-2">
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Business Address <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        formControlName="address"
+                        placeholder="Street address"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all"
+                        [ngClass]="f['address'].touched && f['address'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        />
+                    </div>
+                    <!-- City -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        City <span class="text-red-500">*</span>
+                      </label>
+                      <select
+                        formControlName="city"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all cursor-pointer"
+                        [ngClass]="f['city'].touched && f['city'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        >
+                        <option value="">Select city</option>
+                        <option value="harare">Harare</option>
+                        <option value="bulawayo">Bulawayo</option>
+                        <option value="chitungwiza">Chitungwiza</option>
+                        <option value="mutare">Mutare</option>
+                        <option value="gweru">Gweru</option>
+                        <option value="masvingo">Masvingo</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <!-- Business Type -->
+                    <div>
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Business Type <span class="text-red-500">*</span>
+                      </label>
+                      <select
+                        formControlName="businessType"
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all cursor-pointer"
+                        [ngClass]="f['businessType'].touched && f['businessType'].invalid ? 'border-red-500' : 'border-gray-200'"
+                        >
+                        <option value="">Select business type</option>
+                        @for (type of businessTypes; track type) {
+                          <option [value]="type.value">
+                            {{ type.icon }} {{ type.label }}
+                          </option>
+                        }
+                      </select>
+                    </div>
+                    <!-- Product Categories -->
+                    <div class="md:col-span-2">
+                      <label class="block text-sm font-medium text-gray-700 mb-3">
+                        Product Categories <span class="text-gray-400">(Select all that apply)</span>
+                      </label>
+                      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                        @for (category of productCategories; track category) {
+                          <div
+                            (click)="toggleCategory(category)"
+                            class="px-3 py-2 rounded-lg text-sm text-center cursor-pointer transition-all border-2"
+                            [ngClass]="category.selected ? 'bg-[fresh-500] text-white border-[fresh-500]' : 'bg-gray-100 text-gray-700 border-transparent hover:border-[fresh-500]'"
+                            >
+                            {{ category.label }}
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <!-- Description -->
+                    <div class="md:col-span-2">
+                      <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Business Description <span class="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        formControlName="description"
+                        rows="4"
+                        placeholder="Tell us about your business, products, and what makes you unique..."
+                        class="w-full px-4 py-3 border-2 rounded-xl focus:border-[fresh-500] focus:outline-none transition-all resize-none"
+                        [ngClass]="f['description'].touched && f['description'].invalid ? 'border-red-500' : 'border-gray-200'"
+                      ></textarea>
+                      <p class="text-gray-500 text-sm mt-1">Minimum 50 characters</p>
+                      @if (f['description'].touched && f['description'].invalid) {
+                        <p class="text-red-500 text-sm mt-1">
+                          Please provide a description (min 50 characters)
+                        </p>
+                      }
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- Step 3: Confirmation -->
-            <div *ngIf="currentStep === 3" class="space-y-6">
-              <h3 class="text-xl font-semibold text-[#1c352c] mb-6 flex items-center gap-2">
-                <i class="fas fa-clipboard-check text-[#42af57]"></i>
-                Review & Confirm
-              </h3>
-
-              <!-- Summary -->
-              <div class="bg-gray-50 rounded-xl p-6 space-y-4">
-                <h4 class="font-semibold text-[#1c352c] mb-4">Application Summary</h4>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span class="text-gray-500">Business Name:</span>
-                    <p class="font-medium text-[#1c352c]">{{ vendorForm.get('businessName')?.value || '-' }}</p>
+              }
+              <!-- Step 3: Confirmation -->
+              @if (currentStep === 3) {
+                <div class="space-y-6">
+                  <h3 class="text-xl font-semibold text-[dark] mb-6 flex items-center gap-2">
+                    <i class="fas fa-clipboard-check text-[fresh-500]"></i>
+                    Review & Confirm
+                  </h3>
+                  <!-- Summary -->
+                  <div class="bg-gray-50 rounded-xl p-6 space-y-4">
+                    <h4 class="font-semibold text-[dark] mb-4">Application Summary</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span class="text-gray-500">Business Name:</span>
+                        <p class="font-medium text-[dark]">{{ vendorForm.get('businessName')?.value || '-' }}</p>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Owner:</span>
+                        <p class="font-medium text-[dark]">{{ vendorForm.get('ownerName')?.value || '-' }}</p>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Email:</span>
+                        <p class="font-medium text-[dark]">{{ vendorForm.get('email')?.value || '-' }}</p>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Phone:</span>
+                        <p class="font-medium text-[dark]">{{ vendorForm.get('phone')?.value || '-' }}</p>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">City:</span>
+                        <p class="font-medium text-[dark] capitalize">{{ vendorForm.get('city')?.value || '-' }}</p>
+                      </div>
+                      <div>
+                        <span class="text-gray-500">Business Type:</span>
+                        <p class="font-medium text-[dark] capitalize">{{ vendorForm.get('businessType')?.value || '-' }}</p>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span class="text-gray-500">Owner:</span>
-                    <p class="font-medium text-[#1c352c]">{{ vendorForm.get('ownerName')?.value || '-' }}</p>
+                  <!-- License Checkbox -->
+                  <div class="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      formControlName="hasBusinessLicense"
+                      id="hasLicense"
+                      class="w-5 h-5 mt-0.5 rounded border-gray-300 text-[fresh-500] focus:ring-[fresh-500] cursor-pointer"
+                      />
+                    <label for="hasLicense" class="text-gray-700 cursor-pointer">
+                      I have a valid business license or registration
+                      <span class="text-gray-400 text-sm block">(Not required but helps with verification)</span>
+                    </label>
                   </div>
-                  <div>
-                    <span class="text-gray-500">Email:</span>
-                    <p class="font-medium text-[#1c352c]">{{ vendorForm.get('email')?.value || '-' }}</p>
+                  <!-- Terms Checkbox -->
+                  <div class="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      formControlName="acceptTerms"
+                      id="acceptTerms"
+                      class="w-5 h-5 mt-0.5 rounded border-gray-300 text-[fresh-500] focus:ring-[fresh-500] cursor-pointer"
+                      />
+                    <label for="acceptTerms" class="text-gray-700 cursor-pointer">
+                      I agree to the <a href="#" class="text-[fresh-500] hover:underline">Terms & Conditions</a> and
+                      <a href="#" class="text-[fresh-500] hover:underline">Vendor Agreement</a>
+                      <span class="text-red-500">*</span>
+                    </label>
                   </div>
-                  <div>
-                    <span class="text-gray-500">Phone:</span>
-                    <p class="font-medium text-[#1c352c]">{{ vendorForm.get('phone')?.value || '-' }}</p>
-                  </div>
-                  <div>
-                    <span class="text-gray-500">City:</span>
-                    <p class="font-medium text-[#1c352c] capitalize">{{ vendorForm.get('city')?.value || '-' }}</p>
-                  </div>
-                  <div>
-                    <span class="text-gray-500">Business Type:</span>
-                    <p class="font-medium text-[#1c352c] capitalize">{{ vendorForm.get('businessType')?.value || '-' }}</p>
-                  </div>
+                  @if (f['acceptTerms'].touched && f['acceptTerms'].invalid) {
+                    <p class="text-red-500 text-sm">
+                      You must accept the terms to continue
+                    </p>
+                  }
                 </div>
+              }
+              <!-- Navigation Buttons -->
+              <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+                @if (currentStep > 1) {
+                  <button
+                    type="button"
+                    (click)="prevStep()"
+                    class="flex items-center gap-2 text-gray-600 hover:text-[fresh-500] transition-all"
+                    >
+                    <i class="fas fa-arrow-left"></i>
+                    Previous
+                  </button>
+                }
+                @if (currentStep === 1) {
+                  <div></div>
+                }
+                @if (currentStep < totalSteps) {
+                  <button
+                    type="button"
+                    (click)="nextStep()"
+                    [disabled]="!isStepValid(currentStep)"
+                    class="flex items-center gap-2 bg-[fresh-500] text-white px-6 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[fresh-600]"
+                    >
+                    Next
+                    <i class="fas fa-arrow-right"></i>
+                  </button>
+                }
+                @if (currentStep === totalSteps) {
+                  <button
+                    type="submit"
+                    [disabled]="!vendorForm.valid || isSubmitting"
+                    class="flex items-center gap-2 bg-[fresh-500] text-white px-8 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[fresh-600]"
+                    >
+                    @if (isSubmitting) {
+                      <i class="fas fa-spinner fa-spin"></i>
+                    }
+                    @if (!isSubmitting) {
+                      <i class="fas fa-paper-plane"></i>
+                    }
+                    {{ isSubmitting ? 'Submitting...' : 'Submit Application' }}
+                  </button>
+                }
               </div>
-
-              <!-- License Checkbox -->
-              <div class="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  formControlName="hasBusinessLicense"
-                  id="hasLicense"
-                  class="w-5 h-5 mt-0.5 rounded border-gray-300 text-[#42af57] focus:ring-[#42af57] cursor-pointer"
-                />
-                <label for="hasLicense" class="text-gray-700 cursor-pointer">
-                  I have a valid business license or registration
-                  <span class="text-gray-400 text-sm block">(Not required but helps with verification)</span>
-                </label>
-              </div>
-
-              <!-- Terms Checkbox -->
-              <div class="flex items-start gap-3">
-                <input
-                  type="checkbox"
-                  formControlName="acceptTerms"
-                  id="acceptTerms"
-                  class="w-5 h-5 mt-0.5 rounded border-gray-300 text-[#42af57] focus:ring-[#42af57] cursor-pointer"
-                />
-                <label for="acceptTerms" class="text-gray-700 cursor-pointer">
-                  I agree to the <a href="#" class="text-[#42af57] hover:underline">Terms & Conditions</a> and
-                  <a href="#" class="text-[#42af57] hover:underline">Vendor Agreement</a>
-                  <span class="text-red-500">*</span>
-                </label>
-              </div>
-              <p *ngIf="f['acceptTerms'].touched && f['acceptTerms'].invalid" class="text-red-500 text-sm">
-                You must accept the terms to continue
-              </p>
-            </div>
-
-            <!-- Navigation Buttons -->
-            <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
-              <button
-                *ngIf="currentStep > 1"
-                type="button"
-                (click)="prevStep()"
-                class="flex items-center gap-2 text-gray-600 hover:text-[#42af57] transition-all"
-              >
-                <i class="fas fa-arrow-left"></i>
-                Previous
-              </button>
-              <div *ngIf="currentStep === 1"></div>
-
-              <button
-                *ngIf="currentStep < totalSteps"
-                type="button"
-                (click)="nextStep()"
-                [disabled]="!isStepValid(currentStep)"
-                class="flex items-center gap-2 bg-[#42af57] text-white px-6 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#3d9332]"
-              >
-                Next
-                <i class="fas fa-arrow-right"></i>
-              </button>
-
-              <button
-                *ngIf="currentStep === totalSteps"
-                type="submit"
-                [disabled]="!vendorForm.valid || isSubmitting"
-                class="flex items-center gap-2 bg-[#42af57] text-white px-8 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#3d9332]"
-              >
-                <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
-                <i *ngIf="!isSubmitting" class="fas fa-paper-plane"></i>
-                {{ isSubmitting ? 'Submitting...' : 'Submit Application' }}
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-5">
-      <div class="max-w-3xl mx-auto">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-[#1c352c] font-outfit">Frequently Asked Questions</h2>
-        </div>
-
-        <div class="space-y-4">
-          <div class="bg-gray-50 rounded-xl p-6">
-            <h4 class="font-semibold text-[#1c352c] mb-2">What are the requirements to become a vendor?</h4>
-            <p class="text-gray-600 text-sm">You need a valid business or products to sell. A business license is helpful but not required for approval. We accept both registered businesses and individual producers.</p>
+    </section>
+    <!-- FAQ Section -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-5">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-[dark] font-outfit">Frequently Asked Questions</h2>
           </div>
-          <div class="bg-gray-50 rounded-xl p-6">
-            <h4 class="font-semibold text-[#1c352c] mb-2">How long does the approval process take?</h4>
-            <p class="text-gray-600 text-sm">Most applications are reviewed within 24-48 hours. You'll receive an email notification once your application has been processed.</p>
+          <div class="space-y-4">
+            <div class="bg-gray-50 rounded-xl p-6">
+              <h4 class="font-semibold text-[dark] mb-2">What are the requirements to become a vendor?</h4>
+              <p class="text-gray-600 text-sm">You need a valid business or products to sell. A business license is helpful but not required for approval. We accept both registered businesses and individual producers.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6">
+              <h4 class="font-semibold text-[dark] mb-2">How long does the approval process take?</h4>
+              <p class="text-gray-600 text-sm">Most applications are reviewed within 24-48 hours. You'll receive an email notification once your application has been processed.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6">
+              <h4 class="font-semibold text-[dark] mb-2">What are the commission rates?</h4>
+              <p class="text-gray-600 text-sm">Our commission rates are competitive and vary by product category. We'll discuss the specifics during your onboarding call after approval.</p>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-6">
+              <h4 class="font-semibold text-[dark] mb-2">How do I receive payments?</h4>
+              <p class="text-gray-600 text-sm">Payments are processed weekly via EcoCash, bank transfer, or other preferred methods. You can track all your earnings in the vendor dashboard.</p>
+            </div>
           </div>
-          <div class="bg-gray-50 rounded-xl p-6">
-            <h4 class="font-semibold text-[#1c352c] mb-2">What are the commission rates?</h4>
-            <p class="text-gray-600 text-sm">Our commission rates are competitive and vary by product category. We'll discuss the specifics during your onboarding call after approval.</p>
+          <div class="text-center mt-8">
+            <p class="text-gray-600">
+              Have more questions?
+              <a routerLink="/contact-us" class="text-[fresh-500] font-semibold hover:underline">Contact our vendor support team</a>
+            </p>
           </div>
-          <div class="bg-gray-50 rounded-xl p-6">
-            <h4 class="font-semibold text-[#1c352c] mb-2">How do I receive payments?</h4>
-            <p class="text-gray-600 text-sm">Payments are processed weekly via EcoCash, bank transfer, or other preferred methods. You can track all your earnings in the vendor dashboard.</p>
-          </div>
-        </div>
-
-        <div class="text-center mt-8">
-          <p class="text-gray-600">
-            Have more questions?
-            <a routerLink="/contact-us" class="text-[#42af57] font-semibold hover:underline">Contact our vendor support team</a>
-          </p>
         </div>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
+  </div>
+}
 
 <!-- Features Strip -->
 <app-features-strip></app-features-strip>

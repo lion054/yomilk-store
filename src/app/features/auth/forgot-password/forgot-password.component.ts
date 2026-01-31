@@ -10,7 +10,7 @@ import {
   ValidatorFn,
   Validators
 } from "@angular/forms";
-import {NgIf} from "@angular/common";
+
 import Swal from "sweetalert2";
 
 export function passwordMatchValidator(): ValidatorFn {
@@ -27,9 +27,8 @@ export function passwordMatchValidator(): ValidatorFn {
   standalone: true,
   imports: [
     RouterLink,
-    NgIf,
     ReactiveFormsModule
-  ],
+],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css'
 })

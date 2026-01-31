@@ -1,14 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
+import { CurrencyPipe } from "@angular/common";
 
 @Component({
   selector: 'app-confirm-cart',
   standalone: true,
   imports: [
-    CurrencyPipe,
-    NgIf,
-    NgForOf
-  ],
+    CurrencyPipe
+],
   templateUrl: './confirm-cart.component.html',
   styleUrl: './confirm-cart.component.css'
 })

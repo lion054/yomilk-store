@@ -13,23 +13,25 @@
       <div class="overflow-x-auto">
         <table class="min-w-full">
           <thead>
-          <tr class="text-left text-sm text-gray-600">
-            <th class="pb-3 font-medium">Description</th>
-            <th class="pb-3 font-medium text-center">Qty</th>
-            <th class="pb-3 font-medium text-right">Price</th>
-            <th class="pb-3 font-medium text-right">Total</th>
-          </tr>
+            <tr class="text-left text-sm text-gray-600">
+              <th class="pb-3 font-medium">Description</th>
+              <th class="pb-3 font-medium text-center">Qty</th>
+              <th class="pb-3 font-medium text-right">Price</th>
+              <th class="pb-3 font-medium text-right">Total</th>
+            </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let item of checkoutData.documentLines" class="border-b border-gray-100">
-            <td class="py-3">
-              <div class="font-medium">{{ item.itemDescription }}</div>
-              <div class="text-xs text-gray-500">{{ item.itemCode }}</div>
-            </td>
-            <td class="py-3 text-center">{{ item.quantity }}</td>
-            <td class="py-3 text-right">{{ item.priceAfterVAT | currency:checkoutData.docCurrency }}</td>
-            <td class="py-3 text-right font-medium">{{ item.lineTotal | currency:checkoutData.docCurrency }}</td>
-          </tr>
+            @for (item of checkoutData.documentLines; track item) {
+              <tr class="border-b border-gray-100">
+                <td class="py-3">
+                  <div class="font-medium">{{ item.itemDescription }}</div>
+                  <div class="text-xs text-gray-500">{{ item.itemCode }}</div>
+                </td>
+                <td class="py-3 text-center">{{ item.quantity }}</td>
+                <td class="py-3 text-right">{{ item.priceAfterVAT | currency:checkoutData.docCurrency }}</td>
+                <td class="py-3 text-right font-medium">{{ item.lineTotal | currency:checkoutData.docCurrency }}</td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
@@ -41,7 +43,9 @@
         <h3 class="text-lg font-medium text-gray-700 mb-3">Billing Address</h3>
         <div class="text-sm space-y-1">
           <div>{{ checkoutData.billToAddress.addressLine1 }}</div>
-          <div *ngIf="checkoutData.billToAddress.suburb">{{ checkoutData.billToAddress.suburb }}</div>
+          @if (checkoutData.billToAddress.suburb) {
+            <div>{{ checkoutData.billToAddress.suburb }}</div>
+          }
           <div>{{ checkoutData.billToAddress.city }}</div>
           <div>{{ checkoutData.billToAddress.countryName }}</div>
         </div>
@@ -50,7 +54,9 @@
         <h3 class="text-lg font-medium text-gray-700 mb-3">Shipping Address</h3>
         <div class="text-sm space-y-1">
           <div>{{ checkoutData.shipToAddress.addressLine1 }}</div>
-          <div *ngIf="checkoutData.shipToAddress.suburb">{{ checkoutData.shipToAddress.suburb }}</div>
+          @if (checkoutData.shipToAddress.suburb) {
+            <div>{{ checkoutData.shipToAddress.suburb }}</div>
+          }
           <div>{{ checkoutData.shipToAddress.city }}</div>
           <div>{{ checkoutData.shipToAddress.countryName }}</div>
         </div>
@@ -65,42 +71,56 @@
           <span class="w-24 font-medium text-gray-600">Method:</span>
           <span>{{ checkoutData.paymentMethod }}</span>
         </div>
-        <div class="flex" *ngIf="checkoutData.paymentFullName">
-          <span class="w-24 font-medium text-gray-600">Name:</span>
-          <span>{{ checkoutData.paymentFullName }}</span>
-        </div>
-        <div class="flex" *ngIf="checkoutData.paymentPhoneNumber">
-          <span class="w-24 font-medium text-gray-600">Phone:</span>
-          <span>{{ checkoutData.paymentPhoneNumber }}</span>
-        </div>
-        <div class="flex" *ngIf="checkoutData.email">
-          <span class="w-24 font-medium text-gray-600">Email:</span>
-          <span>{{ checkoutData.email }}</span>
-        </div>
-        <div class="flex" *ngIf="checkoutData.paymentReference">
-          <span class="w-24 font-medium text-gray-600">Reference:</span>
-          <span>{{ checkoutData.paymentReference }}</span>
-        </div>
+        @if (checkoutData.paymentFullName) {
+          <div class="flex">
+            <span class="w-24 font-medium text-gray-600">Name:</span>
+            <span>{{ checkoutData.paymentFullName }}</span>
+          </div>
+        }
+        @if (checkoutData.paymentPhoneNumber) {
+          <div class="flex">
+            <span class="w-24 font-medium text-gray-600">Phone:</span>
+            <span>{{ checkoutData.paymentPhoneNumber }}</span>
+          </div>
+        }
+        @if (checkoutData.email) {
+          <div class="flex">
+            <span class="w-24 font-medium text-gray-600">Email:</span>
+            <span>{{ checkoutData.email }}</span>
+          </div>
+        }
+        @if (checkoutData.paymentReference) {
+          <div class="flex">
+            <span class="w-24 font-medium text-gray-600">Reference:</span>
+            <span>{{ checkoutData.paymentReference }}</span>
+          </div>
+        }
       </div>
     </div>
 
     <!-- Additional Expenses -->
-    <div *ngIf="checkoutData.additionalExpenses.length > 0" class="mb-8">
-      <h3 class="text-lg font-medium text-gray-700 pb-2 border-b border-gray-200 mb-4">Additional Expenses</h3>
-      <div class="space-y-2">
-        <div *ngFor="let expense of checkoutData.additionalExpenses" class="flex justify-between py-2 border-b border-gray-100">
-          <div>{{ expense.remarks }}</div>
-<!--          <div class="font-medium">{{ expense.lineTotal | currency:checkoutData.docCurrency }}</div>-->
-          <div class="font-medium">{{ expense.lineTotalAfterVAT | currency:checkoutData.docCurrency }}</div>
+    @if (checkoutData.additionalExpenses.length > 0) {
+      <div class="mb-8">
+        <h3 class="text-lg font-medium text-gray-700 pb-2 border-b border-gray-200 mb-4">Additional Expenses</h3>
+        <div class="space-y-2">
+          @for (expense of checkoutData.additionalExpenses; track expense) {
+            <div class="flex justify-between py-2 border-b border-gray-100">
+              <div>{{ expense.remarks }}</div>
+              <!--          <div class="font-medium">{{ expense.lineTotal | currency:checkoutData.docCurrency }}</div>-->
+              <div class="font-medium">{{ expense.lineTotalAfterVAT | currency:checkoutData.docCurrency }}</div>
+            </div>
+          }
         </div>
       </div>
-    </div>
+    }
 
     <!-- Comments -->
-    <div *ngIf="checkoutData.comments" class="mb-8">
-      <h3 class="text-lg font-medium text-gray-700 pb-2 border-b border-gray-200 mb-4">Comments</h3>
-      <div class="text-gray-600 italic">{{ checkoutData.comments }}</div>
-    </div>
+    @if (checkoutData.comments) {
+      <div class="mb-8">
+        <h3 class="text-lg font-medium text-gray-700 pb-2 border-b border-gray-200 mb-4">Comments</h3>
+        <div class="text-gray-600 italic">{{ checkoutData.comments }}</div>
+      </div>
+    }
 
     <!-- Order Summary -->
     <div class="bg-gray-50 p-4 rounded-md mb-8">
@@ -110,10 +130,12 @@
           <span>Subtotal:</span>
           <span>{{ subtotal | currency:checkoutData.docCurrency }}</span>
         </div>
-        <div class="flex justify-between" *ngIf="additionalExpensesTotal > 0">
-          <span>Additional Expenses:</span>
-          <span>{{ additionalExpensesTotal | currency:checkoutData.docCurrency }}</span>
-        </div>
+        @if (additionalExpensesTotal > 0) {
+          <div class="flex justify-between">
+            <span>Additional Expenses:</span>
+            <span>{{ additionalExpensesTotal | currency:checkoutData.docCurrency }}</span>
+          </div>
+        }
         <div class="flex justify-between">
           <span>VAT:</span>
           <span>{{ checkoutData.vatTotal | currency:checkoutData.docCurrency }}</span>

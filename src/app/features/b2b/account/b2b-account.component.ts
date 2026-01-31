@@ -18,333 +18,353 @@ import { forkJoin } from 'rxjs';
           <h1 class="text-2xl font-bold text-gray-900">My Account</h1>
           <p class="text-gray-500">View your statements, invoices, and payments</p>
         </div>
-        <button
-          *ngIf="!isLoading && !errorMessage"
-          (click)="refreshData()"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-        >
-          <i class="fas fa-sync-alt"></i>
-          Refresh
-        </button>
+        @if (!isLoading && !errorMessage) {
+          <button
+            (click)="refreshData()"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+            >
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        }
       </div>
-
+    
       <!-- Error State -->
-      <div *ngIf="errorMessage" class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
-        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+      @if (errorMessage) {
+        <div class="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-exclamation-triangle text-red-500 text-2xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold text-red-800 mb-2">Unable to Load Account Data</h3>
+          <p class="text-red-600 mb-4">{{ errorMessage }}</p>
+          <button
+            (click)="refreshData()"
+            class="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
+            >
+            <i class="fas fa-redo mr-2"></i>
+            Try Again
+          </button>
         </div>
-        <h3 class="text-lg font-semibold text-red-800 mb-2">Unable to Load Account Data</h3>
-        <p class="text-red-600 mb-4">{{ errorMessage }}</p>
-        <button
-          (click)="refreshData()"
-          class="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors"
-        >
-          <i class="fas fa-redo mr-2"></i>
-          Try Again
-        </button>
-      </div>
-
+      }
+    
       <!-- Account Summary Cards -->
-      <div *ngIf="!errorMessage" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white rounded-xl p-5 border border-gray-200">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-              <i class="fas fa-wallet text-green-600 text-xl"></i>
+      @if (!errorMessage) {
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white rounded-xl p-5 border border-gray-200">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-wallet text-green-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-gray-500 text-sm">Account Balance</p>
+                <p class="text-2xl font-bold text-green-600">{{ accountBalance | currency:'USD':'symbol':'1.2-2' }}</p>
+              </div>
             </div>
-            <div>
-              <p class="text-gray-500 text-sm">Account Balance</p>
-              <p class="text-2xl font-bold text-green-600">{{ accountBalance | currency:'USD':'symbol':'1.2-2' }}</p>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-gray-200">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-gray-500 text-sm">Outstanding</p>
+                <p class="text-2xl font-bold text-red-600">{{ outstandingBalance | currency:'USD':'symbol':'1.2-2' }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-gray-200">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-file-invoice text-purple-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-gray-500 text-sm">Open Invoices</p>
+                <p class="text-2xl font-bold text-gray-900">{{ openInvoicesCount }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-5 border border-gray-200">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <i class="fas fa-credit-card text-blue-600 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-gray-500 text-sm">This Month's Payments</p>
+                <p class="text-2xl font-bold text-gray-900">{{ thisMonthPayments | currency:'USD':'symbol':'1.0-0' }}</p>
+              </div>
             </div>
           </div>
         </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-200">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-              <i class="fas fa-exclamation-circle text-red-600 text-xl"></i>
-            </div>
-            <div>
-              <p class="text-gray-500 text-sm">Outstanding</p>
-              <p class="text-2xl font-bold text-red-600">{{ outstandingBalance | currency:'USD':'symbol':'1.2-2' }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-200">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
-              <i class="fas fa-file-invoice text-purple-600 text-xl"></i>
-            </div>
-            <div>
-              <p class="text-gray-500 text-sm">Open Invoices</p>
-              <p class="text-2xl font-bold text-gray-900">{{ openInvoicesCount }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-xl p-5 border border-gray-200">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-              <i class="fas fa-credit-card text-blue-600 text-xl"></i>
-            </div>
-            <div>
-              <p class="text-gray-500 text-sm">This Month's Payments</p>
-              <p class="text-2xl font-bold text-gray-900">{{ thisMonthPayments | currency:'USD':'symbol':'1.0-0' }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      }
+    
       <!-- Tabs -->
-      <div *ngIf="!errorMessage" class="bg-white rounded-xl border border-gray-200">
-        <div class="border-b border-gray-200">
-          <nav class="flex -mb-px overflow-x-auto">
-            <button
-              *ngFor="let tab of tabs"
-              (click)="activeTab = tab.id"
-              class="px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap transition-colors"
+      @if (!errorMessage) {
+        <div class="bg-white rounded-xl border border-gray-200">
+          <div class="border-b border-gray-200">
+            <nav class="flex -mb-px overflow-x-auto">
+              @for (tab of tabs; track tab) {
+                <button
+                  (click)="activeTab = tab.id"
+                  class="px-6 py-4 text-sm font-medium border-b-2 whitespace-nowrap transition-colors"
               [ngClass]="{
                 'border-[#42af57] text-[#42af57]': activeTab === tab.id,
                 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== tab.id
               }"
-            >
-              <i [class]="tab.icon + ' mr-2'"></i>
-              {{ tab.label }}
-              <span
-                *ngIf="tab.count > 0"
-                class="ml-2 px-2 py-0.5 text-xs rounded-full"
+                  >
+                  <i [class]="tab.icon + ' mr-2'"></i>
+                  {{ tab.label }}
+                  @if (tab.count > 0) {
+                    <span
+                      class="ml-2 px-2 py-0.5 text-xs rounded-full"
                 [ngClass]="{
                   'bg-[#42af57]/10 text-[#42af57]': activeTab === tab.id,
                   'bg-gray-100 text-gray-600': activeTab !== tab.id
                 }"
-              >
-                {{ tab.count }}
-              </span>
-            </button>
-          </nav>
-        </div>
-
-        <div class="p-6">
-          <!-- Loading State -->
-          <div *ngIf="isLoading" class="py-12 text-center">
-            <div class="w-12 h-12 border-4 border-[#42af57] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="text-gray-500">Loading data...</p>
+                      >
+                      {{ tab.count }}
+                    </span>
+                  }
+                </button>
+              }
+            </nav>
           </div>
-
-          <!-- Statements Tab -->
-          <div *ngIf="activeTab === 'statements' && !isLoading">
-            <div class="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6">
-              <h3 class="text-lg font-semibold text-gray-900 mb-4">Account Summary</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div class="text-center">
-                  <p class="text-sm text-gray-500 mb-1">Total Invoiced</p>
-                  <p class="text-2xl font-bold text-gray-900">{{ totalInvoiced | currency:'USD':'symbol':'1.2-2' }}</p>
-                </div>
-                <div class="text-center">
-                  <p class="text-sm text-gray-500 mb-1">Total Paid</p>
-                  <p class="text-2xl font-bold text-green-600">{{ totalPaid | currency:'USD':'symbol':'1.2-2' }}</p>
-                </div>
-                <div class="text-center">
-                  <p class="text-sm text-gray-500 mb-1">Balance Due</p>
-                  <p class="text-2xl font-bold" [ngClass]="balanceDue > 0 ? 'text-red-600' : 'text-green-600'">
-                    {{ balanceDue | currency:'USD':'symbol':'1.2-2' }}
-                  </p>
-                </div>
+          <div class="p-6">
+            <!-- Loading State -->
+            @if (isLoading) {
+              <div class="py-12 text-center">
+                <div class="w-12 h-12 border-4 border-[#42af57] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p class="text-gray-500">Loading data...</p>
               </div>
-            </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full">
-                <thead>
-                  <tr class="border-b border-gray-200">
-                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-900">Date</th>
-                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-900">Description</th>
-                    <th class="text-left py-3 px-4 text-sm font-semibold text-gray-900">Reference</th>
-                    <th class="text-right py-3 px-4 text-sm font-semibold text-gray-900">Debit</th>
-                    <th class="text-right py-3 px-4 text-sm font-semibold text-gray-900">Credit</th>
-                    <th class="text-right py-3 px-4 text-sm font-semibold text-gray-900">Balance</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of statementItems" class="border-b border-gray-100 hover:bg-gray-50">
-                    <td class="py-3 px-4 text-sm text-gray-900">{{ item.RefDate | date:'MMM d, yyyy' }}</td>
-                    <td class="py-3 px-4 text-sm text-gray-900">{{ item.TransType || item.Memo }}</td>
-                    <td class="py-3 px-4 text-sm text-gray-500">{{ item.Ref1 || item.Ref2 || '-' }}</td>
-                    <td class="py-3 px-4 text-sm text-right text-gray-900">
-                      {{ item.Debit > 0 ? (item.Debit | currency:'USD':'symbol':'1.2-2') : '-' }}
-                    </td>
-                    <td class="py-3 px-4 text-sm text-right text-green-600">
-                      {{ item.Credit > 0 ? (item.Credit | currency:'USD':'symbol':'1.2-2') : '-' }}
-                    </td>
-                    <td class="py-3 px-4 text-sm text-right font-medium" [ngClass]="item.BalanceDue > 0 ? 'text-red-600' : 'text-green-600'">
-                      {{ item.BalanceDue | currency:'USD':'symbol':'1.2-2' }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div *ngIf="statementItems.length === 0" class="text-center py-12">
-              <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-file-alt text-gray-400 text-2xl"></i>
+            }
+            <!-- Statements Tab -->
+            @if (activeTab === 'statements' && !isLoading) {
+              <div>
+                <div class="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6">
+                  <h3 class="text-lg font-semibold text-gray-900 mb-4">Account Summary</h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div class="text-center">
+                      <p class="text-sm text-gray-500 mb-1">Total Invoiced</p>
+                      <p class="text-2xl font-bold text-gray-900">{{ totalInvoiced | currency:'USD':'symbol':'1.2-2' }}</p>
+                    </div>
+                    <div class="text-center">
+                      <p class="text-sm text-gray-500 mb-1">Total Paid</p>
+                      <p class="text-2xl font-bold text-green-600">{{ totalPaid | currency:'USD':'symbol':'1.2-2' }}</p>
+                    </div>
+                    <div class="text-center">
+                      <p class="text-sm text-gray-500 mb-1">Balance Due</p>
+                      <p class="text-2xl font-bold" [ngClass]="balanceDue > 0 ? 'text-red-600' : 'text-green-600'">
+                        {{ balanceDue | currency:'USD':'symbol':'1.2-2' }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full">
+                    <thead>
+                      <tr class="border-b border-gray-200">
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-900">Date</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-900">Description</th>
+                        <th class="text-left py-3 px-4 text-sm font-semibold text-gray-900">Reference</th>
+                        <th class="text-right py-3 px-4 text-sm font-semibold text-gray-900">Debit</th>
+                        <th class="text-right py-3 px-4 text-sm font-semibold text-gray-900">Credit</th>
+                        <th class="text-right py-3 px-4 text-sm font-semibold text-gray-900">Balance</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (item of statementItems; track item) {
+                        <tr class="border-b border-gray-100 hover:bg-gray-50">
+                          <td class="py-3 px-4 text-sm text-gray-900">{{ item.RefDate | date:'MMM d, yyyy' }}</td>
+                          <td class="py-3 px-4 text-sm text-gray-900">{{ item.TransType || item.Memo }}</td>
+                          <td class="py-3 px-4 text-sm text-gray-500">{{ item.Ref1 || item.Ref2 || '-' }}</td>
+                          <td class="py-3 px-4 text-sm text-right text-gray-900">
+                            {{ item.Debit > 0 ? (item.Debit | currency:'USD':'symbol':'1.2-2') : '-' }}
+                          </td>
+                          <td class="py-3 px-4 text-sm text-right text-green-600">
+                            {{ item.Credit > 0 ? (item.Credit | currency:'USD':'symbol':'1.2-2') : '-' }}
+                          </td>
+                          <td class="py-3 px-4 text-sm text-right font-medium" [ngClass]="item.BalanceDue > 0 ? 'text-red-600' : 'text-green-600'">
+                            {{ item.BalanceDue | currency:'USD':'symbol':'1.2-2' }}
+                          </td>
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                </div>
+                @if (statementItems.length === 0) {
+                  <div class="text-center py-12">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i class="fas fa-file-alt text-gray-400 text-2xl"></i>
+                    </div>
+                    <p class="text-gray-500">No statement entries found</p>
+                  </div>
+                }
               </div>
-              <p class="text-gray-500">No statement entries found</p>
-            </div>
-          </div>
-
-          <!-- Invoices Tab -->
-          <div *ngIf="activeTab === 'invoices' && !isLoading">
-            <div class="mb-4 flex flex-wrap items-center gap-3">
-              <button
-                *ngFor="let filter of invoiceFilters"
-                (click)="invoiceFilter = filter.id"
-                class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+            }
+            <!-- Invoices Tab -->
+            @if (activeTab === 'invoices' && !isLoading) {
+              <div>
+                <div class="mb-4 flex flex-wrap items-center gap-3">
+                  @for (filter of invoiceFilters; track filter) {
+                    <button
+                      (click)="invoiceFilter = filter.id"
+                      class="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
                 [ngClass]="{
                   'bg-[#42af57] text-white': invoiceFilter === filter.id,
                   'bg-gray-100 text-gray-700 hover:bg-gray-200': invoiceFilter !== filter.id
                 }"
-              >
-                {{ filter.label }}
-                <span class="ml-1 text-xs opacity-75">({{ filter.count }})</span>
-              </button>
-            </div>
-
-            <div class="space-y-4">
-              <div
-                *ngFor="let invoice of filteredInvoices"
-                class="border border-gray-200 rounded-xl p-5 hover:border-[#42af57] hover:shadow-sm transition-all"
-              >
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                      [ngClass]="getInvoiceStatusBgClass(invoice)">
-                      <i class="fas fa-file-invoice text-lg"
-                        [ngClass]="getInvoiceStatusTextClass(invoice)"></i>
-                    </div>
-                    <div>
-                      <div class="flex items-center gap-2 mb-1">
-                        <span class="font-semibold text-gray-900">{{ invoice.DocNum }}</span>
-                        <span
-                          class="text-xs px-2 py-0.5 rounded-full"
-                          [ngClass]="getInvoiceStatusBadgeClass(invoice)"
-                        >
-                          {{ getInvoiceStatus(invoice) }}
-                        </span>
+                      >
+                      {{ filter.label }}
+                      <span class="ml-1 text-xs opacity-75">({{ filter.count }})</span>
+                    </button>
+                  }
+                </div>
+                <div class="space-y-4">
+                  @for (invoice of filteredInvoices; track invoice) {
+                    <div
+                      class="border border-gray-200 rounded-xl p-5 hover:border-[#42af57] hover:shadow-sm transition-all"
+                      >
+                      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4">
+                          <div class="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                            [ngClass]="getInvoiceStatusBgClass(invoice)">
+                            <i class="fas fa-file-invoice text-lg"
+                            [ngClass]="getInvoiceStatusTextClass(invoice)"></i>
+                          </div>
+                          <div>
+                            <div class="flex items-center gap-2 mb-1">
+                              <span class="font-semibold text-gray-900">{{ invoice.DocNum }}</span>
+                              <span
+                                class="text-xs px-2 py-0.5 rounded-full"
+                                [ngClass]="getInvoiceStatusBadgeClass(invoice)"
+                                >
+                                {{ getInvoiceStatus(invoice) }}
+                              </span>
+                            </div>
+                            <p class="text-sm text-gray-500">
+                              <i class="fas fa-calendar mr-1"></i>
+                              Due: {{ invoice.DocDueDate | date:'MMM d, yyyy' }}
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1">{{ invoice.Comments || 'Invoice' }}</p>
+                          </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                          <div class="text-right">
+                            <p class="text-lg font-bold" [ngClass]="isOverdue(invoice) ? 'text-red-600' : 'text-gray-900'">
+                              {{ invoice.DocCur || 'USD' }} {{ invoice.DocTotal | number:'1.2-2' }}
+                            </p>
+                            @if (invoice.PaidToDate > 0) {
+                              <p class="text-sm text-green-600">
+                                Paid: {{ invoice.DocCur || 'USD' }} {{ invoice.PaidToDate | number:'1.2-2' }}
+                              </p>
+                            }
+                          </div>
+                          @if (!isPaid(invoice)) {
+                            <button
+                              class="px-4 py-2 bg-[#42af57] text-white text-sm font-medium rounded-lg hover:bg-[#3a9b4d] transition-colors"
+                              >
+                              Pay Now
+                            </button>
+                          }
+                          <button
+                            (click)="downloadInvoicePdf(invoice)"
+                            class="p-2 text-gray-400 hover:text-[#42af57] transition-colors"
+                            title="Download Invoice PDF"
+                            >
+                            <i class="fas fa-download"></i>
+                          </button>
+                        </div>
                       </div>
-                      <p class="text-sm text-gray-500">
-                        <i class="fas fa-calendar mr-1"></i>
-                        Due: {{ invoice.DocDueDate | date:'MMM d, yyyy' }}
-                      </p>
-                      <p class="text-sm text-gray-500 mt-1">{{ invoice.Comments || 'Invoice' }}</p>
                     </div>
-                  </div>
-                  <div class="flex items-center gap-4">
-                    <div class="text-right">
-                      <p class="text-lg font-bold" [ngClass]="isOverdue(invoice) ? 'text-red-600' : 'text-gray-900'">
-                        {{ invoice.DocCur || 'USD' }} {{ invoice.DocTotal | number:'1.2-2' }}
-                      </p>
-                      <p *ngIf="invoice.PaidToDate > 0" class="text-sm text-green-600">
-                        Paid: {{ invoice.DocCur || 'USD' }} {{ invoice.PaidToDate | number:'1.2-2' }}
-                      </p>
-                    </div>
-                    <button
-                      *ngIf="!isPaid(invoice)"
-                      class="px-4 py-2 bg-[#42af57] text-white text-sm font-medium rounded-lg hover:bg-[#3a9b4d] transition-colors"
-                    >
-                      Pay Now
-                    </button>
-                    <button
-                      (click)="downloadInvoicePdf(invoice)"
-                      class="p-2 text-gray-400 hover:text-[#42af57] transition-colors"
-                      title="Download Invoice PDF"
-                    >
-                      <i class="fas fa-download"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div *ngIf="filteredInvoices.length === 0" class="text-center py-12">
-                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i class="fas fa-file-invoice text-gray-400 text-2xl"></i>
-                </div>
-                <p class="text-gray-500">No invoices found</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Payments Tab -->
-          <div *ngIf="activeTab === 'payments' && !isLoading">
-            <div class="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl p-5 text-center">
-                <p class="text-sm text-gray-500 mb-1">This Month</p>
-                <p class="text-2xl font-bold text-teal-600">{{ thisMonthPayments | currency:'USD':'symbol':'1.2-2' }}</p>
-              </div>
-              <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 text-center">
-                <p class="text-sm text-gray-500 mb-1">Last Month</p>
-                <p class="text-2xl font-bold text-blue-600">{{ lastMonthPayments | currency:'USD':'symbol':'1.2-2' }}</p>
-              </div>
-              <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 text-center">
-                <p class="text-sm text-gray-500 mb-1">Total This Year</p>
-                <p class="text-2xl font-bold text-purple-600">{{ yearToDatePayments | currency:'USD':'symbol':'1.2-2' }}</p>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div
-                *ngFor="let payment of payments"
-                class="border border-gray-200 rounded-xl p-5 hover:border-teal-300 hover:shadow-sm transition-all"
-              >
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div class="flex items-start gap-4">
-                    <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <i class="fas fa-credit-card text-teal-600 text-lg"></i>
-                    </div>
-                    <div>
-                      <div class="flex items-center gap-2 mb-1">
-                        <span class="font-semibold text-gray-900">{{ payment.DocNum || 'PAY-' + payment.DocEntry }}</span>
-                        <span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-                          Completed
-                        </span>
+                  }
+                  @if (filteredInvoices.length === 0) {
+                    <div class="text-center py-12">
+                      <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-file-invoice text-gray-400 text-2xl"></i>
                       </div>
-                      <p class="text-sm text-gray-500">
-                        <i class="fas fa-calendar mr-1"></i>
-                        {{ payment.DocDate | date:'MMM d, yyyy' }}
-                      </p>
-                      <p class="text-sm text-gray-500 mt-1">
-                        <i class="fas fa-credit-card mr-1"></i>
-                        {{ payment.U_ONA_POSPaymentMethod || payment.PaymentMethod || 'Payment' }}
-                      </p>
+                      <p class="text-gray-500">No invoices found</p>
                     </div>
-                  </div>
-                  <div class="flex items-center gap-4">
-                    <div class="text-right">
-                      <p class="text-lg font-bold text-green-600">
-                        +{{ payment.DocCurrency || 'USD' }} {{ getPaymentAmount(payment) | number:'1.2-2' }}
-                      </p>
-                      <p *ngIf="payment.Remarks || payment.TransferReference" class="text-sm text-gray-500">
-                        {{ payment.Remarks || ('Ref: ' + payment.TransferReference) }}
-                      </p>
-                    </div>
-                    <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                      <i class="fas fa-download"></i>
-                    </button>
-                  </div>
+                  }
                 </div>
               </div>
-
-              <div *ngIf="payments.length === 0" class="text-center py-12">
-                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i class="fas fa-credit-card text-gray-400 text-2xl"></i>
+            }
+            <!-- Payments Tab -->
+            @if (activeTab === 'payments' && !isLoading) {
+              <div>
+                <div class="mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div class="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-xl p-5 text-center">
+                    <p class="text-sm text-gray-500 mb-1">This Month</p>
+                    <p class="text-2xl font-bold text-teal-600">{{ thisMonthPayments | currency:'USD':'symbol':'1.2-2' }}</p>
+                  </div>
+                  <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 text-center">
+                    <p class="text-sm text-gray-500 mb-1">Last Month</p>
+                    <p class="text-2xl font-bold text-blue-600">{{ lastMonthPayments | currency:'USD':'symbol':'1.2-2' }}</p>
+                  </div>
+                  <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-5 text-center">
+                    <p class="text-sm text-gray-500 mb-1">Total This Year</p>
+                    <p class="text-2xl font-bold text-purple-600">{{ yearToDatePayments | currency:'USD':'symbol':'1.2-2' }}</p>
+                  </div>
                 </div>
-                <p class="text-gray-500">No payments found</p>
+                <div class="space-y-4">
+                  @for (payment of payments; track payment) {
+                    <div
+                      class="border border-gray-200 rounded-xl p-5 hover:border-teal-300 hover:shadow-sm transition-all"
+                      >
+                      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4">
+                          <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-credit-card text-teal-600 text-lg"></i>
+                          </div>
+                          <div>
+                            <div class="flex items-center gap-2 mb-1">
+                              <span class="font-semibold text-gray-900">{{ payment.DocNum || 'PAY-' + payment.DocEntry }}</span>
+                              <span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+                                Completed
+                              </span>
+                            </div>
+                            <p class="text-sm text-gray-500">
+                              <i class="fas fa-calendar mr-1"></i>
+                              {{ payment.DocDate | date:'MMM d, yyyy' }}
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1">
+                              <i class="fas fa-credit-card mr-1"></i>
+                              {{ payment.U_ONA_POSPaymentMethod || payment.PaymentMethod || 'Payment' }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                          <div class="text-right">
+                            <p class="text-lg font-bold text-green-600">
+                              +{{ payment.DocCurrency || 'USD' }} {{ getPaymentAmount(payment) | number:'1.2-2' }}
+                            </p>
+                            @if (payment.Remarks || payment.TransferReference) {
+                              <p class="text-sm text-gray-500">
+                                {{ payment.Remarks || ('Ref: ' + payment.TransferReference) }}
+                              </p>
+                            }
+                          </div>
+                          <button class="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                            <i class="fas fa-download"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  @if (payments.length === 0) {
+                    <div class="text-center py-12">
+                      <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-credit-card text-gray-400 text-2xl"></i>
+                      </div>
+                      <p class="text-gray-500">No payments found</p>
+                    </div>
+                  }
+                </div>
               </div>
-            </div>
+            }
           </div>
         </div>
-      </div>
+      }
     </div>
-  `
+    `
 })
 export class B2bAccountComponent implements OnInit {
   activeTab = 'statements';

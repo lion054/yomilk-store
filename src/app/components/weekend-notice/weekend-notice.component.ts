@@ -1,12 +1,10 @@
 import {Component, Input} from '@angular/core';
-import {NgIf} from "@angular/common";
+
 
 @Component({
   selector: 'app-weekend-notice',
   standalone: true,
-  imports: [
-    NgIf
-  ],
+  imports: [],
   templateUrl: './weekend-notice.component.html',
   styleUrl: './weekend-notice.component.css'
 })

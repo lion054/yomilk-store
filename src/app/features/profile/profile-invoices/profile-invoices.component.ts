@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DatePipe, NgIf} from "@angular/common";
+import { DatePipe } from "@angular/common";
 import {StoreService} from "../../../core/services/store/store.service";
 import {catchError, of, Subject, takeUntil} from "rxjs";
 import {Router, RouterModule} from "@angular/router";
@@ -8,10 +8,9 @@ import {Router, RouterModule} from "@angular/router";
   selector: 'app-profile-invoices',
   standalone: true,
   imports: [
-    NgIf,
     RouterModule,
     DatePipe
-  ],
+],
   templateUrl: './profile-invoices.component.html',
   styleUrl: './profile-invoices.component.css'
 })

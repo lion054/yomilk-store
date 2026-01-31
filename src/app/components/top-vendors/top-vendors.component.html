@@ -2,21 +2,26 @@
 <section class="py-12 bg-white">
   <div class="container mx-auto px-4">
     <!-- Section Header -->
-    <div class="mb-8">
-      <h2 class="text-3xl md:text-4xl font-bold mb-2">
-        Top <span class="text-[#42af57]">Vendors</span>
-      </h2>
-      <p class="text-gray-600">
-        Discover Our Trusted Partners: Excellence & Reliability in Every choice
-      </p>
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-8 mb-10">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-dark font-outfit mb-2">
+          Top Vendors
+        </h2>
+        <p class="text-gray-500 text-sm mb-3">Discover our trusted partners with excellence & reliability</p>
+        <div class="w-16 h-1 bg-fresh-500 rounded-full"></div>
+      </div>
+      <a routerLink="/vendors" class="inline-flex items-center gap-2 text-fresh-500 font-semibold hover:gap-3 transition-all whitespace-nowrap">
+        All Vendors
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
     </div>
 
     <!-- Top Vendors Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <!-- Featured Vendor Card (Left) -->
-      <div class="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group">
+      <div class="relative rounded-lg overflow-hidden shadow-card hover:shadow-hover transition-all duration-300 group">
         <!-- Background Image -->
-        <div class="relative h-[400px] bg-gradient-to-br from-green-50 via-green-100 to-green-200">
+        <div class="relative h-[300px] md:h-[400px] bg-gradient-to-br from-fresh-50 via-fresh-100 to-fresh-200">
           <!-- Decorative Pattern -->
           <div class="absolute inset-0 opacity-10">
             <div class="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl"></div>
@@ -24,26 +29,28 @@
           </div>
 
           <!-- Vendor Image -->
-          <div class="relative h-full flex items-center justify-center p-10">
-            <img 
-              src="assets/images/vendor-featured.webp" 
+          <div class="relative h-full flex items-center justify-center p-8 md:p-10">
+            <img
+              src="assets/images/vendor-featured.webp"
               (error)="$any($event.target).src='assets/images/woocommerce-placeholder.webp'"
               alt="Featured Vendor"
-              class="max-h-full max-w-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
-            />
+              class="max-h-full max-w-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+              />
           </div>
 
           <!-- Badge -->
-          <div *ngIf="featuredVendor.badge" class="absolute top-6 left-6 bg-[#FFA500] text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-lg">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 2a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L10 14.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L2.818 8.374a.75.75 0 01.416-1.28l4.21-.611L9.327 2.42A.75.75 0 0110 2z" />
-            </svg>
-            <span class="text-sm font-bold">{{ featuredVendor.badge }}</span>
-          </div>
+          @if (featuredVendor.badge) {
+            <div class="absolute top-4 md:top-6 left-4 md:left-6 bg-amber-500 text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-md text-sm font-bold">
+              <svg class="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L10 14.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L2.818 8.374a.75.75 0 01.416-1.28l4.21-.611L9.327 2.42A.75.75 0 0110 2z" />
+              </svg>
+              {{ featuredVendor.badge }}
+            </div>
+          }
 
           <!-- Quick View Button -->
-          <a [routerLink]="['/vendors']" 
-             class="absolute top-6 right-6 w-12 h-12 bg-white hover:bg-[#42af57] text-gray-700 hover:text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110">
+          <a [routerLink]="['/vendors']"
+            class="absolute top-4 md:top-6 right-4 md:right-6 w-10 md:w-12 h-10 md:h-12 bg-white hover:bg-fresh-500 text-gray-700 hover:text-white rounded-lg flex items-center justify-center shadow-md hover:shadow-hover transition-all duration-300 group-hover:scale-110">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
             </svg>
@@ -53,36 +60,38 @@
 
       <!-- Vendor List (Right) -->
       <div class="space-y-4">
-        <div *ngFor="let vendor of topVendors" 
-             class="bg-white border border-gray-100 rounded-2xl p-5 hover:border-[#42af57] hover:shadow-lg transition-all duration-300 group cursor-pointer">
-          <div class="flex items-center justify-between">
-            <!-- Vendor Info -->
-            <div class="flex items-center gap-4 flex-1">
-              <!-- Logo -->
-              <div class="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
-                {{ vendor.logo }}
-              </div>
-
-              <!-- Details -->
-              <div class="flex-1">
-                <h3 class="text-lg font-bold text-gray-900 group-hover:text-[#42af57] transition-colors mb-1">
-                  {{ vendor.name }}
-                </h3>
-                <div class="flex flex-wrap items-center gap-3 text-sm text-gray-600">
-                  <span *ngFor="let cat of vendor.categories" class="flex items-center gap-1">
-                    {{ cat.name }} ({{ cat.count }})
-                  </span>
+        @for (vendor of topVendors; track vendor) {
+          <div
+            class="bg-white border border-gray-100 rounded-lg p-5 hover:border-fresh-300 hover:shadow-hover transition-all duration-300 group cursor-pointer hover:scale-[1.02]">
+            <div class="flex items-center justify-between">
+              <!-- Vendor Info -->
+              <div class="flex items-center gap-4 flex-1">
+                <!-- Logo -->
+                <div class="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300 group-hover:shadow-md">
+                  {{ vendor.logo }}
+                </div>
+                <!-- Details -->
+                <div class="flex-1">
+                  <h3 class="text-base md:text-lg font-bold text-dark group-hover:text-fresh-500 transition-colors mb-1">
+                    {{ vendor.name }}
+                  </h3>
+                  <div class="flex flex-wrap items-center gap-2 text-xs md:text-sm text-gray-600">
+                    @for (cat of vendor.categories; track cat) {
+                      <span class="flex items-center gap-1">
+                        {{ cat.name }} <span class="text-gray-400">({{ cat.count }})</span>
+                      </span>
+                    }
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <!-- Sales -->
-            <div class="text-right">
-              <p class="text-xs text-gray-500 mb-1">Sales</p>
-              <p class="text-xl font-bold text-[#42af57]">{{ vendor.sales }}</p>
+              <!-- Sales Badge -->
+              <div class="text-right ml-4">
+                <p class="text-xs text-gray-500 mb-1">Total Sales</p>
+                <p class="text-xl md:text-2xl font-bold text-fresh-500">{{ vendor.sales }}</p>
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </div>

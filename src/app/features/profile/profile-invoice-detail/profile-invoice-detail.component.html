@@ -10,13 +10,13 @@
             <div class="md:flex md:items-center md:gap-12">
               <a class="block text-primary-500 pr-2.5" href="#">
                 <!--          <span class="font-bold text-3xl">YoMilk</span>-->
-<!--                <img src="assets/images/snappy-fresh-logo.webp" class="h-32">-->
+                <!--                <img src="assets/images/snappy-fresh-logo.webp" class="h-32">-->
                 <img src="assets/images/alt/snappy-fresh-logo-blue-trans.webp" class="h-32">
 
               </a>
             </div>
 
-<!--            <h1 class="mt-2 text-lg md:text-xl font-semibold text-blue-600">Yomilk</h1>-->
+            <!--            <h1 class="mt-2 text-lg md:text-xl font-semibold text-blue-600">Yomilk</h1>-->
           </div>
           <!-- Col -->
 
@@ -79,55 +79,55 @@
             <div class="hidden sm:block border-b border-gray-200"></div>
 
             @for (item of invoice.DocumentLines ; track item.LineNum){
-            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-          <div class="col-span-full sm:col-span-2">
-            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Item</h5>
-            <p class="font-medium text-gray-800">{{item.ItemDescription}}</p>
-          </div>
-          <div>
-            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Qty</h5>
-            <p class="text-gray-800">{{item.Quantity}}</p>
-          </div>
-          <div>
-            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Rate</h5>
-            <p class="text-gray-800">{{item.UnitPrice}}</p>
-          </div>
-          <div>
-            <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Amount</h5>
-            <p class="sm:text-end text-gray-800">{{item.LineTotal}}</p>
-          </div>
-        </div>
+              <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                <div class="col-span-full sm:col-span-2">
+                  <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Item</h5>
+                  <p class="font-medium text-gray-800">{{item.ItemDescription}}</p>
+                </div>
+                <div>
+                  <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Qty</h5>
+                  <p class="text-gray-800">{{item.Quantity}}</p>
+                </div>
+                <div>
+                  <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Rate</h5>
+                  <p class="text-gray-800">{{item.UnitPrice}}</p>
+                </div>
+                <div>
+                  <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Amount</h5>
+                  <p class="sm:text-end text-gray-800">{{item.LineTotal}}</p>
+                </div>
+              </div>
             }
 
 
 
             <div class="sm:hidden border-b border-gray-200"></div>
 
-<!--            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">-->
-<!--              <div class="col-span-full sm:col-span-2">-->
-<!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Item</h5>-->
-<!--                <p class="font-medium text-gray-800">Web project</p>-->
-<!--              </div>-->
-<!--              <div>-->
-<!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Qty</h5>-->
-<!--                <p class="text-gray-800">1</p>-->
-<!--              </div>-->
-<!--              <div>-->
-<!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Rate</h5>-->
-<!--                <p class="text-gray-800">24</p>-->
-<!--              </div>-->
-<!--              <div>-->
-<!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Amount</h5>-->
-<!--                <p class="sm:text-end text-gray-800">$1250</p>-->
-<!--              </div>-->
-<!--            </div>-->
+            <!--            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">-->
+            <!--              <div class="col-span-full sm:col-span-2">-->
+            <!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Item</h5>-->
+            <!--                <p class="font-medium text-gray-800">Web project</p>-->
+          <!--              </div>-->
+          <!--              <div>-->
+          <!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Qty</h5>-->
+          <!--                <p class="text-gray-800">1</p>-->
+        <!--              </div>-->
+        <!--              <div>-->
+        <!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Rate</h5>-->
+        <!--                <p class="text-gray-800">24</p>-->
+      <!--              </div>-->
+      <!--              <div>-->
+      <!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Amount</h5>-->
+      <!--                <p class="sm:text-end text-gray-800">$1250</p>-->
+    <!--              </div>-->
+  <!--            </div>-->
 
-<!--            <div class="sm:hidden border-b border-gray-200"></div>-->
+  <!--            <div class="sm:hidden border-b border-gray-200"></div>-->
 
-<!--            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">-->
-<!--              <div class="col-span-full sm:col-span-2">-->
-<!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Item</h5>-->
-<!--                <p class="font-medium text-gray-800">SEO</p>-->
+  <!--            <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">-->
+  <!--              <div class="col-span-full sm:col-span-2">-->
+  <!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Item</h5>-->
+  <!--                <p class="font-medium text-gray-800">SEO</p>-->
 <!--              </div>-->
 <!--              <div>-->
 <!--                <h5 class="sm:hidden text-xs font-medium text-gray-500 uppercase">Qty</h5>-->
@@ -142,103 +142,106 @@
 <!--                <p class="sm:text-end text-gray-800">$2000</p>-->
 <!--              </div>-->
 <!--            </div>-->
-          </div>
-        </div>
-        <!-- End Table -->
+</div>
+</div>
+<!-- End Table -->
 
-        <!-- Flex -->
-        <div class="mt-8 flex sm:justify-end">
-          <div *ngIf="invoice.U_ONA_FiscalQrCode != null" class="flex flex-col items-center">
-              <div class="block">
-                <qrcode [qrdata]="invoice.U_ONA_FiscalQrCode || ''" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
-              </div>
-            <a class="text-center" href="{{invoice.U_ONA_FiscalQrCode}}" target="_blank" >View</a>
-          </div>
-          <div class="w-full max-w-2xl sm:text-end space-y-2">
-            <!-- Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
-              <dl class="grid sm:grid-cols-5 gap-x-3">
-                <dt class="col-span-3 font-semibold text-gray-800">Subtotal:</dt>
-                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{invoice.DocTotal - invoice.VatSum | number:'1.2-2'}}</dd>
-              </dl>
-
-              <dl class="grid sm:grid-cols-5 gap-x-3">
-                <dt class="col-span-3 font-semibold text-gray-800">Total:</dt>
-                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{invoice.DocTotal | number:'1.2-2'}}</dd>
-              </dl>
-
-              <dl class="grid sm:grid-cols-5 gap-x-3">
-                <dt class="col-span-3 font-semibold text-gray-800">VAT:</dt>
-                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{calculateVat() | number:'1.2-2'}}</dd>
-              </dl>
-              <dl class="grid sm:grid-cols-5 gap-x-3">
-                <dt class="col-span-3 font-semibold text-gray-800">Freight Charge:</dt>
-                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{getDeliveryFee() | number:'1.2-2'}}</dd>
-              </dl>
-
-              <dl class="grid sm:grid-cols-5 gap-x-3">
-                <dt class="col-span-3 font-semibold text-gray-800">Amount paid:</dt>
-                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{getTotal() | number:'1.2-2'}}</dd>
-              </dl>
-
-<!--              <dl class="grid sm:grid-cols-5 gap-x-3">-->
-<!--                <dt class="col-span-3 font-semibold text-gray-800">Due balance:</dt>-->
-<!--                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{invoice.DocTotal}}</dd>-->
-<!--              </dl>-->
-            </div>
-            <!-- End Grid -->
-          </div>
-        </div>
-        <!-- End Flex -->
-
-        <div class="mt-8 sm:mt-12">
-          <h4 class="text-lg font-semibold text-gray-800">Thank you!</h4>
-          <p class="text-gray-500">If you have any questions concerning this invoice, use the following contact information:</p>
-          <div class="mt-2">
-<!--            <p class="block text-sm font-medium text-gray-800">mail </p>-->
-            <p class="block text-sm font-medium text-gray-800">+263 782 978 460</p>
-          </div>
-        </div>
-
-        <p class="mt-5 text-sm text-gray-500">© 2025 Yomilk</p>
+<!-- Flex -->
+<div class="mt-8 flex sm:justify-end">
+  @if (invoice.U_ONA_FiscalQrCode != null) {
+    <div class="flex flex-col items-center">
+      <div class="block">
+        <qrcode [qrdata]="invoice.U_ONA_FiscalQrCode || ''" [width]="150" [errorCorrectionLevel]="'M'"></qrcode>
       </div>
-      <!-- End Card -->
-
-      <!-- Buttons -->
-      <div class="mt-6 flex justify-end gap-x-3">
-<!--        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50" >-->
-<!--          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>-->
-<!--          Invoice PDF-->
-<!--        </a>-->
-        <button [useExistingCss]="true"  printSectionId="invoice" ngxPrint class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" >
-          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
-          Print
-        </button>
-      </div>
-      <!-- End Buttons -->
+      <a class="text-center" href="{{invoice.U_ONA_FiscalQrCode}}" target="_blank" >View</a>
     </div>
+  }
+  <div class="w-full max-w-2xl sm:text-end space-y-2">
+    <!-- Grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-1 gap-3 sm:gap-2">
+      <dl class="grid sm:grid-cols-5 gap-x-3">
+        <dt class="col-span-3 font-semibold text-gray-800">Subtotal:</dt>
+        <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{invoice.DocTotal - invoice.VatSum | number:'1.2-2'}}</dd>
+      </dl>
+
+      <dl class="grid sm:grid-cols-5 gap-x-3">
+        <dt class="col-span-3 font-semibold text-gray-800">Total:</dt>
+        <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{invoice.DocTotal | number:'1.2-2'}}</dd>
+      </dl>
+
+      <dl class="grid sm:grid-cols-5 gap-x-3">
+        <dt class="col-span-3 font-semibold text-gray-800">VAT:</dt>
+        <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{calculateVat() | number:'1.2-2'}}</dd>
+      </dl>
+      <dl class="grid sm:grid-cols-5 gap-x-3">
+        <dt class="col-span-3 font-semibold text-gray-800">Freight Charge:</dt>
+        <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{getDeliveryFee() | number:'1.2-2'}}</dd>
+      </dl>
+
+      <dl class="grid sm:grid-cols-5 gap-x-3">
+        <dt class="col-span-3 font-semibold text-gray-800">Amount paid:</dt>
+        <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{getTotal() | number:'1.2-2'}}</dd>
+      </dl>
+
+      <!--              <dl class="grid sm:grid-cols-5 gap-x-3">-->
+      <!--                <dt class="col-span-3 font-semibold text-gray-800">Due balance:</dt>-->
+      <!--                <dd class="col-span-2 text-gray-500">{{invoice.DocCurrency}} {{invoice.DocTotal}}</dd>-->
+    <!--              </dl>-->
   </div>
-  <!-- End Invoice -->
+  <!-- End Grid -->
+</div>
+</div>
+<!-- End Flex -->
+
+<div class="mt-8 sm:mt-12">
+  <h4 class="text-lg font-semibold text-gray-800">Thank you!</h4>
+  <p class="text-gray-500">If you have any questions concerning this invoice, use the following contact information:</p>
+  <div class="mt-2">
+    <!--            <p class="block text-sm font-medium text-gray-800">mail </p>-->
+    <p class="block text-sm font-medium text-gray-800">+263 782 978 460</p>
+  </div>
+</div>
+
+<p class="mt-5 text-sm text-gray-500">© 2025 Yomilk</p>
+</div>
+<!-- End Card -->
+
+<!-- Buttons -->
+<div class="mt-6 flex justify-end gap-x-3">
+  <!--        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50" >-->
+  <!--          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>-->
+  <!--          Invoice PDF-->
+<!--        </a>-->
+<button [useExistingCss]="true"  printSectionId="invoice" ngxPrint class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" >
+  <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+  Print
+</button>
+</div>
+<!-- End Buttons -->
+</div>
+</div>
+<!-- End Invoice -->
 </section>
 
 <!--Order Tracking-->
-<section *ngIf="invoice?.TrackingNumber">
-  <div>
-    <h2 class="text-xl font-semibold text-gray-800">
-      Order Tracking
-    </h2>
-    <p class="text-sm text-gray-600">
-      Track your order through Loop
-    </p>
-  </div>
-
-  <div class="iframe-container rounded-lg" >
-    <iframe
-      [src]="iframeUrl"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      allowfullscreen>
-    </iframe>
-  </div>
-</section>
+@if (invoice?.TrackingNumber) {
+  <section>
+    <div>
+      <h2 class="text-xl font-semibold text-gray-800">
+        Order Tracking
+      </h2>
+      <p class="text-sm text-gray-600">
+        Track your order through Loop
+      </p>
+    </div>
+    <div class="iframe-container rounded-lg" >
+      <iframe
+        [src]="iframeUrl"
+        width="100%"
+        height="100%"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+}

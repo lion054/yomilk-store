@@ -1,43 +1,35 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, OnDestroy} from '@angular/core';
-import {CurrencyService} from "../../core/services/currency/currency.service";
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {StoreService} from "../../core/services/store/store.service";
-import {ProductCardComponent} from "../../components/products/product-card/product-card.component";
-import {CategoryListComponent} from "../../components/category-list/category-list.component";
 import {RouterLink} from '@angular/router';
 import {CommonModule} from "@angular/common";
-import {ProductShelfAltComponent} from "../../components/product-shelf-alt/product-shelf-alt.component";
-import {PromoBannerComponent} from "../../components/promo-banner/promo-banner.component";
+import {FormsModule} from "@angular/forms";
+import {ProductCardComponent} from "../../components/products/product-card/product-card.component";
 import {HeroSliderComponent} from "../../components/hero-slider/hero-slider.component";
 import {PromoCardsComponent} from "../../components/promo-cards/promo-cards.component";
-import {PopularProductsComponent} from "../../components/popular-products/popular-products.component";
+import {ExploreCategoriesComponent} from "../../components/explore-categories/explore-categories.component";
+import {TopVendorsComponent} from "../../components/top-vendors/top-vendors.component";
 import {FeaturesStripComponent} from "../../components/features-strip/features-strip.component";
 import {B2bService, StoreOrderSchedule} from "../../core/services/b2b/b2b.service";
 import {AuthService} from "../../core/services/auth/auth.service";
 import {VendorsService, Vendor} from "../../core/services/vendors/vendors.service";
 import {Subject, takeUntil} from 'rxjs';
-import {TopVendorsComponent} from "../../components/top-vendors/top-vendors.component";
-import {ExploreCategoriesComponent} from "../../components/explore-categories/explore-categories.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    ProductCardComponent,
-    CategoryListComponent,
+    FormsModule,
     RouterLink,
-    ProductShelfAltComponent,
-    PromoBannerComponent,
+    ProductCardComponent,
     HeroSliderComponent,
     PromoCardsComponent,
-    PopularProductsComponent,
-    FeaturesStripComponent,
-    TopVendorsComponent,
     ExploreCategoriesComponent,
+    TopVendorsComponent,
+    FeaturesStripComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomeComponent implements OnInit, OnDestroy {
   selectedCurrency: any;
@@ -46,6 +38,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   totalPages:number = 123;
   searchTerm: string = '';
   categories: any = null;
+
+  // Newsletter form
+  email: string = '';
+
+  // Promo cards (from API or mock data)
+  promoCards: any[] = [];
+
+  // Products (from API)
+  products: any[] = [];
 
   // B2B Order Schedules
   orderSchedules: StoreOrderSchedule[] = [];
@@ -73,7 +74,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   deals: any[] = [];
 
   constructor(
-    private currencyService: CurrencyService,
     private storeService: StoreService,
     private b2bService: B2bService,
     private authService: AuthService,
@@ -82,6 +82,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     window.scrollTo(0, 0);
+
+    // Load categories
     this.storeService.getItemGroups().subscribe((categories: any) => {
       this.categories = this.shuffleArray([...categories]);
     });
@@ -90,11 +92,67 @@ export class HomeComponent implements OnInit, OnDestroy {
     const user = this.authService.getAuthUser();
     this.isLoggedIn = !!(user && !user.customer?.isVisitor);
 
+    // Load products
+    this.loadProducts();
+
+    // Load promo cards
+    this.loadPromoCards();
+
     // Load vendors from API
     this.loadVendors();
 
     // Load B2B schedules
     this.loadOrderSchedules();
+  }
+
+  loadProducts(): void {
+    this.storeService.getStoreItems(undefined, 20, 1).subscribe({
+      next: (data: any) => {
+        this.products = data?.data || [];
+      },
+      error: (error: any) => {
+        console.error('Error loading products:', error);
+        this.products = [];
+      }
+    });
+  }
+
+  loadPromoCards(): void {
+    // Mock promo cards - replace with API call if available
+    this.promoCards = [
+      {
+        title: 'Everyday Fresh &',
+        titleLine2: 'Clean with Our',
+        titleLine3: 'Products',
+        imageUrl: 'assets/images/banner-1.png',
+        product: null
+      },
+      {
+        title: 'Make your Breakfast',
+        titleLine2: 'Healthy and Easy',
+        titleLine3: '',
+        imageUrl: 'assets/images/banner-2.png',
+        product: null
+      },
+      {
+        title: 'The best Organic',
+        titleLine2: 'Products Online',
+        titleLine3: '',
+        imageUrl: 'assets/images/banner-3.png',
+        product: null
+      }
+    ];
+  }
+
+  onSubscribe(): void {
+    if (!this.email) {
+      alert('Please enter your email address');
+      return;
+    }
+    // TODO: Implement newsletter subscription API call
+    console.log('Subscribing with email:', this.email);
+    alert('Thank you for subscribing!');
+    this.email = '';
   }
 
   ngOnDestroy() {

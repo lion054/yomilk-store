@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../../core/services/auth/auth.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {NgIf} from "@angular/common";
+
 import {GoogleAnalyticsService} from "../../../core/services/google-analytics/google-analytics.service";
 import {LocalService} from "../../../core/services/local/local.service";
 
@@ -11,9 +11,8 @@ import {LocalService} from "../../../core/services/local/local.service";
   standalone: true,
   imports: [
     RouterLink,
-    ReactiveFormsModule,
-    NgIf
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

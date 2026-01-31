@@ -2,15 +2,14 @@ import {Component, Input, OnInit} from '@angular/core';
 import {StoreService} from "../../core/services/store/store.service";
 import {CurrencyService} from "../../core/services/currency/currency.service";
 import {ProductCardComponent} from "../products/product-card/product-card.component";
-import {NgIf} from "@angular/common";
+
 
 @Component({
   selector: 'app-product-shelf',
   standalone: true,
   imports: [
-    ProductCardComponent,
-    NgIf
-  ],
+    ProductCardComponent
+],
   templateUrl: './product-shelf.component.html',
   styleUrl: './product-shelf.component.css'
 })

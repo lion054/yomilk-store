@@ -3,87 +3,105 @@
   <div class="container mx-auto px-5">
 
     <!-- Section Header with Tabs -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-8 mb-10">
       <!-- Title with accent underline -->
       <div>
-        <h2 class="text-[28px] md:text-[32px] font-bold text-[#253D4E] font-outfit mb-2">
+        <h2 class="text-3xl md:text-4xl font-bold text-dark font-outfit mb-2">
           Popular Products
         </h2>
-        <div class="w-16 h-1 bg-[#42af57] rounded-full"></div>
+        <p class="text-gray-500 text-sm mb-3">Handpicked bestsellers just for you</p>
+        <div class="w-16 h-1 bg-fresh-500 rounded-full"></div>
       </div>
 
-      <!-- Category Tabs - Elegant text style -->
-      <div class="flex items-center gap-6 overflow-x-auto hide-scrollbar pb-1">
+      <!-- View All Link -->
+      <a routerLink="/store" class="inline-flex items-center gap-2 text-fresh-500 font-semibold hover:gap-3 transition-all whitespace-nowrap">
+        View All
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex items-center gap-3 md:gap-4 overflow-x-auto hide-scrollbar mb-8 pb-2 -mx-5 px-5">
+      @for (tab of categoryTabs; track tab) {
         <button
-          *ngFor="let tab of categoryTabs"
           (click)="selectCategory(tab)"
-          class="relative py-2 text-[14px] font-medium whitespace-nowrap transition-all duration-200"
+          class="relative py-2 px-3 text-sm md:text-base font-medium whitespace-nowrap transition-all duration-200 hover:text-fresh-500 rounded-lg"
           [ngClass]="tab.active
-            ? 'text-[#42af57]'
-            : 'text-gray-500 hover:text-[#42af57]'">
+            ? 'text-fresh-500 bg-fresh-50'
+            : 'text-gray-600'">
           {{ tab.name }}
-          <!-- Active underline -->
-          <span
-            *ngIf="tab.active"
-            class="absolute bottom-0 left-0 w-full h-[2px] bg-[#42af57] rounded-full">
-          </span>
+          <!-- Active indicator -->
+          @if (tab.active) {
+            <span
+              class="absolute bottom-0 left-0 right-0 h-0.5 bg-fresh-500 rounded-full">
+            </span>
+          }
         </button>
-      </div>
+      }
     </div>
 
     <!-- Products Grid - 5 columns on desktop like reference -->
     <div class="relative">
       <!-- Products Container -->
-      <div
-        *ngIf="!loading && products.length > 0"
-        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-        <div *ngFor="let product of products">
-          <app-product-card [product]="product"></app-product-card>
+      @if (!loading && products.length > 0) {
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          @for (product of products; track product) {
+            <div>
+              <app-product-card [product]="product"></app-product-card>
+            </div>
+          }
         </div>
-      </div>
+      }
 
       <!-- Loading State -->
-      <div *ngIf="loading" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
-        <div *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]">
-          <div class="bg-white rounded-[12px] overflow-hidden shadow-sm">
-            <div class="aspect-square w-full bg-gray-200 animate-pulse"></div>
-            <div class="p-4 space-y-3">
-              <div class="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
-              <div class="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
-              <div class="h-3 w-20 bg-gray-200 rounded animate-pulse"></div>
-              <div class="flex gap-1">
-                <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
-                <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
-                <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
-                <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
-                <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
-              </div>
-              <div class="flex justify-between items-center pt-2">
-                <div class="h-5 w-16 bg-gray-200 rounded animate-pulse"></div>
-                <div class="h-9 w-9 bg-gray-200 rounded-lg animate-pulse"></div>
+      @if (loading) {
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+          @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+            <div>
+              <div class="bg-white rounded-[12px] overflow-hidden shadow-sm">
+                <div class="aspect-square w-full bg-gray-200 animate-pulse"></div>
+                <div class="p-4 space-y-3">
+                  <div class="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
+                  <div class="h-4 w-full bg-gray-200 rounded animate-pulse"></div>
+                  <div class="h-3 w-20 bg-gray-200 rounded animate-pulse"></div>
+                  <div class="flex gap-1">
+                    <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-3 w-3 bg-gray-200 rounded animate-pulse"></div>
+                  </div>
+                  <div class="flex justify-between items-center pt-2">
+                    <div class="h-5 w-16 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-9 w-9 bg-gray-200 rounded-lg animate-pulse"></div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          }
         </div>
-      </div>
+      }
 
       <!-- Empty State -->
-      <div *ngIf="!loading && products.length === 0" class="text-center py-16 bg-white rounded-[20px]">
-        <div class="text-gray-300 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M16 16s-1.5-2-4-2-4 2-4 2"/>
-            <line x1="9" x2="9.01" y1="9" y2="9"/>
-            <line x1="15" x2="15.01" y1="9" y2="9"/>
-          </svg>
+      @if (!loading && products.length === 0) {
+        <div class="text-center py-16 bg-white rounded-[20px]">
+          <div class="text-gray-300 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mx-auto">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M16 16s-1.5-2-4-2-4 2-4 2"/>
+              <line x1="9" x2="9.01" y1="9" y2="9"/>
+              <line x1="15" x2="15.01" y1="9" y2="9"/>
+            </svg>
+          </div>
+          <p class="text-gray-500 text-lg mb-4">No products found in this category</p>
+          <button
+            (click)="selectCategory(categoryTabs[0])"
+            class="px-6 py-3 bg-fresh-500 text-white rounded-full text-sm font-semibold hover:bg-fresh-600 transition-colors">
+            View All Products
+          </button>
         </div>
-        <p class="text-gray-500 text-lg mb-4">No products found in this category</p>
-        <button
-          (click)="selectCategory(categoryTabs[0])"
-          class="px-6 py-3 bg-fresh-500 text-white rounded-full text-sm font-semibold hover:bg-fresh-600 transition-colors">
-          View All Products
-        </button>
-      </div>
+      }
     </div>
 
   </div>

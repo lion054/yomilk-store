@@ -35,7 +35,7 @@ module.exports = {
         '56': '448px',  // 56 * 8
         '64': '512px',  // 64 * 8
       },
-      // Enhanced shadow system
+      // Enhanced shadow system - Added Nest design shadows
       boxShadow: {
         'xs': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         'sm': '0 2px 8px 0 rgba(0, 0, 0, 0.06)',
@@ -44,23 +44,48 @@ module.exports = {
         'lg': '0 10px 24px 0 rgba(0, 0, 0, 0.12)',
         'xl': '0 16px 40px 0 rgba(0, 0, 0, 0.15)',
         '2xl': '0 24px 56px 0 rgba(0, 0, 0, 0.18)',
+        '3xl': '0 32px 64px rgba(0,0,0,0.2)',
         'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
         'glow-sm': '0 0 8px rgba(66, 175, 87, 0.4)',
         'glow-md': '0 0 16px rgba(66, 175, 87, 0.5)',
         'glow-lg': '0 0 24px rgba(66, 175, 87, 0.6)',
+        'card': '0 2px 15px rgba(0,0,0,0.08)',
+        'hover': '0 4px 25px rgba(0,0,0,0.12)',
+        'product': '0 3px 18px rgba(0,0,0,0.07)',
       },
-      // Animation timings
+      // Animation timings - Enhanced with Nest durations
       transitionDuration: {
+        '200': '200ms',
+        '300': '300ms',
         '400': '400ms',
+        '500': '500ms',
         '600': '600ms',
+        '700': '700ms',
         '800': '800ms',
         '900': '900ms',
+        '1000': '1000ms',
+        '1500': '1500ms',
       },
-      // Animation curves
+      // Animation curves - Enhanced with Nest easing functions
       transitionTimingFunction: {
         'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
         'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
         'spring': 'cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+        'ease-in-out-back': 'cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+        'ease-out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
+      },
+      // Border radius scale - Standardized from Nest
+      borderRadius: {
+        'none': '0px',
+        'sm': '5px',
+        'DEFAULT': '10px',
+        'md': '15px',
+        'lg': '20px',
+        'xl': '25px',
+        '2xl': '30px',
+        '3xl': '40px',
+        'pill': '50px',
+        'full': '9999px'
       },
       // Typography scale
       fontSize: {
@@ -76,18 +101,39 @@ module.exports = {
         '6xl': ['60px', { lineHeight: '1', letterSpacing: '-0.03em' }],
       },
       colors: {
-        // Snappy Fresh Brand Palette - New Colors
+        // Snappy Fresh Brand Palette - Enhanced with Nest design tokens
         fresh: {
-          50: '#dfed93',   // primrose - light background
-          100: '#d4f5db',
-          200: '#9cb32f',  // atlantis - lime accent
-          300: '#42af57',  // chateau-green
-          400: '#215724',  // everglade - dark green
-          500: '#42af57',  // chateau-green - Main brand green
-          600: '#215724',  // everglade
-          700: '#1c352c',  // timber-green
-          800: '#1c352c',
-          900: '#0f2a0d'
+          50: '#f0fdf4',   // NEW - Lightest tint
+          100: '#dcfce7',  // NEW - Very light
+          200: '#bbf7d0',  // NEW - Light
+          300: '#42af57',  // KEEP - chateau-green
+          400: '#3d9e4f',  // NEW - Medium
+          500: '#42af57',  // KEEP - Main brand green (Matches Nest!)
+          600: '#2f8742',  // NEW - Dark
+          700: '#215724',  // KEEP - everglade
+          800: '#1c352c',  // KEEP - timber-green
+          900: '#0f2a0d'   // KEEP - darkest
+        },
+        // NEW - Semantic Colors from Nest
+        success: {
+          50: '#f0fdf4',
+          500: '#42af57',
+          600: '#2f8742'
+        },
+        warning: {
+          50: '#fffbeb',
+          500: '#f59e0b',
+          600: '#d97706'
+        },
+        danger: {
+          50: '#fef2f2',
+          500: '#ef4444',
+          600: '#dc2626'
+        },
+        info: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          600: '#2563eb'
         },
         // Red/Coral accent palette
         coral: {

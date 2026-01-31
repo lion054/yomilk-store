@@ -21,25 +21,28 @@
 <app-skip-link></app-skip-link>
 
 <!-- B2B Portal Layout - No header/footer, uses its own layout -->
-<section *ngIf="isB2bRoute" [@fadeIn] class="w-full min-h-screen">
-  <main id="main-content">
-    <router-outlet></router-outlet>
-  </main>
-</section>
+@if (isB2bRoute) {
+  <section [@fadeIn] class="w-full min-h-screen">
+    <main id="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </section>
+}
 
 <!-- Main Store Layout -->
-<section *ngIf="!isB2bRoute" [@fadeIn] class="w-full min-h-screen flex flex-col relative">
-  <app-header class="fixed top-0 left-0 right-0 z-[1000]"></app-header>
-  <!-- Spacer for fixed header: ~48px when scrolled (just nav bar) -->
-  <main id="main-content" class="w-full pt-[120px] md:pt-[150px] flex-grow">
-    <router-outlet></router-outlet>
-  </main>
-  <app-footer></app-footer>
-
-  <app-whats-app/>
-  <app-floating-cart></app-floating-cart>
-  <app-consent-banner></app-consent-banner>
-</section>
+@if (!isB2bRoute) {
+  <section [@fadeIn] class="w-full min-h-screen flex flex-col relative">
+    <app-header class="fixed top-0 left-0 right-0 z-[1000]"></app-header>
+    <!-- Spacer for fixed header: ~48px when scrolled (just nav bar) -->
+    <main id="main-content" class="w-full pt-[120px] md:pt-[150px] flex-grow">
+      <router-outlet></router-outlet>
+    </main>
+    <app-footer></app-footer>
+    <app-whats-app/>
+    <app-floating-cart></app-floating-cart>
+    <app-consent-banner></app-consent-banner>
+  </section>
+}
 
 <!-- Global Components (visible on all pages) -->
 <app-toast></app-toast>

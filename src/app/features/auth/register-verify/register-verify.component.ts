@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {NgIf} from "@angular/common";
+
 import {FormBuilder} from "@angular/forms";
 import {AuthService} from "../../../core/services/auth/auth.service";
 import Swal from "sweetalert2";
@@ -9,9 +9,8 @@ import Swal from "sweetalert2";
   selector: 'app-register-verify',
   standalone: true,
   imports: [
-    RouterLink,
-    NgIf
-  ],
+    RouterLink
+],
   templateUrl: './register-verify.component.html',
   styleUrl: './register-verify.component.css'
 })

@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../core/services/auth/auth.service";
-import {NgIf} from "@angular/common";
+
 import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-profile-passwords',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
-    NgIf
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './profile-passwords.component.html',
   styleUrl: './profile-passwords.component.css'
 })

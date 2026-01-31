@@ -19,7 +19,7 @@ import {GoogleAnalyticsService} from "./core/services/google-analytics/google-an
 import {ConsentBannerComponent} from "./components/consent-banner/consent-banner.component";
 import {FloatingCartComponent} from "./components/floating-cart/floating-cart.component";
 import {SeoService} from "./core/services/seo/seo.service";
-import {CommonModule} from "@angular/common";
+
 import {filter} from "rxjs/operators";
 import {ToastComponent} from "./components/toast/toast.component";
 import {DialogComponent} from "./components/dialog/dialog.component";
@@ -38,12 +38,11 @@ import {ThemeService} from "./core/services/theme/theme.service";
     WhatsAppComponent,
     ConsentBannerComponent,
     FloatingCartComponent,
-    CommonModule,
     ToastComponent,
     DialogComponent,
     BackToTopComponent,
     SkipLinkComponent
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   animations: [

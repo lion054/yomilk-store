@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { SkeletonLoaderComponent } from '../skeleton-loader/skeleton-loader.component';
 
 @Component({
   selector: 'app-product-skeleton',
   standalone: true,
-  imports: [CommonModule, SkeletonLoaderComponent],
+  imports: [SkeletonLoaderComponent],
   template: `
     <div class="w-full bg-white rounded-2xl shadow-sm border border-gray-100/50 overflow-hidden animate-pulse">
       <!-- Image skeleton -->

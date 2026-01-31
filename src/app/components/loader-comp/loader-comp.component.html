@@ -1,3 +1,5 @@
-<div *ngIf="loadingService.loading$ | async" class="global-loader">
-  <div class="spinner"></div>
-</div>
+@if (loadingService.loading$ | async) {
+  <div class="global-loader">
+    <div class="spinner"></div>
+  </div>
+}

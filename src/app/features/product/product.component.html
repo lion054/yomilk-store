@@ -8,262 +8,274 @@
 ]"></app-breadcrumb>
 
 <!-- Loading State -->
-<section *ngIf="loading" class="py-20 bg-gray-100">
-  <div class="container mx-auto px-5">
-    <div class="flex flex-col items-center justify-center space-y-4">
-      <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-[#42af57]"></div>
-      <p class="text-gray-500 font-medium">Loading product details...</p>
+@if (loading) {
+  <section class="py-20 bg-gray-100">
+    <div class="container mx-auto px-5">
+      <div class="flex flex-col items-center justify-center space-y-4">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-[fresh-500]"></div>
+        <p class="text-gray-500 font-medium">Loading product details...</p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+}
 
 <!-- Product Detail Section -->
-<section *ngIf="!loading && product" class="py-8 bg-gray-100">
-  <div class="container mx-auto px-5">
-    <!-- Back Button -->
-    <button
-      (click)="goBackToStore()"
-      class="mb-6 inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-xl border-2 border-gray-200 hover:border-[#42af57] transition-all shadow-sm hover:shadow-md">
-      <i class="fas fa-arrow-left"></i>
-      <span>Back to Store</span>
-    </button>
-
-    <!-- Main Product Card -->
-    <div class="bg-white rounded-[20px] shadow-sm p-6 lg:p-10 mb-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-
-        <!-- Image Section -->
-        <div class="flex flex-col">
-          <!-- Main Image -->
-          <div class="relative group w-full aspect-square bg-gray-50 rounded-[20px] overflow-hidden mb-4 border border-gray-200">
-            <img
-              [src]="mainImage"
-              (click)="openModal(mainImage)"
-              class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 cursor-zoom-in p-4"
-              alt="{{ product.itemName }}">
-            <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-[#1c352c]/80 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1">
-              <i class="fas fa-search-plus"></i>
-              Click to zoom
+@if (!loading && product) {
+  <section class="py-8 bg-gray-100">
+    <div class="container mx-auto px-5">
+      <!-- Back Button -->
+      <button
+        (click)="goBackToStore()"
+        class="mb-6 inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-semibold rounded-xl border-2 border-gray-200 hover:border-[fresh-500] transition-all shadow-sm hover:shadow-md">
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Store</span>
+      </button>
+      <!-- Main Product Card -->
+      <div class="bg-white rounded-[20px] shadow-sm p-6 lg:p-10 mb-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <!-- Image Section -->
+          <div class="flex flex-col">
+            <!-- Main Image -->
+            <div class="relative group w-full aspect-square bg-gray-50 rounded-[20px] overflow-hidden mb-4 border border-gray-200">
+              <img
+                [src]="mainImage"
+                (click)="openModal(mainImage)"
+                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 cursor-zoom-in p-4"
+                alt="{{ product.itemName }}">
+              <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity bg-[dark]/80 text-white px-3 py-1.5 rounded-full text-xs font-medium flex items-center gap-1">
+                <i class="fas fa-search-plus"></i>
+                Click to zoom
+              </div>
+              <!-- Sold Out Badge -->
+              @if (product.unitsOnStock < 1) {
+                <div class="absolute top-4 left-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold uppercase">
+                  Sold Out
+                </div>
+              }
             </div>
-
-            <!-- Sold Out Badge -->
-            <div *ngIf="product.unitsOnStock < 1" class="absolute top-4 left-4 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold uppercase">
-              Sold Out
-            </div>
-          </div>
-
-          <!-- Thumbnail Gallery -->
-          <div *ngIf="product.pictures && product.pictures.length > 1" class="flex gap-3 overflow-x-auto pb-2">
-            <button
-              *ngFor="let pic of product.pictures"
-              (click)="selectImage(pic)"
-              class="flex-shrink-0 w-20 h-20 rounded-xl border-2 overflow-hidden transition-all duration-200 shadow-sm hover:shadow-md"
+            <!-- Thumbnail Gallery -->
+            @if (product.pictures && product.pictures.length > 1) {
+              <div class="flex gap-3 overflow-x-auto pb-2">
+                @for (pic of product.pictures; track pic) {
+                  <button
+                    (click)="selectImage(pic)"
+                    class="flex-shrink-0 w-20 h-20 rounded-xl border-2 overflow-hidden transition-all duration-200 shadow-sm hover:shadow-md"
               [ngClass]="{
-                'border-[#42af57] ring-2 ring-[#42af57]/20': mainImage === pic,
-                'border-gray-200 hover:border-[#42af57]': mainImage !== pic
+                'border-[fresh-500] ring-2 ring-[fresh-500]/20': mainImage === pic,
+                'border-gray-200 hover:border-[fresh-500]': mainImage !== pic
               }">
-              <img [src]="pic" class="w-full h-full object-cover">
-            </button>
-          </div>
-        </div>
-
-        <!-- Product Details Section -->
-        <div class="flex flex-col">
-          <!-- Product Name -->
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1c352c] mb-4 font-outfit leading-tight">
-            {{ product.itemName }}
-          </h1>
-
-          <!-- Price -->
-          <div class="flex items-baseline gap-2 mb-6 p-4 bg-[#e8f7ef] rounded-xl">
-            <span class="text-lg font-semibold text-[#42af57]">{{ product.currency }}</span>
-            <span class="text-3xl sm:text-4xl font-bold text-[#42af57] font-outfit">{{ product.price | number:'1.2-2' }}</span>
-          </div>
-
-          <!-- Sold Out Notice -->
-          <div *ngIf="product.unitsOnStock < 1" class="flex items-center gap-3 p-4 mb-6 bg-red-50 border border-red-200 rounded-xl">
-            <i class="fas fa-exclamation-triangle text-red-500 text-xl"></i>
-            <div>
-              <span class="font-bold text-red-700">Currently Unavailable</span>
-              <p class="text-sm text-red-600">This product is temporarily out of stock.</p>
-            </div>
-          </div>
-
-          <!-- Product Description -->
-          <div *ngIf="product.u_ONA_Description" class="mb-6">
-            <div class="flex items-center gap-2 mb-3">
-              <i class="fas fa-info-circle text-[#42af57]"></i>
-              <h3 class="text-lg font-semibold text-[#1c352c]">Description</h3>
-            </div>
-
-            <div class="relative">
-              <p
-                id="product-description"
-                class="text-gray-600 leading-relaxed whitespace-pre-line transition-all duration-300"
-                [class.line-clamp-4]="!isDescriptionExpanded && showExpandButton">
-                {{ product.u_ONA_Description }}
-              </p>
-
-              <!-- Gradient overlay when collapsed -->
-              <div
-                *ngIf="!isDescriptionExpanded && showExpandButton"
-                class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none">
+                    <img [src]="pic" class="w-full h-full object-cover">
+                  </button>
+                }
               </div>
-            </div>
-
-            <!-- Expand/Collapse Button -->
-            <button
-              *ngIf="showExpandButton"
-              (click)="toggleDescription()"
-              class="mt-3 flex items-center gap-2 text-[#42af57] hover:text-[#3d9332] font-medium text-sm transition-colors">
-              <span>{{ isDescriptionExpanded ? 'Read less' : 'Read more' }}</span>
-              <i class="fas" [ngClass]="isDescriptionExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </button>
+            }
           </div>
-
-          <!-- Tags Section -->
-          <div *ngIf="product.u_ONA_Tags && product.u_ONA_Tags.length > 0" class="mb-6">
-            <div class="flex items-center gap-2 mb-3">
-              <i class="fas fa-tags text-[#42af57]"></i>
-              <h3 class="text-lg font-semibold text-[#1c352c]">Tags</h3>
+          <!-- Product Details Section -->
+          <div class="flex flex-col">
+            <!-- Product Name -->
+            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-[dark] mb-4 font-outfit leading-tight">
+              {{ product.itemName }}
+            </h1>
+            <!-- Price -->
+            <div class="flex items-baseline gap-2 mb-6 p-4 bg-[#e8f7ef] rounded-xl">
+              <span class="text-lg font-semibold text-[fresh-500]">{{ product.currency }}</span>
+              <span class="text-3xl sm:text-4xl font-bold text-[fresh-500] font-outfit">{{ product.price | number:'1.2-2' }}</span>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span
-                *ngFor="let tag of product.u_ONA_Tags"
-                class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-[#e8f7ef] text-[#42af57] border border-[#42af57]/20">
-                {{ tag }}
-              </span>
-            </div>
-          </div>
-
-          <!-- Unit Selection & Add to Cart -->
-          <div class="pt-6 border-t border-gray-200 space-y-5 mt-auto">
-
-            <!-- Unit Selection -->
-            <div *ngIf="product.uoMs && product.uoMs.length > 1">
-              <label class="block text-sm font-semibold text-[#1c352c] mb-3">Select Unit</label>
-              <div class="flex flex-wrap gap-2">
-                <button
-                  *ngFor="let uom of product.uoMs"
-                  (click)="selectUom(uom)"
-                  class="px-5 py-3 rounded-xl text-sm font-semibold border-2 transition-all"
+            <!-- Sold Out Notice -->
+            @if (product.unitsOnStock < 1) {
+              <div class="flex items-center gap-3 p-4 mb-6 bg-red-50 border border-red-200 rounded-xl">
+                <i class="fas fa-exclamation-triangle text-red-500 text-xl"></i>
+                <div>
+                  <span class="font-bold text-red-700">Currently Unavailable</span>
+                  <p class="text-sm text-red-600">This product is temporarily out of stock.</p>
+                </div>
+              </div>
+            }
+            <!-- Product Description -->
+            @if (product.u_ONA_Description) {
+              <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <i class="fas fa-info-circle text-[fresh-500]"></i>
+                  <h3 class="text-lg font-semibold text-[dark]">Description</h3>
+                </div>
+                <div class="relative">
+                  <p
+                    id="product-description"
+                    class="text-gray-600 leading-relaxed whitespace-pre-line transition-all duration-300"
+                    [class.line-clamp-4]="!isDescriptionExpanded && showExpandButton">
+                    {{ product.u_ONA_Description }}
+                  </p>
+                  <!-- Gradient overlay when collapsed -->
+                  @if (!isDescriptionExpanded && showExpandButton) {
+                    <div
+                      class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none">
+                    </div>
+                  }
+                </div>
+                <!-- Expand/Collapse Button -->
+                @if (showExpandButton) {
+                  <button
+                    (click)="toggleDescription()"
+                    class="mt-3 flex items-center gap-2 text-[fresh-500] hover:text-[fresh-600] font-medium text-sm transition-colors">
+                    <span>{{ isDescriptionExpanded ? 'Read less' : 'Read more' }}</span>
+                    <i class="fas" [ngClass]="isDescriptionExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  </button>
+                }
+              </div>
+            }
+            <!-- Tags Section -->
+            @if (product.u_ONA_Tags && product.u_ONA_Tags.length > 0) {
+              <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <i class="fas fa-tags text-[fresh-500]"></i>
+                  <h3 class="text-lg font-semibold text-[dark]">Tags</h3>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  @for (tag of product.u_ONA_Tags; track tag) {
+                    <span
+                      class="inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium bg-[#e8f7ef] text-[fresh-500] border border-[fresh-500]/20">
+                      {{ tag }}
+                    </span>
+                  }
+                </div>
+              </div>
+            }
+            <!-- Unit Selection & Add to Cart -->
+            <div class="pt-6 border-t border-gray-200 space-y-5 mt-auto">
+              <!-- Unit Selection -->
+              @if (product.uoMs && product.uoMs.length > 1) {
+                <div>
+                  <label class="block text-sm font-semibold text-[dark] mb-3">Select Unit</label>
+                  <div class="flex flex-wrap gap-2">
+                    @for (uom of product.uoMs; track uom) {
+                      <button
+                        (click)="selectUom(uom)"
+                        class="px-5 py-3 rounded-xl text-sm font-semibold border-2 transition-all"
                   [ngClass]="{
-                    'border-[#42af57] bg-[#42af57] text-white shadow-md': selectedUom?.uomEntry === uom.uomEntry,
-                    'border-gray-200 text-gray-700 bg-white hover:border-[#42af57]': selectedUom?.uomEntry !== uom.uomEntry
+                    'border-[fresh-500] bg-[fresh-500] text-white shadow-md': selectedUom?.uomEntry === uom.uomEntry,
+                    'border-gray-200 text-gray-700 bg-white hover:border-[fresh-500]': selectedUom?.uomEntry !== uom.uomEntry
                   }">
-                  {{ uom.uomName }}
-                </button>
-              </div>
-            </div>
-
-            <!-- Quantity & Add to Cart -->
-            <div class="flex flex-col sm:flex-row gap-4 items-stretch">
-              <!-- Quantity Selector -->
-              <div class="sm:w-40">
-                <label class="block text-sm font-semibold text-[#1c352c] mb-3">Quantity</label>
-                <div class="flex items-center border-2 border-gray-200 rounded-xl bg-white" [class.opacity-50]="product.unitsOnStock < 1">
+                        {{ uom.uomName }}
+                      </button>
+                    }
+                  </div>
+                </div>
+              }
+              <!-- Quantity & Add to Cart -->
+              <div class="flex flex-col sm:flex-row gap-4 items-stretch">
+                <!-- Quantity Selector -->
+                <div class="sm:w-40">
+                  <label class="block text-sm font-semibold text-[dark] mb-3">Quantity</label>
+                  <div class="flex items-center border-2 border-gray-200 rounded-xl bg-white" [class.opacity-50]="product.unitsOnStock < 1">
+                    <button
+                      (click)="decreaseQuantity()"
+                      [disabled]="product.unitsOnStock < 1"
+                      class="w-12 h-12 text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors font-bold text-xl disabled:cursor-not-allowed disabled:opacity-50 rounded-l-xl">
+                      −
+                    </button>
+                    <div class="flex-1 text-center font-bold text-[dark] text-lg">{{ quantity }}</div>
+                    <button
+                      (click)="increaseQuantity()"
+                      [disabled]="product.unitsOnStock < 1"
+                      class="w-12 h-12 text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors font-bold text-xl disabled:cursor-not-allowed disabled:opacity-50 rounded-r-xl">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <!-- Add to Cart Button -->
+                <div class="flex-1 flex items-end">
                   <button
-                    (click)="decreaseQuantity()"
+                    (click)="addToCart()"
                     [disabled]="product.unitsOnStock < 1"
-                    class="w-12 h-12 text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors font-bold text-xl disabled:cursor-not-allowed disabled:opacity-50 rounded-l-xl">
-                    −
-                  </button>
-                  <div class="flex-1 text-center font-bold text-[#1c352c] text-lg">{{ quantity }}</div>
-                  <button
-                    (click)="increaseQuantity()"
-                    [disabled]="product.unitsOnStock < 1"
-                    class="w-12 h-12 text-gray-600 hover:bg-gray-100 active:bg-gray-200 transition-colors font-bold text-xl disabled:cursor-not-allowed disabled:opacity-50 rounded-r-xl">
-                    +
+                    class="w-full h-12 bg-[#8dc1ed] hover:bg-[#015a9e] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:shadow-none">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>{{ product.unitsOnStock < 1 ? 'Sold Out' : 'Add to Cart' }}</span>
                   </button>
                 </div>
               </div>
-
-              <!-- Add to Cart Button -->
-              <div class="flex-1 flex items-end">
-                <button
-                  (click)="addToCart()"
-                  [disabled]="product.unitsOnStock < 1"
-                  class="w-full h-12 bg-[#8dc1ed] hover:bg-[#015a9e] text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:shadow-none">
-                  <i class="fas fa-shopping-cart"></i>
-                  <span>{{ product.unitsOnStock < 1 ? 'Sold Out' : 'Add to Cart' }}</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- Product Info Strip -->
-            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200 mt-6">
-              <div class="text-center">
-                <div class="w-12 h-12 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
-                    <path d="M15 18H9"/>
-                    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
-                    <circle cx="17" cy="18" r="2"/>
-                    <circle cx="7" cy="18" r="2"/>
-                  </svg>
+              <!-- Product Info Strip -->
+              <div class="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200 mt-6">
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                      <path d="M15 18H9"/>
+                      <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                      <circle cx="17" cy="18" r="2"/>
+                      <circle cx="7" cy="18" r="2"/>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-medium text-gray-700">Fast Delivery</span>
                 </div>
-                <span class="text-xs font-medium text-gray-700">Fast Delivery</span>
-              </div>
-              <div class="text-center">
-                <div class="w-12 h-12 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <path d="m9 12 2 2 4-4"/>
-                  </svg>
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                      <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-medium text-gray-700">Quality Assured</span>
                 </div>
-                <span class="text-xs font-medium text-gray-700">Quality Assured</span>
-              </div>
-              <div class="text-center">
-                <div class="w-12 h-12 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#42af57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                    <path d="M14.05 2a9 9 0 0 1 8 7.94"/>
-                    <path d="M14.05 6A5 5 0 0 1 18 10"/>
-                  </svg>
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="fresh-500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      <path d="M14.05 2a9 9 0 0 1 8 7.94"/>
+                      <path d="M14.05 6A5 5 0 0 1 18 10"/>
+                    </svg>
+                  </div>
+                  <span class="text-xs font-medium text-gray-700">24/7 Support</span>
                 </div>
-                <span class="text-xs font-medium text-gray-700">24/7 Support</span>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- Frequently Bought Together Section -->
+      @if (crossSellProducts && crossSellProducts.length > 0) {
+        <section class="mb-12">
+          <div class="flex items-center gap-4 mb-6">
+            <h2 class="text-2xl font-bold text-[dark] font-outfit">Frequently Bought Together</h2>
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            @for (crossItem of crossSellProducts; track crossItem) {
+              <app-product-card [product]="crossItem"></app-product-card>
+            }
+          </div>
+        </section>
+      }
+      <!-- Similar Products Section -->
+      @if (upsellProducts && upsellProducts.length > 0) {
+        <section class="mb-8">
+          <div class="flex items-center gap-4 mb-6">
+            <h2 class="text-2xl font-bold text-[dark] font-outfit">Similar Products</h2>
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            @for (relatedProduct of upsellProducts; track relatedProduct) {
+              <app-product-card [product]="relatedProduct"></app-product-card>
+            }
+          </div>
+        </section>
+      }
     </div>
-
-    <!-- Frequently Bought Together Section -->
-    <section *ngIf="crossSellProducts && crossSellProducts.length > 0" class="mb-12">
-      <div class="flex items-center gap-4 mb-6">
-        <h2 class="text-2xl font-bold text-[#1c352c] font-outfit">Frequently Bought Together</h2>
-        <div class="flex-1 h-px bg-gray-200"></div>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <app-product-card *ngFor="let crossItem of crossSellProducts" [product]="crossItem"></app-product-card>
-      </div>
-    </section>
-
-    <!-- Similar Products Section -->
-    <section *ngIf="upsellProducts && upsellProducts.length > 0" class="mb-8">
-      <div class="flex items-center gap-4 mb-6">
-        <h2 class="text-2xl font-bold text-[#1c352c] font-outfit">Similar Products</h2>
-        <div class="flex-1 h-px bg-gray-200"></div>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        <app-product-card *ngFor="let relatedProduct of upsellProducts" [product]="relatedProduct"></app-product-card>
-      </div>
-    </section>
-  </div>
-</section>
+  </section>
+}
 
 <!-- Features Strip -->
 <app-features-strip></app-features-strip>
 
 <!-- Image Modal -->
-<div *ngIf="showModal" class="fixed inset-0 z-[1050] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" (click)="closeModal()">
-  <div class="relative z-10 w-full max-w-4xl max-h-[90vh] flex flex-col items-center" (click)="$event.stopPropagation()">
-    <button
-      (click)="closeModal()"
-      class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded-full">
-      <i class="fas fa-times text-2xl"></i>
-    </button>
-    <img [src]="modalImage" class="w-full h-auto max-h-[85vh] object-contain rounded-[20px] shadow-2xl">
+@if (showModal) {
+  <div class="fixed inset-0 z-[1050] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" (click)="closeModal()">
+    <div class="relative z-10 w-full max-w-4xl max-h-[90vh] flex flex-col items-center" (click)="$event.stopPropagation()">
+      <button
+        (click)="closeModal()"
+        class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors p-2 hover:bg-white/10 rounded-full">
+        <i class="fas fa-times text-2xl"></i>
+      </button>
+      <img [src]="modalImage" class="w-full h-auto max-h-[85vh] object-contain rounded-[20px] shadow-2xl">
+    </div>
   </div>
-</div>
+}

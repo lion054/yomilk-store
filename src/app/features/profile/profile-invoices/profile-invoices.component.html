@@ -21,209 +21,205 @@
                 <!--                <div class="inline-flex gap-x-2">-->
                 <!--                  <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" href="#">-->
                 <!--                    View all-->
-                <!--                  </a>-->
+              <!--                  </a>-->
 
-                <!--                  <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">-->
-                <!--                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>-->
-                <!--                    Create-->
-                <!--                  </a>-->
-                <!--                </div>-->
-              </div>
-            </div>
-            <!-- End Header -->
+              <!--                  <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">-->
+              <!--                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>-->
+              <!--                    Create-->
+            <!--                  </a>-->
+          <!--                </div>-->
+        </div>
+      </div>
+      <!-- End Header -->
 
-            <!-- Table -->
-            <table *ngIf="!loading" class="min-w-full divide-y divide-gray-200 w-full">
-              <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Invoice number
-                    </span>
-                    <div class="hs-tooltip">
-                      <div class="hs-tooltip-toggle">
-                        <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
-                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round">
-                          <circle cx="12" cy="12" r="10"/>
-                          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                          <path d="M12 17h.01"/>
-                        </svg>
-                        <span
-                          class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm"
-                          role="tooltip">
-                          Invoice number related popup
-                        </span>
-                      </div>
+      <!-- Table -->
+      @if (!loading) {
+        <table class="min-w-full divide-y divide-gray-200 w-full">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-start">
+                <div class="flex items-center gap-x-2">
+                  <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                    Invoice number
+                  </span>
+                  <div class="hs-tooltip">
+                    <div class="hs-tooltip-toggle">
+                      <svg class="shrink-0 size-4 text-gray-500" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                        <path d="M12 17h.01"/>
+                      </svg>
+                      <span
+                        class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm"
+                        role="tooltip">
+                        Invoice number related popup
+                      </span>
                     </div>
                   </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Amount
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Due
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Created
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-start">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                      Action
-                    </span>
-                  </div>
-                </th>
-              </tr>
-              </thead>
-
-              <tbody class="divide-y divide-gray-200 w-full">
-                @for (invoice of invoices; track invoice.DocNum) {
-                  <tr class="bg-white hover:bg-gray-50 w-full">
-                    <td class="size-px whitespace-nowrap">
-                      <button (click)="openInvoice(invoice)" type="button" class="block" aria-haspopup="dialog"
-                              aria-expanded="false"
-                              aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
+                </div>
+              </th>
+              <th scope="col" class="px-6 py-3 text-start">
+                <div class="flex items-center gap-x-2">
+                  <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                    Amount
+                  </span>
+                </div>
+              </th>
+              <th scope="col" class="px-6 py-3 text-start">
+                <div class="flex items-center gap-x-2">
+                  <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                    Due
+                  </span>
+                </div>
+              </th>
+              <th scope="col" class="px-6 py-3 text-start">
+                <div class="flex items-center gap-x-2">
+                  <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                    Created
+                  </span>
+                </div>
+              </th>
+              <th scope="col" class="px-6 py-3 text-start">
+                <div class="flex items-center gap-x-2">
+                  <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                    Action
+                  </span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 w-full">
+            @for (invoice of invoices; track invoice.DocNum) {
+              <tr class="bg-white hover:bg-gray-50 w-full">
+                <td class="size-px whitespace-nowrap">
+                  <button (click)="openInvoice(invoice)" type="button" class="block" aria-haspopup="dialog"
+                    aria-expanded="false"
+                    aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
                       <span class="font-mono text-sm text-blue-600">{{ invoice?.DocNum }}</span>
                     </span>
-                      </button>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                      <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false"
-                              aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
+                  </button>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false"
+                    aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
                       <span class="text-sm text-gray-600">{{ invoice.DocCurrency }} ${{ invoice.DocTotalSys }}</span>
                     </span>
-                      </button>
-                    </td>
-
-                    <td class="size-px whitespace-nowrap">
-                      <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false"
-                              aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
+                  </button>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false"
+                    aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
                       <span class="text-sm text-gray-600">{{ invoice.DocDueDate | date:'dd/MM/yyyy hh:mm a':'UTC' }}</span>
                     </span>
-                      </button>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                      <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false"
-                              aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
+                  </button>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <button type="button" class="block" aria-haspopup="dialog" aria-expanded="false"
+                    aria-controls="hs-ai-invoice-modal" data-hs-overlay="#hs-ai-invoice-modal">
                     <span class="block px-6 py-2">
                       <span class="text-sm text-gray-600">{{ invoice.DocDate | date:'dd/MM/yyyy hh:mm a' : 'UTC'}}</span>
                     </span>
-                      </button>
-                    </td>
-                    <td class="size-px whitespace-nowrap">
-                      <div class="flex items-center justify-center">
-                        <button (click)="openInvoice(invoice)" type="button" class="block " aria-haspopup="dialog"
-                                aria-expanded="false">
-                    <span class=" px-2 py-1.5">
-                      <span
-                        class="py-1 px-2 inline-flex justify-center items-center gap-2 rounded-lg border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm">
-                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                             fill="currentColor" viewBox="0 0 16 16">
-                          <path
-                            d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
-                          <path
-                            d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
-                        </svg>
-                        View
+                  </button>
+                </td>
+                <td class="size-px whitespace-nowrap">
+                  <div class="flex items-center justify-center">
+                    <button (click)="openInvoice(invoice)" type="button" class="block " aria-haspopup="dialog"
+                      aria-expanded="false">
+                      <span class=" px-2 py-1.5">
+                        <span
+                          class="py-1 px-2 inline-flex justify-center items-center gap-2 rounded-lg border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm">
+                          <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            fill="currentColor" viewBox="0 0 16 16">
+                            <path
+                              d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z"/>
+                            <path
+                              d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                          </svg>
+                          View
+                        </span>
                       </span>
-                    </span>
-                        </button>
-<!--                        Navigate to Pay page for invoice-->
-                        <ng-container *ngIf="(invoice.PaidToDate != invoice.DocTotal)">
-                          <button (click)="payInvoice(invoice)" type="button" class="block" aria-haspopup="dialog"
-                                  aria-expanded="false">
-                                <span class="px-2 py-1.5">
-                                  <span
-                                    class="py-1 px-2 inline-flex justify-center items-center gap-2 rounded-lg border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-                                    Pay
-                                  </span>
-                                </span>
-                          </button>
-                        </ng-container>
+                    </button>
+                    <!--                        Navigate to Pay page for invoice-->
+                    @if ((invoice.PaidToDate != invoice.DocTotal)) {
+                      <button (click)="payInvoice(invoice)" type="button" class="block" aria-haspopup="dialog"
+                        aria-expanded="false">
+                        <span class="px-2 py-1.5">
+                          <span
+                            class="py-1 px-2 inline-flex justify-center items-center gap-2 rounded-lg border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                            Pay
+                          </span>
+                        </span>
+                      </button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+      <!-- End Table -->
 
-                      </div>
-                    </td>
-                  </tr>
-                }
+      @if (loading) {
+        <div class="h-[400px] w-full flex flex-col items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-loader-circle animate-spin">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+          </svg>
+          <span class="animate-pulse py-10"> FETCHING INVOICES...</span>
+        </div>
+      }
 
-              </tbody>
-            </table>
-            <!-- End Table -->
+      <!-- Footer -->
+      <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200">
+        <div>
+          @if (!loading) {
+            <p class="text-sm text-gray-600">
+              <span class="font-semibold text-gray-800">{{ invoices.length }}</span> results
+              <span class="font-semibold text-gray-800">Page {{ pageNumber }} of {{ totalPages }}</span>
+            </p>
+          }
+        </div>
 
-            <div *ngIf="loading" class="h-[400px] w-full flex flex-col items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
-                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                   class="lucide lucide-loader-circle animate-spin">
-                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+        <div>
+          <div class="inline-flex gap-x-2">
+            <button (click)="goToPreviousPage()" [disabled]="pageNumber === 1" type="button"
+              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+              <svg class="size-3" width="16" height="16" viewBox="0 0 16 15" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.506 1.64001L4.85953 7.28646C4.66427 7.48172 4.66427 7.79831 4.85953 7.99357L10.506 13.64"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
               </svg>
+              Prev
+            </button>
 
-              <span class="animate-pulse py-10"> FETCHING INVOICES...</span>
-
-            </div>
-
-            <!-- Footer -->
-            <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200">
-              <div>
-                <p *ngIf="!loading" class="text-sm text-gray-600">
-                  <span class="font-semibold text-gray-800">{{ invoices.length }}</span> results
-                  <span class="font-semibold text-gray-800">Page {{ pageNumber }} of {{ totalPages }}</span>
-                </p>
-              </div>
-
-              <div>
-                <div class="inline-flex gap-x-2">
-                  <button (click)="goToPreviousPage()" [disabled]="pageNumber === 1" type="button"
-                          class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                    <svg class="size-3" width="16" height="16" viewBox="0 0 16 15" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        d="M10.506 1.64001L4.85953 7.28646C4.66427 7.48172 4.66427 7.79831 4.85953 7.99357L10.506 13.64"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    Prev
-                  </button>
-
-                  <button (click)="goToNextPage()" [disabled]="pageNumber === totalPages" type="button"
-                          class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
-                    Next
-                    <svg class="size-3" width="16" height="16" viewBox="0 0 16 16" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4.50598 2L10.1524 7.64645C10.3477 7.84171 10.3477 8.15829 10.1524 8.35355L4.50598 14"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- End Footer -->
+            <button (click)="goToNextPage()" [disabled]="pageNumber === totalPages" type="button"
+              class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
+              Next
+              <svg class="size-3" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.50598 2L10.1524 7.64645C10.3477 7.84171 10.3477 8.15829 10.1524 8.35355L4.50598 14"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
+      <!-- End Footer -->
     </div>
-    <!-- End Card -->
   </div>
-  <!-- End Table Section -->
+</div>
+</div>
+<!-- End Card -->
+</div>
+<!-- End Table Section -->
 </section>
 

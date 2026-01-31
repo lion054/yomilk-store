@@ -1,15 +1,14 @@
 import {AfterViewInit, Component, CUSTOM_ELEMENTS_SCHEMA, OnDestroy, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {NgIf} from "@angular/common";
+
 import {AuthService} from "../../core/services/auth/auth.service";
 
 @Component({
   selector: 'app-hero-cta',
   standalone: true,
   imports: [
-    RouterLink,
-    NgIf
-  ],
+    RouterLink
+],
   templateUrl: './hero-cta.component.html',
   styleUrl: './hero-cta.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

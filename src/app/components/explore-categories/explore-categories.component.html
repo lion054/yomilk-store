@@ -1,70 +1,42 @@
-<!-- Explore Categories Section - Nest Design Inspired -->
-<section class="py-12 bg-gray-50">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-      <!-- Left: Shopper Image -->
-      <div class="relative rounded-2xl overflow-hidden shadow-xl group order-2 lg:order-1">
-        <!-- Background -->
-        <div class="relative h-[400px] lg:h-[500px] bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
-          <!-- Decorative Elements -->
-          <div class="absolute inset-0 opacity-20">
-            <div class="absolute top-20 left-20 w-40 h-40 bg-[#42af57] rounded-full blur-3xl"></div>
-            <div class="absolute bottom-20 right-20 w-48 h-48 bg-[#8dc1ed] rounded-full blur-3xl"></div>
-          </div>
-
-          <!-- Shopper Image -->
-          <div class="relative h-full flex items-center justify-center p-8">
-            <img 
-              src="assets/images/shopper-hero.webp" 
-              (error)="$any($event.target).src='assets/images/woocommerce-placeholder.webp'"
-              alt="Shopper"
-              class="max-h-full max-w-full object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-
-          <!-- 50% Off Badge -->
-          <div class="absolute top-6 left-6 bg-[#FF6B6B] text-white px-5 py-2.5 rounded-full font-bold text-lg shadow-xl">
-            50% Off
-          </div>
-        </div>
+<!-- Explore Categories Section - Nest-Inspired Full-Width Design -->
+<section class="py-16 bg-white">
+  <div class="container mx-auto px-5">
+    <!-- Section Header -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-8 mb-10">
+      <div>
+        <h2 class="text-3xl md:text-4xl font-bold text-dark font-outfit mb-2">
+          Shop by Categories
+        </h2>
+        <p class="text-gray-500 text-sm mb-3">Browse our wide selection of fresh products</p>
+        <div class="w-16 h-1 bg-fresh-500 rounded-full"></div>
       </div>
+      <a routerLink="/store" class="inline-flex items-center gap-2 text-fresh-500 font-semibold hover:gap-3 transition-all whitespace-nowrap">
+        All Categories
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
 
-      <!-- Right: Categories -->
-      <div class="order-1 lg:order-2">
-        <!-- Section Header -->
-        <div class="mb-8">
-          <h2 class="text-4xl md:text-5xl font-bold mb-2 leading-tight">
-            Explore<br/>
-            <span class="text-[#42af57]">Categories</span>
-          </h2>
-        </div>
-
-        <!-- Category Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-4 gap-4">
-          <a *ngFor="let category of categories" 
-             [routerLink]="['/store']"
-             [queryParams]="{category: category.name.toLowerCase()}"
-             class="group flex flex-col items-center justify-center p-6 rounded-2xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer"
-             [style.background-color]="category.bgColor">
-            
-            <!-- Icon -->
-            <div class="text-5xl mb-3 group-hover:scale-110 transition-transform duration-300">
-              {{ category.icon }}
-            </div>
-
-            <!-- Category Name -->
-            <h3 class="font-bold text-sm mb-1 text-center"
-                [style.color]="category.textColor">
-              {{ category.name }}
-            </h3>
-
-            <!-- Item Count -->
-            <p class="text-xs text-gray-600">
-              {{ category.count }} items
-            </p>
-          </a>
-        </div>
-      </div>
+    <!-- Category Grid - Full Width -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-5">
+      @for (category of categories; track category) {
+        <a
+          [routerLink]="['/store']"
+          [queryParams]="{category: category.name.toLowerCase()}"
+          class="group flex flex-col items-center justify-center p-6 md:p-8 rounded-lg text-center transition-all duration-300 bg-gray-50 border border-gray-50 hover:bg-white hover:border-fresh-200 hover:shadow-card cursor-pointer">
+          <!-- Icon -->
+          <div class="text-4xl md:text-5xl mb-4 group-hover:scale-105 transition-transform duration-500">
+            {{ category.icon }}
+          </div>
+          <!-- Category Name -->
+          <h3 class="font-bold text-sm md:text-base text-dark group-hover:text-fresh-500 transition-colors mb-1">
+            {{ category.name }}
+          </h3>
+          <!-- Item Count -->
+          <p class="text-xs text-gray-500 group-hover:text-gray-600">
+            {{ category.count }} items
+          </p>
+        </a>
+      }
     </div>
   </div>
 </section>

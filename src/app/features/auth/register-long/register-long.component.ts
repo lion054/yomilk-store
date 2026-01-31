@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+
 import {
   AbstractControl,
   FormBuilder,
@@ -21,13 +21,11 @@ import {CountryISO, NgxIntlTelInputModule, SearchCountryField} from "ngx-intl-te
   selector: 'app-register-long',
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     RouterLink,
-    NgForOf,
     NgSelectModule,
     NgxIntlTelInputModule
-  ],
+],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './register-long.component.html',
   styleUrl: './register-long.component.css'

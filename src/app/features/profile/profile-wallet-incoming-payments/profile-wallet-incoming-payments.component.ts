@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DatePipe, DecimalPipe, NgIf} from "@angular/common";
+import { DatePipe, DecimalPipe } from "@angular/common";
 import {catchError, of, Subject, takeUntil} from "rxjs";
 import {StoreService} from "../../../core/services/store/store.service";
 import {Router, RouterModule} from "@angular/router";
@@ -9,11 +9,10 @@ import {AuthService} from "../../../core/services/auth/auth.service";
   selector: 'app-profile-wallet-incoming-payments',
   standalone: true,
   imports: [
-    NgIf,
     RouterModule,
     DecimalPipe,
     DatePipe
-  ],
+],
   templateUrl: './profile-wallet-incoming-payments.component.html',
   styleUrl: './profile-wallet-incoming-payments.component.css'
 })

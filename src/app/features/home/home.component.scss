@@ -1,0 +1,23 @@
+.category-card {
+  &:hover {
+    background-color: white !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+// Newsletter Banner Section
+.newsletter-banner {
+  background: linear-gradient(135deg, #42af57 0%, #2f8742 100%);
+  color: white;
+}
+
+// Button Success Custom
+.btn-success-custom {
+  background-color: #42af57 !important;
+  border-color: #42af57 !important;
+
+  &:hover {
+    background-color: #3d9332 !important;
+    border-color: #3d9332 !important;
+  }
+}

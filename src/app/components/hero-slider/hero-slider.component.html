@@ -1,29 +1,27 @@
-<!-- Hero Section - Pastel Design with Corner Images -->
-<section class="py-6 bg-gray-100">
-  <div class="container mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+<!-- Hero Section - Nest-Inspired Design with 8/4 Column Layout -->
+<section class="py-8 bg-white">
+  <div class="container mx-auto px-5">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-      <!-- Main Hero Slider (2/3 width) -->
-      <div class="lg:col-span-2 relative rounded-[20px] overflow-hidden min-h-[400px] bg-gradient-to-br from-[#e8f5e9] to-[#c8e6c9]">
+      <!-- Main Hero Slider (8 columns) -->
+      <div class="lg:col-span-8 relative rounded-[30px] overflow-hidden min-h-[250px] md:min-h-[350px] lg:min-h-[538px] bg-gradient-to-br from-[#e8f5e9] to-[#c8e6c9]">
         <!-- Background decorative circles -->
-        <div class="absolute right-[-50px] bottom-[-50px] w-[400px] h-[400px] rounded-full bg-[#42af57]/10"></div>
-        <div class="absolute right-[100px] top-[-100px] w-[200px] h-[200px] rounded-full bg-[#42af57]/5"></div>
+        <div class="absolute right-[-50px] bottom-[-50px] w-[400px] h-[400px] rounded-full bg-[fresh-500]/10"></div>
+        <div class="absolute right-[100px] top-[-100px] w-[200px] h-[200px] rounded-full bg-[fresh-500]/5"></div>
 
         <!-- Slide Content -->
-        <div class="relative z-10 h-full flex flex-col justify-center p-10 md:p-14">
+        <div class="relative z-10 h-full flex flex-col justify-center p-6 md:p-10 lg:p-14">
           <!-- Main Title -->
-          <h1 class="text-4xl md:text-5xl lg:text-[56px] font-bold text-[#1c352c] leading-tight mb-1 font-outfit">
-            Fresh Groceries
+          <h1 class="text-3xl md:text-[46px] lg:text-[72px] font-bold text-dark leading-none mb-2 md:mb-4 font-outfit">
+            Fresh Groceries<br>
+            <span class="text-[fresh-500]">Daily Save</span>
           </h1>
-          <h2 class="text-4xl md:text-5xl lg:text-[56px] font-bold text-gray-700 mb-6 font-outfit">
-            Daily Save
-          </h2>
 
           <!-- Description -->
-          <p class="text-gray-600 text-lg mb-6">Sign up for the daily newsletter</p>
+          <p class="text-gray-600 text-base md:text-lg lg:text-[22px] mb-6 md:mb-8">Sign up for the daily newsletter</p>
 
           <!-- Newsletter Form -->
-          <div class="flex flex-col sm:flex-row gap-3 max-w-[420px]">
+          <div class="flex flex-col sm:flex-row gap-2 md:gap-3 max-w-[320px] md:max-w-[420px]">
             <div class="relative flex-1">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                 <rect width="20" height="16" x="2" y="4" rx="2"/>
@@ -33,12 +31,12 @@
                 type="email"
                 [(ngModel)]="email"
                 placeholder="Your email address"
-                class="w-full pl-12 pr-4 py-4 rounded-full border-0 bg-white shadow-md text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#42af57] text-[15px]"
-              />
+                class="w-full pl-12 pr-4 py-3 md:py-4 rounded-full border-0 bg-white shadow-card text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[fresh-500] text-sm md:text-[15px]"
+                />
             </div>
             <button
               (click)="onSubscribe()"
-              class="px-8 py-4 bg-[#42af57] hover:bg-[#4a9a48] text-white font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-[15px]">
+              class="px-6 md:px-8 py-3 md:py-4 bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-hover flex items-center justify-center gap-2 text-sm md:text-[15px] whitespace-nowrap">
               Subscribe
             </button>
           </div>
@@ -51,34 +49,36 @@
             alt="Fresh Groceries"
             class="w-full h-full object-cover object-center rounded-[30px] drop-shadow-2xl"
             style="mask-image: linear-gradient(to left, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 50%, transparent 100%);"
-          />
+            />
         </div>
 
         <!-- Slide Navigation Dots -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-          <button
-            *ngFor="let slide of slides; let i = index"
-            (click)="goToSlide(i)"
-            class="w-2.5 h-2.5 rounded-full transition-all duration-300"
-            [ngClass]="i === currentSlide ? 'bg-[#42af57] w-6' : 'bg-white/60 hover:bg-white'">
-          </button>
+        <div class="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          @for (slide of slides; track slide; let i = $index) {
+            <button
+              (click)="goToSlide(i)"
+              class="w-2.5 h-2.5 rounded-full transition-all duration-300"
+              [ngClass]="i === currentSlide ? 'bg-[fresh-500] w-6' : 'bg-white/60 hover:bg-white'">
+            </button>
+          }
         </div>
       </div>
 
-      <!-- Side Card - Juice/Milk Delivery -->
-      <div class="hidden lg:block">
-        <div class="rounded-[20px] overflow-hidden h-full min-h-[400px] relative bg-gradient-to-br from-[#e3f2fd] to-[#bbdefb]">
+      <!-- Side Banner - Delivered to Home (4 columns, hidden on tablets/mobile) -->
+      <div class="hidden xl:flex lg:col-span-4">
+        <div class="w-full rounded-[15px] overflow-hidden relative bg-gradient-to-br from-[#e3f2fd] to-[#bbdefb] shadow-card">
           <!-- Content -->
-          <div class="relative z-10 p-8 h-full flex flex-col justify-center">
-            <p class="text-gray-700 text-xl mb-0 font-outfit">Delivered to</p>
-            <h3 class="text-4xl font-bold text-[#42af57] leading-tight font-outfit">
+          <div class="relative z-10 p-8 h-full flex flex-col justify-center min-h-[538px]">
+            <p class="text-gray-700 text-lg mb-2 font-outfit">Delivered</p>
+            <p class="text-gray-700 text-lg mb-2 font-outfit">to</p>
+            <h3 class="text-5xl font-bold text-dark leading-tight mb-2 font-outfit">
               your
             </h3>
-            <h3 class="text-4xl font-bold text-[#42af57] mb-6 font-outfit">
+            <h3 class="text-5xl font-bold text-[fresh-500] mb-8 font-outfit">
               home
             </h3>
             <a routerLink="/store"
-               class="inline-flex items-center gap-2 px-6 py-3 bg-[#42af57] hover:bg-[#4a9a48] text-white font-semibold rounded-full transition-all duration-300 shadow-md hover:shadow-lg w-fit text-sm">
+              class="inline-flex items-center gap-2 px-6 py-3 bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-hover w-fit text-sm">
               Shop Now
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m9 18 6-6-6-6"/>
@@ -90,10 +90,10 @@
           <div class="absolute right-[-20px] bottom-[-20px] w-[75%] h-[70%]">
             <img
               src="assets/images/milk_card_min.jpg"
-              alt="Fresh Juice"
+              alt="Delivered to your home"
               class="w-full h-full object-cover object-center rounded-[20px] drop-shadow-2xl"
               style="mask-image: linear-gradient(to top left, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to top left, black 50%, transparent 100%);"
-            />
+              />
           </div>
         </div>
       </div>

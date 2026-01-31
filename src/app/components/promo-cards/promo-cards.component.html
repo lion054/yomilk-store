@@ -1,57 +1,65 @@
-<!-- Promotional Cards Section - Dynamic with Skeleton Loading -->
+<!-- Promotional Cards Section - Nest-Inspired Design -->
 <section class="py-12 bg-white">
   <div class="container mx-auto px-5">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
       <!-- Dynamic Promo Cards -->
-      <ng-container *ngFor="let card of promoCards; let i = index">
+      @for (card of promoCards; track card; let i = $index) {
         <a [routerLink]="['/store']"
-           [queryParams]="card.product ? {group: card.product.itemsGroupCode} : {}"
-           class="relative rounded-[20px] overflow-hidden min-h-[240px] group cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 block bg-gradient-to-br"
-           [ngClass]="card.bgGradient">
-
-          <!-- Save Tag (only on second card) -->
-          <div *ngIf="card.hasSaveTag" class="absolute top-4 left-4 z-20 flex items-center gap-1.5 bg-[#f74b81] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md animate-pulse">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
-            </svg>
-            Save
-          </div>
-
+          [queryParams]="card.product ? {group: card.product.itemsGroupCode} : {}"
+          class="relative rounded-lg overflow-hidden min-h-[200px] md:min-h-[240px] group cursor-pointer transition-all duration-300 hover:shadow-hover hover:-translate-y-1 block bg-gradient-to-br shadow-card"
+          [ngClass]="card.bgGradient"
+          [@routerState]="i < 3 ? 'visible' : 'hidden'">
+          <!-- Save Tag Badge -->
+          @if (card.hasSaveTag) {
+            <div class="absolute top-3 md:top-4 left-3 md:left-4 z-20 flex items-center gap-1.5 bg-danger-500 text-white text-[11px] md:text-xs font-bold px-3 py-1.5 rounded-full shadow-md animate-pulse">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+              </svg>
+              Save
+            </div>
+          }
           <!-- Category Badge -->
-          <div *ngIf="card.categoryName && card.product" class="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-sm text-gray-700 text-[11px] font-semibold px-3 py-1.5 rounded-full shadow-sm">
-            {{ card.categoryName }}
-          </div>
-
+          @if (card.categoryName && card.product) {
+            <div class="absolute top-3 md:top-4 right-3 md:right-4 z-20 bg-white/95 backdrop-blur-sm text-gray-700 text-[10px] md:text-[11px] font-semibold px-2.5 md:px-3 py-1.5 rounded-full shadow-sm">
+              {{ card.categoryName }}
+            </div>
+          }
           <!-- Content -->
-          <div class="relative z-10 p-7 h-full flex flex-col justify-center">
-            <h3 class="text-[20px] font-bold text-gray-800 leading-tight mb-1 max-w-[55%] font-outfit">
+          <div class="relative z-10 p-5 md:p-8 h-full flex flex-col justify-center">
+            <h3 class="text-lg md:text-xl font-bold text-dark leading-tight mb-1 max-w-[55%] font-outfit line-clamp-2">
               {{ card.title }}
             </h3>
-            <h3 *ngIf="card.titleLine2" class="text-[20px] font-bold text-gray-800 leading-tight mb-1 max-w-[55%] font-outfit">
-              {{ card.titleLine2 }}
-            </h3>
-            <h3 *ngIf="card.titleLine3" class="text-[20px] font-bold text-gray-800 leading-tight mb-5 max-w-[55%] font-outfit">
-              {{ card.titleLine3 }}
-            </h3>
-            <div *ngIf="!card.titleLine3" class="mb-4"></div>
-
-            <!-- Product Price Badge (if product loaded) -->
-            <div *ngIf="card.product" class="mb-3">
-              <span class="inline-flex items-center gap-1 bg-white/80 backdrop-blur-sm text-[#42af57] text-sm font-bold px-3 py-1 rounded-full shadow-sm">
-                From {{ card.product.currency }}{{ card.product.price | number:'1.2-2' }}
-              </span>
-            </div>
-
-            <span class="inline-flex items-center gap-2 px-5 py-2.5 bg-[#42af57] group-hover:bg-[#4a9a48] text-white font-semibold rounded-full transition-all duration-300 text-[13px] w-fit shadow-md group-hover:shadow-lg group-hover:gap-3">
+            @if (card.titleLine2) {
+              <h3 class="text-lg md:text-xl font-bold text-dark leading-tight mb-1 max-w-[55%] font-outfit line-clamp-1">
+                {{ card.titleLine2 }}
+              </h3>
+            }
+            @if (card.titleLine3) {
+              <h3 class="text-lg md:text-xl font-bold text-dark leading-tight mb-4 md:mb-6 max-w-[55%] font-outfit line-clamp-1">
+                {{ card.titleLine3 }}
+              </h3>
+            }
+            @if (!card.titleLine3) {
+              <div class="mb-3 md:mb-4"></div>
+            }
+            <!-- Product Price Badge -->
+            @if (card.product) {
+              <div class="mb-3 md:mb-4">
+                <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-fresh-500 text-xs md:text-sm font-bold px-3 py-1.5 rounded-full shadow-sm">
+                  From {{ card.product.currency }}{{ card.product.price | number:'1.2-2' }}
+                </span>
+              </div>
+            }
+            <!-- CTA Button -->
+            <span class="inline-flex items-center gap-2 px-5 md:px-6 py-2.5 md:py-3 bg-fresh-500 group-hover:bg-fresh-600 text-white font-semibold rounded-lg md:rounded-full transition-all duration-300 text-[12px] md:text-sm w-fit shadow-md group-hover:shadow-hover group-hover:gap-3">
               Shop Now
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5">
                 <path d="m9 18 6-6-6-6"/>
               </svg>
             </span>
           </div>
-
-          <!-- Product Image - Right Side with gradient blend -->
+          <!-- Product Image - Right Side with mask -->
           <div class="absolute right-[-20px] bottom-[-20px] w-[55%] h-[110%] flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
             <img
               [src]="card.imageUrl"
@@ -59,13 +67,12 @@
               class="w-full h-full object-cover object-center rounded-[30px] drop-shadow-2xl transition-opacity duration-300"
               style="mask-image: linear-gradient(to left, black 60%, transparent 100%); -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);"
               loading="lazy"
-            />
+              />
           </div>
-
-          <!-- Hover Overlay Effect -->
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          <!-- Subtle Overlay on Hover -->
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
         </a>
-      </ng-container>
+      }
 
     </div>
   </div>

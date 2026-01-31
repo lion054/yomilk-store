@@ -4,7 +4,7 @@
 <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
 
 <!-- Page Header -->
-<section class="page-header bg-gradient-to-r from-[#42af57] to-[#3d9332] py-12">
+<section class="page-header bg-gradient-to-r from-fresh-500 to-fresh-600 py-12">
   <div class="container mx-auto px-5">
     <div class="text-center text-white">
       <h1 class="text-4xl font-bold mb-4 font-outfit">Other Services</h1>
@@ -23,9 +23,9 @@
         <input
           type="text"
           [(ngModel)]="searchQuery"
-          class="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 transition-all focus:border-[#42af57] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef]"
+          class="w-full pl-12 pr-4 py-4 bg-white border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 transition-all focus:border-[fresh-500] focus:outline-none focus:shadow-[0_0_0_4px_#e8f7ef]"
           placeholder="Search for a service..."
-        />
+          />
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
         </svg>
@@ -44,23 +44,24 @@
         <div class="bg-gray-50 rounded-2xl p-4 sticky top-32">
           <h3 class="text-lg font-semibold text-gray-800 mb-4 px-2">Categories</h3>
           <nav class="space-y-1">
-            <button
-              *ngFor="let category of serviceCategories"
-              (click)="setActiveCategory(category.id)"
+            @for (category of serviceCategories; track category) {
+              <button
+                (click)="setActiveCategory(category.id)"
               [class]="activeCategory === category.id
-                ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[#42af57] text-white font-medium transition-all'
+                ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-[fresh-500] text-white font-medium transition-all'
                 : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-700 hover:bg-gray-100 transition-all'"
-            >
-              <span class="text-2xl">{{ category.icon }}</span>
-              <span class="text-left flex-1">{{ category.name }}</span>
-              <span
+                >
+                <span class="text-2xl">{{ category.icon }}</span>
+                <span class="text-left flex-1">{{ category.name }}</span>
+                <span
                 [class]="activeCategory === category.id
                   ? 'text-xs bg-white/20 px-2 py-0.5 rounded-full'
                   : 'text-xs bg-gray-200 px-2 py-0.5 rounded-full text-gray-600'"
-              >
-                {{ category.services.length }}
-              </span>
-            </button>
+                  >
+                  {{ category.services.length }}
+                </span>
+              </button>
+            }
           </nav>
         </div>
       </aside>
@@ -68,64 +69,72 @@
       <!-- Services Grid -->
       <main class="flex-1">
         <!-- Category Header -->
-        <div class="mb-8" *ngIf="activeCategoryData">
-          <div class="flex items-center gap-4 mb-2">
-            <span class="text-4xl">{{ activeCategoryData.icon }}</span>
-            <div>
-              <h2 class="text-2xl font-bold text-gray-800 font-outfit">{{ activeCategoryData.name }}</h2>
-              <p class="text-gray-600">{{ activeCategoryData.description }}</p>
+        @if (activeCategoryData) {
+          <div class="mb-8">
+            <div class="flex items-center gap-4 mb-2">
+              <span class="text-4xl">{{ activeCategoryData.icon }}</span>
+              <div>
+                <h2 class="text-2xl font-bold text-gray-800 font-outfit">{{ activeCategoryData.name }}</h2>
+                <p class="text-gray-600">{{ activeCategoryData.description }}</p>
+              </div>
             </div>
           </div>
-        </div>
+        }
 
         <!-- Services Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div
-            *ngFor="let service of activeServices"
-            (click)="selectService(service)"
-            [class]="service.available
-              ? 'service-card bg-white border-2 border-gray-100 rounded-2xl p-6 cursor-pointer transition-all hover:border-[#42af57] hover:shadow-lg hover:-translate-y-1 group'
-              : 'service-card bg-gray-50 border-2 border-gray-100 rounded-2xl p-6 cursor-not-allowed opacity-60'"
-          >
-            <div class="flex items-start justify-between mb-4">
-              <span class="text-4xl">{{ service.icon }}</span>
-              <span
-                *ngIf="service.available"
-                class="text-xs font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full"
-              >
-                Available
-              </span>
-              <span
-                *ngIf="!service.available"
-                class="text-xs font-medium bg-gray-200 text-gray-500 px-2 py-1 rounded-full"
-              >
-                Coming Soon
-              </span>
-            </div>
-            <h3 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-[#42af57] transition-colors">
-              {{ service.name }}
-            </h3>
-            <p class="text-sm text-gray-600 mb-4">
-              {{ service.description }}
-            </p>
+          @for (service of activeServices; track service) {
             <div
-              *ngIf="service.available"
-              class="flex items-center gap-2 text-[#42af57] font-medium text-sm"
-            >
-              <span>Get Started</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform">
-                <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-              </svg>
+              (click)="selectService(service)"
+            [class]="service.available
+              ? 'service-card bg-white border-2 border-gray-100 rounded-2xl p-6 cursor-pointer transition-all hover:border-[fresh-500] hover:shadow-lg hover:-translate-y-1 group'
+              : 'service-card bg-gray-50 border-2 border-gray-100 rounded-2xl p-6 cursor-not-allowed opacity-60'"
+              >
+              <div class="flex items-start justify-between mb-4">
+                <span class="text-4xl">{{ service.icon }}</span>
+                @if (service.available) {
+                  <span
+                    class="text-xs font-medium bg-green-100 text-green-700 px-2 py-1 rounded-full"
+                    >
+                    Available
+                  </span>
+                }
+                @if (!service.available) {
+                  <span
+                    class="text-xs font-medium bg-gray-200 text-gray-500 px-2 py-1 rounded-full"
+                    >
+                    Coming Soon
+                  </span>
+                }
+              </div>
+              <h3 class="text-lg font-semibold text-gray-800 mb-2 group-hover:text-[fresh-500] transition-colors">
+                {{ service.name }}
+              </h3>
+              <p class="text-sm text-gray-600 mb-4">
+                {{ service.description }}
+              </p>
+              @if (service.available) {
+                <div
+                  class="flex items-center gap-2 text-[fresh-500] font-medium text-sm"
+                  >
+                  <span>Get Started</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform">
+                    <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                  </svg>
+                </div>
+              }
             </div>
-          </div>
+          }
         </div>
 
         <!-- Empty State -->
-        <div *ngIf="activeServices.length === 0" class="text-center py-16">
-          <div class="text-6xl mb-4">🔍</div>
-          <h3 class="text-xl font-semibold text-gray-800 mb-2">No services found</h3>
-          <p class="text-gray-600">Try adjusting your search or browse other categories</p>
-        </div>
+        @if (activeServices.length === 0) {
+          <div class="text-center py-16">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">No services found</h3>
+            <p class="text-gray-600">Try adjusting your search or browse other categories</p>
+          </div>
+        }
       </main>
     </div>
   </div>
@@ -140,8 +149,8 @@
       <!-- ZESA -->
       <div
         (click)="setActiveCategory('electricity')"
-        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[#42af57]"
-      >
+        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[fresh-500]"
+        >
         <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
           ⚡
         </div>
@@ -152,8 +161,8 @@
       <!-- Econet Airtime -->
       <div
         (click)="setActiveCategory('airtime')"
-        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[#42af57]"
-      >
+        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[fresh-500]"
+        >
         <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
           📱
         </div>
@@ -164,8 +173,8 @@
       <!-- DStv -->
       <div
         (click)="setActiveCategory('tv')"
-        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[#42af57]"
-      >
+        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[fresh-500]"
+        >
         <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
           📺
         </div>
@@ -176,8 +185,8 @@
       <!-- Data Bundles -->
       <div
         (click)="setActiveCategory('airtime')"
-        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[#42af57]"
-      >
+        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[fresh-500]"
+        >
         <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
           📶
         </div>
@@ -188,8 +197,8 @@
       <!-- TelOne -->
       <div
         (click)="setActiveCategory('internet')"
-        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[#42af57]"
-      >
+        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[fresh-500]"
+        >
         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
           🌐
         </div>
@@ -200,8 +209,8 @@
       <!-- Water -->
       <div
         (click)="setActiveCategory('water')"
-        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[#42af57]"
-      >
+        class="bg-white rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 border-transparent hover:border-[fresh-500]"
+        >
         <div class="w-16 h-16 bg-cyan-100 rounded-full flex items-center justify-center text-3xl mx-auto mb-3">
           💧
         </div>
@@ -213,7 +222,7 @@
 </section>
 
 <!-- Info Banner -->
-<section class="py-12 bg-[#1c352c]">
+<section class="py-12 bg-[dark]">
   <div class="container mx-auto px-5">
     <div class="flex flex-col md:flex-row items-center justify-between gap-8">
       <div class="text-white">
@@ -221,7 +230,7 @@
         <p class="text-gray-400">Our support team is available to assist you with any service-related queries.</p>
       </div>
       <div class="flex flex-col sm:flex-row gap-4">
-        <a href="tel:+263782978460" class="inline-flex items-center gap-2 bg-[#42af57] hover:bg-[#4ea34a] text-white font-semibold px-6 py-3 rounded-xl transition-all">
+        <a href="tel:+263782978460" class="inline-flex items-center gap-2 bg-[fresh-500] hover:bg-[#4ea34a] text-white font-semibold px-6 py-3 rounded-xl transition-all">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
           </svg>

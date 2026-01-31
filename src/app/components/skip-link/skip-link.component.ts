@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-skip-link',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <a
       href="#main-content"

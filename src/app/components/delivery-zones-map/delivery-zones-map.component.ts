@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit, AfterViewInit, ElementRef, ViewChild} from '@angular/core';
 import * as L from 'leaflet';
-import {CommonModule} from "@angular/common";
+
 import {GeolocationService} from "../../core/services/location/geolocation.service";
 
 @Component({
   selector: 'app-delivery-zones-map',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './delivery-zones-map.component.html',
   styleUrl: './delivery-zones-map.component.css'
 })

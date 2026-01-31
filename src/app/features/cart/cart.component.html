@@ -7,7 +7,7 @@
 ]"></app-breadcrumb>
 
 <!-- Page Header -->
-<section class="page-header bg-gradient-to-r from-[#42af57] to-[#3d9332] py-12">
+<section class="page-header bg-gradient-to-r from-fresh-500 to-fresh-600 py-12">
   <div class="container mx-auto px-5">
     <div class="text-center text-white">
       <h1 class="text-4xl font-bold mb-4 font-outfit">Your Cart</h1>
@@ -19,755 +19,787 @@
 </section>
 
 <!-- Cart Section -->
-<section *ngIf="!isPreview" class="py-12 bg-gray-100">
-  <div class="container mx-auto px-5">
-    <div class="flex flex-wrap max-w-screen-xl mx-auto">
-
-      <!-- Cart Items Section -->
-      <div *ngIf="cartTotal > 0" class="{{validOrderAmount? 'lg:w-1/2' : 'w-full'}} w-full lg:pr-8 mb-10 lg:mb-0">
-
-        <app-weekend-notice></app-weekend-notice>
-
-        <!-- Cart Table Wrapper -->
-        <div class="bg-white rounded-[20px] overflow-hidden shadow-sm">
-          <div class="p-6 border-b border-gray-200">
-            <h2 class="text-xl font-semibold text-[#1c352c] font-outfit">Your Cart Items</h2>
-            <span class="text-sm text-gray-500">Review your items before checkout</span>
-          </div>
-
-          <!-- Cart Items List -->
-          <div class="p-4">
-            <div *ngFor="let item of cartItems; let i = index; trackBy: trackByFn">
-              <app-cart-item [index]="i" [cartItem]="item"></app-cart-item>
-            </div>
-          </div>
-
-          <!-- Cart Summary Footer -->
-          <div class="p-6 bg-gray-50 border-t border-gray-200">
-            <!-- Minimum Order Warning -->
-            <div class="flex flex-col gap-2 p-4 mb-4 bg-amber-50 border border-amber-200 rounded-xl"
-                 *ngIf="cartTotal > 0 && cartTotal < minimumOrderAmount">
-              <div class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                </svg>
-                <span class="text-amber-800 font-semibold">Minimum Order Required</span>
+@if (!isPreview) {
+  <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-5">
+      <div class="flex flex-wrap max-w-screen-xl mx-auto">
+        <!-- Cart Items Section -->
+        @if (cartTotal > 0) {
+          <div class="{{validOrderAmount? 'lg:w-1/2' : 'w-full'}} w-full lg:pr-8 mb-10 lg:mb-0">
+            <app-weekend-notice></app-weekend-notice>
+            <!-- Cart Table Wrapper -->
+            <div class="bg-white rounded-[20px] overflow-hidden shadow-sm">
+              <div class="p-6 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-dark font-outfit">Your Cart Items</h2>
+                <span class="text-sm text-gray-500">Review your items before checkout</span>
               </div>
-              <p class="text-sm text-amber-700">
-                Add {{activeCurrency.code}} {{(minimumOrderAmount - cartTotal) | number: '1.2-2'}} more to reach the minimum order of {{activeCurrency.code}} {{minimumOrderAmount | number: '1.2-2'}}
-              </p>
-              <div class="w-full bg-amber-200 rounded-full h-2.5">
-                <div class="bg-amber-600 h-2.5 rounded-full transition-all duration-300"
-                     [style.width.%]="(cartTotal / minimumOrderAmount) * 100"></div>
+              <!-- Cart Items List -->
+              <div class="p-4">
+                @for (item of cartItems; track trackByFn(i, item); let i = $index) {
+                  <div>
+                    <app-cart-item [index]="i" [cartItem]="item"></app-cart-item>
+                  </div>
+                }
               </div>
-            </div>
-
-            <!-- Minimum Order Met Success -->
-            <div class="flex items-center gap-2 p-4 mb-4 bg-[#e8f7ef] border border-[#42af57] rounded-xl text-[#3d9332]"
-                 *ngIf="cartTotal >= minimumOrderAmount && cartTotal > 0">
-              <svg class="w-5 h-5 text-[#42af57]" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <span class="font-semibold">Minimum order requirement met!</span>
-            </div>
-
-            <!-- Cart Total -->
-            <div class="flex justify-between items-center py-4 border-t border-gray-200" *ngIf="cartTotal > 0">
-              <span class="text-lg font-semibold text-[#1c352c]">Total</span>
-              <span class="text-2xl font-bold text-[#42af57] font-outfit">{{activeCurrency.code}} {{cartTotal | number: '1.2-2'}}</span>
-            </div>
-
-            <!-- Continue Shopping Link -->
-            <a routerLink="/store" class="flex items-center justify-center gap-2 text-gray-600 hover:text-[#42af57] transition-colors mt-4">
-              <i class="fas fa-arrow-left"></i>
-              <span>Continue Shopping</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Empty Cart State -->
-      <div class="w-full text-center py-16" *ngIf="cartTotal == 0">
-        <div class="bg-white rounded-[20px] p-12 max-w-lg mx-auto shadow-sm">
-          <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="48"
-              height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="text-gray-400"
-            >
-              <circle cx="8" cy="21" r="1"/>
-              <circle cx="19" cy="21" r="1"/>
-              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
-            </svg>
-          </div>
-          <h2 class="text-2xl font-bold text-[#1c352c] mb-3 font-outfit">Your Cart is Empty</h2>
-          <p class="text-gray-600 mb-6">
-            Looks like you haven't added anything to your cart yet.
-          </p>
-          <a routerLink="/store" class="inline-flex items-center gap-2 bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg">
-            <i class="fas fa-shopping-bag"></i>
-            Start Shopping
-          </a>
-        </div>
-      </div>
-
-      <!-- Checkout Form Section (for logged-in users) -->
-      <ng-container *ngIf="cartTotal > 0 && !isVisitor">
-        <div class="lg:w-1/2 w-full lg:pl-8">
-          <div class="bg-white rounded-[20px] p-6 shadow-sm sticky top-24">
-            <form [formGroup]="checkoutForm" (submit)="previewOrder()">
-              <!-- Stepper -->
-              <app-stepper [step]="step" (stepChange)="changeStep($event)"></app-stepper>
-
-              <!-- Step 1: Customer Info -->
-              <div *ngIf="step === 1">
-                <h2 class="text-xl font-semibold text-[#1c352c] mb-6 font-outfit">Customer Information</h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div class="form-group">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="firstName">
-                      First Name *
-                      <span *ngIf="checkoutForm.controls['firstName']?.invalid && (checkoutForm.controls['firstName']?.dirty || checkoutForm.controls['firstName']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <input id="firstName" type="text" formControlName="firstName"
-                           class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                           placeholder="John" />
+              <!-- Cart Summary Footer -->
+              <div class="p-6 bg-gray-50 border-t border-gray-200">
+                <!-- Minimum Order Warning -->
+                @if (cartTotal > 0 && cartTotal < minimumOrderAmount) {
+                  <div class="flex flex-col gap-2 p-4 mb-4 bg-amber-50 border border-amber-200 rounded-xl"
+                    >
+                    <div class="flex items-center gap-2">
+                      <svg class="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                      </svg>
+                      <span class="text-amber-800 font-semibold">Minimum Order Required</span>
+                    </div>
+                    <p class="text-sm text-amber-700">
+                      Add {{activeCurrency.code}} {{(minimumOrderAmount - cartTotal) | number: '1.2-2'}} more to reach the minimum order of {{activeCurrency.code}} {{minimumOrderAmount | number: '1.2-2'}}
+                    </p>
+                    <div class="w-full bg-amber-200 rounded-full h-2.5">
+                      <div class="bg-amber-600 h-2.5 rounded-full transition-all duration-300"
+                      [style.width.%]="(cartTotal / minimumOrderAmount) * 100"></div>
+                    </div>
                   </div>
-
-                  <div class="form-group">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="lastName">
-                      Last Name *
-                      <span *ngIf="checkoutForm.controls['lastName']?.invalid && (checkoutForm.controls['lastName']?.dirty || checkoutForm.controls['lastName']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <input id="lastName" type="text" formControlName="lastName"
-                           class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                           placeholder="Doe" />
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div class="form-group">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="secondName">Second Name</label>
-                    <input id="secondName" type="text" formControlName="secondName"
-                           class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                           placeholder="" />
-                  </div>
-                  <div class="form-group">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="companyName">Company Name</label>
-                    <input id="companyName" type="text" formControlName="companyName"
-                           class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                           placeholder="Company Ltd" />
-                  </div>
-                </div>
-
-                <div class="form-group mb-4">
-                  <label class="block text-sm font-medium text-[#1c352c] mb-2" for="email">
-                    Email *
-                    <span *ngIf="checkoutForm.controls['email']?.invalid && (checkoutForm.controls['email']?.dirty || checkoutForm.controls['email']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                  </label>
-                  <input id="email" type="email" formControlName="email"
-                         class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                         placeholder="johndoe@mail.com" />
-                </div>
-
-                <div class="form-group mb-6">
-                  <label class="block text-sm font-medium text-[#1c352c] mb-2" for="mobileNumber">
-                    Mobile Number *
-                    <span *ngIf="checkoutForm.controls['mobileNumber']?.invalid && (checkoutForm.controls['mobileNumber']?.dirty || checkoutForm.controls['mobileNumber']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                  </label>
-                  <ngx-intl-tel-input
-                    [cssClass]="'w-full py-3 bg-gray-100 rounded-xl transition focus:border-[#42af57] border-2 border-transparent focus:ring-0 focus:outline-none'"
-                    [preferredCountries]="[CountryISO.Zimbabwe, CountryISO.Zambia, CountryISO.SouthAfrica]"
-                    [enableAutoCountrySelect]="true"
-                    [enablePlaceholder]="true"
-                    [searchCountryFlag]="true"
-                    [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                    [selectFirstCountry]="false"
-                    [selectedCountryISO]="CountryISO.Zimbabwe"
-                    [maxLength]="15"
-                    [phoneValidation]="true"
-                    [inputId]="'mobileNumber'"
-                    id="mobileNumber"
-                    name="mobileNumber"
-                    formControlName="mobileNumber"
-                  ></ngx-intl-tel-input>
-                </div>
-
-                <button type="button" class="w-full bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg" (click)="nextStep()">
-                  Continue to Address
-                </button>
-              </div>
-
-              <!-- Step 2: Billing & Shipping Address -->
-              <div *ngIf="step === 2">
-                <h2 class="text-xl font-semibold text-[#1c352c] mb-6 font-outfit">Billing & Shipping Address</h2>
-
-                <h3 class="text-gray-600 font-medium mb-4">Billing Address</h3>
-
-                <div class="form-group mb-4">
-                  <label class="block text-sm font-medium text-[#1c352c] mb-2" for="billCountry">
-                    Country *
-                    <span *ngIf="checkoutForm.controls['billCountry']?.invalid && (checkoutForm.controls['billCountry']?.dirty || checkoutForm.controls['billCountry']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                  </label>
-                  <select id="billCountry" formControlName="billCountry"
-                          class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] transition-all focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer">
-                    <option value="">Select a country</option>
-                    <option *ngFor="let country of countries" [value]="country.countryCode">{{ country.countryName }}</option>
-                  </select>
-                </div>
-
-                <div class="form-group mb-4">
-                  <label class="block text-sm font-medium text-[#1c352c] mb-2" for="billCity">
-                    City *
-                    <span *ngIf="checkoutForm.controls['billCity']?.invalid && (checkoutForm.controls['billCity']?.dirty || checkoutForm.controls['billCity']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                  </label>
-                  <select id="billCity" formControlName="billCity"
-                          class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] transition-all focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer"
-                          [disabled]="!billCities.length">
-                    <option value="">Select a city</option>
-                    <option *ngFor="let city of billCities" [value]="city.name">{{ city.name }}</option>
-                  </select>
-                </div>
-
-                <div class="form-group mb-4">
-                  <label class="block text-sm font-medium text-[#1c352c] mb-2" for="billSuburb">
-                    Suburb *
-                    <span *ngIf="checkoutForm.controls['billSuburb']?.invalid && (checkoutForm.controls['billSuburb']?.dirty || checkoutForm.controls['billSuburb']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                  </label>
-                  <ng-select
-                    id="billSuburb"
-                    [items]="billSuburbs"
-                    bindLabel="name"
-                    bindValue="name"
-                    placeholder=""
-                    formControlName="billSuburb"
-                    class="custom"
-                    [clearable]="false"
-                  ></ng-select>
-                </div>
-
-                <div class="form-group mb-4">
-                  <label class="block text-sm font-medium text-[#1c352c] mb-2" for="billAddressLine1">
-                    Address Line 1 *
-                    <span *ngIf="checkoutForm.controls['billAddressLine1']?.invalid && (checkoutForm.controls['billAddressLine1']?.dirty || checkoutForm.controls['billAddressLine1']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                  </label>
-                  <input id="billAddressLine1" type="text" formControlName="billAddressLine1"
-                         class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                         placeholder="123 Main St" />
-                </div>
-
-                <div class="form-group mb-6">
-                  <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="separateShipping" name="separateShipping" [(ngModel)]="separateShipping" [ngModelOptions]="{standalone: true}" (change)="onSeparateShippingChange()"
-                           class="w-5 h-5 rounded border-gray-300 text-[#42af57] focus:ring-[#42af57]" />
-                    <span class="text-gray-600">Use a different shipping address?</span>
-                  </label>
-                </div>
-
-                <!-- Separate Shipping Address -->
-                <div *ngIf="separateShipping" class="pt-6 border-t border-gray-200">
-                  <h3 class="text-gray-600 font-medium mb-4">Shipping Address</h3>
-
-                  <div class="form-group mb-4">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="shipCountry">
-                      Country *
-                      <span *ngIf="checkoutForm.controls['shipCountry']?.invalid && (checkoutForm.controls['shipCountry']?.dirty || checkoutForm.controls['shipCountry']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <select id="shipCountry" formControlName="shipCountry"
-                            class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] transition-all focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer">
-                      <option value="">Select a country</option>
-                      <option *ngFor="let country of countries" [value]="country.countryCode">{{ country.countryName }}</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group mb-4">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="shipCity">
-                      City *
-                      <span *ngIf="checkoutForm.controls['shipCity']?.invalid && (checkoutForm.controls['shipCity']?.dirty || checkoutForm.controls['shipCity']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <select id="shipCity" formControlName="shipCity"
-                            class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] transition-all focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer"
-                            [disabled]="!shipCities.length">
-                      <option value="">Select a city</option>
-                      <option *ngFor="let city of shipCities" [value]="city.name">{{ city.name }}</option>
-                    </select>
-                  </div>
-
-                  <div class="form-group mb-4">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="shipSuburb">
-                      Suburb *
-                      <span *ngIf="checkoutForm.controls['shipSuburb']?.invalid && (checkoutForm.controls['shipSuburb']?.dirty || checkoutForm.controls['shipSuburb']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <ng-select
-                      id="shipSuburb"
-                      [items]="shipSuburbs"
-                      bindLabel="name"
-                      bindValue="name"
-                      placeholder=""
-                      formControlName="shipSuburb"
-                      class="custom"
-                      [clearable]="false"
-                    ></ng-select>
-                  </div>
-
-                  <div class="form-group mb-6">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="shipAddressLine1">
-                      Address Line 1 *
-                      <span *ngIf="checkoutForm.controls['shipAddressLine1']?.invalid && (checkoutForm.controls['shipAddressLine1']?.dirty || checkoutForm.controls['shipAddressLine1']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <input id="shipAddressLine1" type="text" formControlName="shipAddressLine1"
-                           class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-[#1c352c] placeholder-gray-400 transition-all focus:border-[#42af57] focus:bg-white focus:outline-none"
-                           placeholder="456 Second St" />
-                  </div>
-                </div>
-
-                <!-- Delivery Schedule Options -->
-                <div class="pt-6 mt-6 border-t border-gray-200">
-                  <h3 class="text-lg font-semibold text-[#1c352c] mb-4 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57]">
-                      <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
-                      <path d="M15 18H9"/>
-                      <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
-                      <circle cx="17" cy="18" r="2"/>
-                      <circle cx="7" cy="18" r="2"/>
+                }
+                <!-- Minimum Order Met Success -->
+                @if (cartTotal >= minimumOrderAmount && cartTotal > 0) {
+                  <div class="flex items-center gap-2 p-4 mb-4 bg-fresh-50 border border-[fresh-500] rounded-xl text-[fresh-600]"
+                    >
+                    <svg class="w-5 h-5 text-[fresh-500]" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    Delivery Schedule
-                  </h3>
-
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <!-- ASAP Delivery Option -->
-                    <div
-                      class="p-4 border-2 rounded-xl cursor-pointer transition-all"
-                      [class.border-[#42af57]]="deliveryType === 'asap'"
-                      [class.bg-[#e8f7ef]]="deliveryType === 'asap'"
-                      [class.border-gray-200]="deliveryType !== 'asap'"
-                      (click)="onDeliveryTypeChange('asap')"
-                    >
-                      <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center"
-                             [class.bg-[#42af57]]="deliveryType === 'asap'"
-                             [class.bg-gray-100]="deliveryType !== 'asap'">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                               [class.text-white]="deliveryType === 'asap'"
-                               [class.text-gray-500]="deliveryType !== 'asap'">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                          </svg>
-                        </div>
-                        <div>
-                          <span class="font-semibold text-[#1c352c] block">Deliver ASAP</span>
-                          <span class="text-sm text-gray-500">Get it as soon as possible</span>
-                        </div>
+                    <span class="font-semibold">Minimum order requirement met!</span>
+                  </div>
+                }
+                <!-- Cart Total -->
+                @if (cartTotal > 0) {
+                  <div class="flex justify-between items-center py-4 border-t border-gray-200">
+                    <span class="text-lg font-semibold text-dark">Total</span>
+                    <span class="text-2xl font-bold text-[fresh-500] font-outfit">{{activeCurrency.code}} {{cartTotal | number: '1.2-2'}}</span>
+                  </div>
+                }
+                <!-- Continue Shopping Link -->
+                <a routerLink="/store" class="flex items-center justify-center gap-2 text-gray-600 hover:text-[fresh-500] transition-colors mt-4">
+                  <i class="fas fa-arrow-left"></i>
+                  <span>Continue Shopping</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+        <!-- Empty Cart State -->
+        @if (cartTotal == 0) {
+          <div class="w-full text-center py-16">
+            <div class="bg-white rounded-[20px] p-12 max-w-lg mx-auto shadow-sm">
+              <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-gray-400"
+                  >
+                  <circle cx="8" cy="21" r="1"/>
+                  <circle cx="19" cy="21" r="1"/>
+                  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-bold text-dark mb-3 font-outfit">Your Cart is Empty</h2>
+              <p class="text-gray-600 mb-6">
+                Looks like you haven't added anything to your cart yet.
+              </p>
+              <a routerLink="/store" class="inline-flex items-center gap-2 bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                <i class="fas fa-shopping-bag"></i>
+                Start Shopping
+              </a>
+            </div>
+          </div>
+        }
+        <!-- Checkout Form Section (for logged-in users) -->
+        @if (cartTotal > 0 && !isVisitor) {
+          <div class="lg:w-1/2 w-full lg:pl-8">
+            <div class="bg-white rounded-[20px] p-6 shadow-sm sticky top-24">
+              <form [formGroup]="checkoutForm" (submit)="previewOrder()">
+                <!-- Stepper -->
+                <app-stepper [step]="step" (stepChange)="changeStep($event)"></app-stepper>
+                <!-- Step 1: Customer Info -->
+                @if (step === 1) {
+                  <div>
+                    <h2 class="text-xl font-semibold text-dark mb-6 font-outfit">Customer Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div class="form-group">
+                        <label class="block text-sm font-medium text-dark mb-2" for="firstName">
+                          First Name *
+                          @if (checkoutForm.controls['firstName']?.invalid && (checkoutForm.controls['firstName']?.dirty || checkoutForm.controls['firstName']?.touched)) {
+                            <span class="text-red-500 text-xs ml-1">Required</span>
+                          }
+                        </label>
+                        <input id="firstName" type="text" formControlName="firstName"
+                          class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                          placeholder="John" />
+                      </div>
+                      <div class="form-group">
+                        <label class="block text-sm font-medium text-dark mb-2" for="lastName">
+                          Last Name *
+                          @if (checkoutForm.controls['lastName']?.invalid && (checkoutForm.controls['lastName']?.dirty || checkoutForm.controls['lastName']?.touched)) {
+                            <span class="text-red-500 text-xs ml-1">Required</span>
+                          }
+                        </label>
+                        <input id="lastName" type="text" formControlName="lastName"
+                          class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                          placeholder="Doe" />
                       </div>
                     </div>
-
-                    <!-- Scheduled Delivery Option -->
-                    <div
-                      class="p-4 border-2 rounded-xl cursor-pointer transition-all"
-                      [class.border-[#42af57]]="deliveryType === 'scheduled'"
-                      [class.bg-[#e8f7ef]]="deliveryType === 'scheduled'"
-                      [class.border-gray-200]="deliveryType !== 'scheduled'"
-                      (click)="onDeliveryTypeChange('scheduled')"
-                    >
-                      <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full flex items-center justify-center"
-                             [class.bg-[#42af57]]="deliveryType === 'scheduled'"
-                             [class.bg-gray-100]="deliveryType !== 'scheduled'">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                               [class.text-white]="deliveryType === 'scheduled'"
-                               [class.text-gray-500]="deliveryType !== 'scheduled'">
-                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-                            <line x1="16" x2="16" y1="2" y2="6"/>
-                            <line x1="8" x2="8" y1="2" y2="6"/>
-                            <line x1="3" x2="21" y1="10" y2="10"/>
-                          </svg>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div class="form-group">
+                        <label class="block text-sm font-medium text-dark mb-2" for="secondName">Second Name</label>
+                        <input id="secondName" type="text" formControlName="secondName"
+                          class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                          placeholder="" />
+                      </div>
+                      <div class="form-group">
+                        <label class="block text-sm font-medium text-dark mb-2" for="companyName">Company Name</label>
+                        <input id="companyName" type="text" formControlName="companyName"
+                          class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                          placeholder="Company Ltd" />
+                      </div>
+                    </div>
+                    <div class="form-group mb-4">
+                      <label class="block text-sm font-medium text-dark mb-2" for="email">
+                        Email *
+                        @if (checkoutForm.controls['email']?.invalid && (checkoutForm.controls['email']?.dirty || checkoutForm.controls['email']?.touched)) {
+                          <span class="text-red-500 text-xs ml-1">Required</span>
+                        }
+                      </label>
+                      <input id="email" type="email" formControlName="email"
+                        class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                        placeholder="johndoe@mail.com" />
+                    </div>
+                    <div class="form-group mb-6">
+                      <label class="block text-sm font-medium text-dark mb-2" for="mobileNumber">
+                        Mobile Number *
+                        @if (checkoutForm.controls['mobileNumber']?.invalid && (checkoutForm.controls['mobileNumber']?.dirty || checkoutForm.controls['mobileNumber']?.touched)) {
+                          <span class="text-red-500 text-xs ml-1">Required</span>
+                        }
+                      </label>
+                      <ngx-intl-tel-input
+                        [cssClass]="'w-full py-3 bg-gray-100 rounded-xl transition focus:border-[fresh-500] border-2 border-transparent focus:ring-0 focus:outline-none'"
+                        [preferredCountries]="[CountryISO.Zimbabwe, CountryISO.Zambia, CountryISO.SouthAfrica]"
+                        [enableAutoCountrySelect]="true"
+                        [enablePlaceholder]="true"
+                        [searchCountryFlag]="true"
+                        [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                        [selectFirstCountry]="false"
+                        [selectedCountryISO]="CountryISO.Zimbabwe"
+                        [maxLength]="15"
+                        [phoneValidation]="true"
+                        [inputId]="'mobileNumber'"
+                        id="mobileNumber"
+                        name="mobileNumber"
+                        formControlName="mobileNumber"
+                      ></ngx-intl-tel-input>
+                    </div>
+                    <button type="button" class="w-full bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg" (click)="nextStep()">
+                      Continue to Address
+                    </button>
+                  </div>
+                }
+                <!-- Step 2: Billing & Shipping Address -->
+                @if (step === 2) {
+                  <div>
+                    <h2 class="text-xl font-semibold text-dark mb-6 font-outfit">Billing & Shipping Address</h2>
+                    <h3 class="text-gray-600 font-medium mb-4">Billing Address</h3>
+                    <div class="form-group mb-4">
+                      <label class="block text-sm font-medium text-dark mb-2" for="billCountry">
+                        Country *
+                        @if (checkoutForm.controls['billCountry']?.invalid && (checkoutForm.controls['billCountry']?.dirty || checkoutForm.controls['billCountry']?.touched)) {
+                          <span class="text-red-500 text-xs ml-1">Required</span>
+                        }
+                      </label>
+                      <select id="billCountry" formControlName="billCountry"
+                        class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none cursor-pointer">
+                        <option value="">Select a country</option>
+                        @for (country of countries; track country) {
+                          <option [value]="country.countryCode">{{ country.countryName }}</option>
+                        }
+                      </select>
+                    </div>
+                    <div class="form-group mb-4">
+                      <label class="block text-sm font-medium text-dark mb-2" for="billCity">
+                        City *
+                        @if (checkoutForm.controls['billCity']?.invalid && (checkoutForm.controls['billCity']?.dirty || checkoutForm.controls['billCity']?.touched)) {
+                          <span class="text-red-500 text-xs ml-1">Required</span>
+                        }
+                      </label>
+                      <select id="billCity" formControlName="billCity"
+                        class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none cursor-pointer"
+                        [disabled]="!billCities.length">
+                        <option value="">Select a city</option>
+                        @for (city of billCities; track city) {
+                          <option [value]="city.name">{{ city.name }}</option>
+                        }
+                      </select>
+                    </div>
+                    <div class="form-group mb-4">
+                      <label class="block text-sm font-medium text-dark mb-2" for="billSuburb">
+                        Suburb *
+                        @if (checkoutForm.controls['billSuburb']?.invalid && (checkoutForm.controls['billSuburb']?.dirty || checkoutForm.controls['billSuburb']?.touched)) {
+                          <span class="text-red-500 text-xs ml-1">Required</span>
+                        }
+                      </label>
+                      <ng-select
+                        id="billSuburb"
+                        [items]="billSuburbs"
+                        bindLabel="name"
+                        bindValue="name"
+                        placeholder=""
+                        formControlName="billSuburb"
+                        class="custom"
+                        [clearable]="false"
+                      ></ng-select>
+                    </div>
+                    <div class="form-group mb-4">
+                      <label class="block text-sm font-medium text-dark mb-2" for="billAddressLine1">
+                        Address Line 1 *
+                        @if (checkoutForm.controls['billAddressLine1']?.invalid && (checkoutForm.controls['billAddressLine1']?.dirty || checkoutForm.controls['billAddressLine1']?.touched)) {
+                          <span class="text-red-500 text-xs ml-1">Required</span>
+                        }
+                      </label>
+                      <input id="billAddressLine1" type="text" formControlName="billAddressLine1"
+                        class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                        placeholder="123 Main St" />
+                    </div>
+                    <div class="form-group mb-6">
+                      <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="separateShipping" name="separateShipping" [(ngModel)]="separateShipping" [ngModelOptions]="{standalone: true}" (change)="onSeparateShippingChange()"
+                          class="w-5 h-5 rounded border-gray-300 text-[fresh-500] focus:ring-[fresh-500]" />
+                        <span class="text-gray-600">Use a different shipping address?</span>
+                      </label>
+                    </div>
+                    <!-- Separate Shipping Address -->
+                    @if (separateShipping) {
+                      <div class="pt-6 border-t border-gray-200">
+                        <h3 class="text-gray-600 font-medium mb-4">Shipping Address</h3>
+                        <div class="form-group mb-4">
+                          <label class="block text-sm font-medium text-dark mb-2" for="shipCountry">
+                            Country *
+                            @if (checkoutForm.controls['shipCountry']?.invalid && (checkoutForm.controls['shipCountry']?.dirty || checkoutForm.controls['shipCountry']?.touched)) {
+                              <span class="text-red-500 text-xs ml-1">Required</span>
+                            }
+                          </label>
+                          <select id="shipCountry" formControlName="shipCountry"
+                            class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none cursor-pointer">
+                            <option value="">Select a country</option>
+                            @for (country of countries; track country) {
+                              <option [value]="country.countryCode">{{ country.countryName }}</option>
+                            }
+                          </select>
                         </div>
-                        <div>
-                          <span class="font-semibold text-[#1c352c] block">Schedule Delivery</span>
-                          <span class="text-sm text-gray-500">Choose date & time</span>
+                        <div class="form-group mb-4">
+                          <label class="block text-sm font-medium text-dark mb-2" for="shipCity">
+                            City *
+                            @if (checkoutForm.controls['shipCity']?.invalid && (checkoutForm.controls['shipCity']?.dirty || checkoutForm.controls['shipCity']?.touched)) {
+                              <span class="text-red-500 text-xs ml-1">Required</span>
+                            }
+                          </label>
+                          <select id="shipCity" formControlName="shipCity"
+                            class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none cursor-pointer"
+                            [disabled]="!shipCities.length">
+                            <option value="">Select a city</option>
+                            @for (city of shipCities; track city) {
+                              <option [value]="city.name">{{ city.name }}</option>
+                            }
+                          </select>
+                        </div>
+                        <div class="form-group mb-4">
+                          <label class="block text-sm font-medium text-dark mb-2" for="shipSuburb">
+                            Suburb *
+                            @if (checkoutForm.controls['shipSuburb']?.invalid && (checkoutForm.controls['shipSuburb']?.dirty || checkoutForm.controls['shipSuburb']?.touched)) {
+                              <span class="text-red-500 text-xs ml-1">Required</span>
+                            }
+                          </label>
+                          <ng-select
+                            id="shipSuburb"
+                            [items]="shipSuburbs"
+                            bindLabel="name"
+                            bindValue="name"
+                            placeholder=""
+                            formControlName="shipSuburb"
+                            class="custom"
+                            [clearable]="false"
+                          ></ng-select>
+                        </div>
+                        <div class="form-group mb-6">
+                          <label class="block text-sm font-medium text-dark mb-2" for="shipAddressLine1">
+                            Address Line 1 *
+                            @if (checkoutForm.controls['shipAddressLine1']?.invalid && (checkoutForm.controls['shipAddressLine1']?.dirty || checkoutForm.controls['shipAddressLine1']?.touched)) {
+                              <span class="text-red-500 text-xs ml-1">Required</span>
+                            }
+                          </label>
+                          <input id="shipAddressLine1" type="text" formControlName="shipAddressLine1"
+                            class="w-full px-4 py-3 bg-gray-100 border-2 border-transparent rounded-xl text-dark placeholder-gray-400 transition-all focus:border-[fresh-500] focus:bg-white focus:outline-none"
+                            placeholder="456 Second St" />
                         </div>
                       </div>
+                    }
+                    <!-- Delivery Schedule Options -->
+                    <div class="pt-6 mt-6 border-t border-gray-200">
+                      <h3 class="text-lg font-semibold text-dark mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500]">
+                          <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/>
+                          <path d="M15 18H9"/>
+                          <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/>
+                          <circle cx="17" cy="18" r="2"/>
+                          <circle cx="7" cy="18" r="2"/>
+                        </svg>
+                        Delivery Schedule
+                      </h3>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <!-- ASAP Delivery Option -->
+                        <div
+                          class="p-4 border-2 rounded-xl cursor-pointer transition-all"
+                          [class.border-[fresh-500]]="deliveryType === 'asap'"
+                          [class.bg-fresh-50]="deliveryType === 'asap'"
+                          [class.border-gray-200]="deliveryType !== 'asap'"
+                          (click)="onDeliveryTypeChange('asap')"
+                          >
+                          <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                              [class.bg-[fresh-500]]="deliveryType === 'asap'"
+                              [class.bg-gray-100]="deliveryType !== 'asap'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                [class.text-white]="deliveryType === 'asap'"
+                                [class.text-gray-500]="deliveryType !== 'asap'">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                              </svg>
+                            </div>
+                            <div>
+                              <span class="font-semibold text-dark block">Deliver ASAP</span>
+                              <span class="text-sm text-gray-500">Get it as soon as possible</span>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Scheduled Delivery Option -->
+                        <div
+                          class="p-4 border-2 rounded-xl cursor-pointer transition-all"
+                          [class.border-[fresh-500]]="deliveryType === 'scheduled'"
+                          [class.bg-fresh-50]="deliveryType === 'scheduled'"
+                          [class.border-gray-200]="deliveryType !== 'scheduled'"
+                          (click)="onDeliveryTypeChange('scheduled')"
+                          >
+                          <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center"
+                              [class.bg-[fresh-500]]="deliveryType === 'scheduled'"
+                              [class.bg-gray-100]="deliveryType !== 'scheduled'">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                [class.text-white]="deliveryType === 'scheduled'"
+                                [class.text-gray-500]="deliveryType !== 'scheduled'">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                <line x1="16" x2="16" y1="2" y2="6"/>
+                                <line x1="8" x2="8" y1="2" y2="6"/>
+                                <line x1="3" x2="21" y1="10" y2="10"/>
+                              </svg>
+                            </div>
+                            <div>
+                              <span class="font-semibold text-dark block">Schedule Delivery</span>
+                              <span class="text-sm text-gray-500">Choose date & time</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Scheduled Delivery Details -->
+                      @if (deliveryType === 'scheduled') {
+                        <div class="space-y-4 p-4 bg-gray-50 rounded-xl">
+                          <div class="form-group">
+                            <label class="block text-sm font-medium text-dark mb-2">
+                              Delivery Date *
+                              @if (!scheduledDate) {
+                                <span class="text-red-500 text-xs ml-1">Required</span>
+                              }
+                            </label>
+                            <input
+                              type="date"
+                              [(ngModel)]="scheduledDate"
+                              [ngModelOptions]="{standalone: true}"
+                              [min]="minDeliveryDate"
+                              [max]="maxDeliveryDate"
+                              (change)="onScheduledDateChange()"
+                              class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-dark transition-all focus:border-[fresh-500] focus:outline-none cursor-pointer"
+                              />
+                          </div>
+                          <div class="form-group">
+                            <label class="block text-sm font-medium text-dark mb-2">
+                              Time Slot *
+                              @if (!scheduledTimeSlot) {
+                                <span class="text-red-500 text-xs ml-1">Required</span>
+                              }
+                            </label>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                              @for (slot of availableTimeSlots; track slot) {
+                                <button
+                                  type="button"
+                                  [disabled]="!slot.available"
+                                  (click)="slot.available && (scheduledTimeSlot = slot.value)"
+                                  class="px-3 py-2 text-sm rounded-lg border-2 transition-all"
+                                  [class.border-[fresh-500]]="scheduledTimeSlot === slot.value"
+                                  [class.bg-fresh-50]="scheduledTimeSlot === slot.value"
+                                  [class.text-[fresh-500]]="scheduledTimeSlot === slot.value"
+                                  [class.border-gray-200]="scheduledTimeSlot !== slot.value && slot.available"
+                                  [class.bg-white]="scheduledTimeSlot !== slot.value && slot.available"
+                                  [class.hover:border-[fresh-500]]="slot.available"
+                                  [class.opacity-50]="!slot.available"
+                                  [class.cursor-not-allowed]="!slot.available"
+                                  [class.bg-gray-100]="!slot.available"
+                                  >
+                                  {{ slot.label }}
+                                </button>
+                              }
+                            </div>
+                          </div>
+                          <!-- Selected Schedule Summary -->
+                          @if (scheduledDate && scheduledTimeSlot) {
+                            <div class="flex items-center gap-2 p-3 bg-fresh-50 border border-[fresh-500] rounded-lg text-[fresh-600]">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="m9 12 2 2 4-4"/>
+                              </svg>
+                              <span class="text-sm font-medium">
+                                Delivery scheduled for {{ getFormattedScheduledDate() }} between {{ scheduledTimeSlot }}
+                              </span>
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                    <div class="flex gap-4 mt-6">
+                      <button class="flex-1 bg-gray-200 hover:bg-gray-300 text-dark font-semibold py-4 rounded-xl transition-all" type="button" (click)="prevStep()">Back</button>
+                      <button
+                        class="flex-1 bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+                        type="button"
+                        (click)="nextStep()"
+                        [disabled]="deliveryType === 'scheduled' && (!scheduledDate || !scheduledTimeSlot)"
+                      >Continue</button>
                     </div>
                   </div>
-
-                  <!-- Scheduled Delivery Details -->
-                  <div *ngIf="deliveryType === 'scheduled'" class="space-y-4 p-4 bg-gray-50 rounded-xl">
-                    <div class="form-group">
-                      <label class="block text-sm font-medium text-[#1c352c] mb-2">
-                        Delivery Date *
-                        <span *ngIf="!scheduledDate" class="text-red-500 text-xs ml-1">Required</span>
-                      </label>
-                      <input
-                        type="date"
-                        [(ngModel)]="scheduledDate"
-                        [ngModelOptions]="{standalone: true}"
-                        [min]="minDeliveryDate"
-                        [max]="maxDeliveryDate"
-                        (change)="onScheduledDateChange()"
-                        class="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-xl text-[#1c352c] transition-all focus:border-[#42af57] focus:outline-none cursor-pointer"
-                      />
+                }
+                <!-- Step 3: Payment Method -->
+                @if (step === 3) {
+                  <div>
+                    @if (paymentMethod=='Account') {
+                      <div class="text-gray-600 py-2 mb-4 bg-fresh-50 rounded-xl px-4">
+                        <span class="font-medium">Available Account Balance:</span> {{activeCurrency.code}} {{userDetailsData.currentAccountBalance}}
+                      </div>
+                    }
+                    <h2 class="text-xl font-semibold text-dark mb-2 font-outfit">
+                      Payment Method
+                      @if (paymentMethod == '') {
+                        <span class="text-red-500 text-xs ml-1">Required</span>
+                      }
+                    </h2>
+                    <p class="text-gray-500 text-sm mb-6">Select your preferred payment method</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                      <!-- Account -->
+                      @if (!isVisitor) {
+                        <div class="flex flex-col items-center">
+                          <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[fresh-500] transition-all"
+                            [ngStyle]="{'background-image': 'url(/assets/images/payment/wallet.png)', 'background-size': '70%'}"
+                            [class.border-[fresh-500]]="paymentMethod === 'Account'"
+                            [class.bg-fresh-50]="paymentMethod === 'Account'"
+                            (click)="paymentMethod = 'Account'; toggleEcoCashValidators()">
+                            <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Account" class="hidden" />
+                          </div>
+                          <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">Account</span>
+                        </div>
+                      }
+                      <!-- PayNow -->
+                      <div class="flex flex-col items-center">
+                        <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[fresh-500] transition-all"
+                          [ngStyle]="{'background-image': 'url(/assets/images/payment/paynow.png)', 'background-size': '70%'}"
+                          [class.border-[fresh-500]]="paymentMethod === 'PayNow'"
+                          [class.bg-fresh-50]="paymentMethod === 'PayNow'"
+                          (click)="paymentMethod = 'PayNow'; toggleEcoCashValidators()">
+                          <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="PayNow" class="hidden" />
+                        </div>
+                        <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">PayNow</span>
+                      </div>
+                      <!-- InnBucks -->
+                      <div class="flex flex-col items-center">
+                        <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-innbucks bg-cover relative hover:border-[fresh-500] transition-all"
+                          [class.border-[fresh-500]]="paymentMethod === 'InnBucks'"
+                          (click)="paymentMethod = 'InnBucks'; toggleEcoCashValidators()">
+                          <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="InnBucks" class="hidden" />
+                        </div>
+                        <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">InnBucks</span>
+                      </div>
+                      <!-- EcoCash -->
+                      <div class="flex flex-col items-center">
+                        <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[fresh-500] transition-all"
+                          [ngStyle]="{'background-image': 'url(/assets/images/payment/ecocash-logo.jpg)', 'background-size': '70%'}"
+                          [class.border-[fresh-500]]="paymentMethod === 'Ecocash'"
+                          [class.bg-fresh-50]="paymentMethod === 'Ecocash'"
+                          (click)="paymentMethod = 'Ecocash'; toggleEcoCashValidators()">
+                          <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Ecocash" class="hidden" />
+                        </div>
+                        <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">EcoCash</span>
+                      </div>
+                      <!-- Cash on Delivery -->
+                      @if (!isVisitor) {
+                        <div class="flex flex-col items-center">
+                          <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[fresh-500] transition-all"
+                            [ngStyle]="{'background-image': 'url(/assets/images/payment/cod-logo.png)', 'background-size': '70%'}"
+                            [class.border-[fresh-500]]="paymentMethod === 'CashOnDelivery'"
+                            [class.bg-fresh-50]="paymentMethod === 'CashOnDelivery'"
+                            (click)="paymentMethod = 'CashOnDelivery'; toggleEcoCashValidators()">
+                            <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="CashOnDelivery" class="hidden" />
+                          </div>
+                          <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">COD</span>
+                        </div>
+                      }
                     </div>
-
-                    <div class="form-group">
-                      <label class="block text-sm font-medium text-[#1c352c] mb-2">
-                        Time Slot *
-                        <span *ngIf="!scheduledTimeSlot" class="text-red-500 text-xs ml-1">Required</span>
-                      </label>
-                      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        <button
-                          *ngFor="let slot of availableTimeSlots"
-                          type="button"
-                          [disabled]="!slot.available"
-                          (click)="slot.available && (scheduledTimeSlot = slot.value)"
-                          class="px-3 py-2 text-sm rounded-lg border-2 transition-all"
-                          [class.border-[#42af57]]="scheduledTimeSlot === slot.value"
-                          [class.bg-[#e8f7ef]]="scheduledTimeSlot === slot.value"
-                          [class.text-[#42af57]]="scheduledTimeSlot === slot.value"
-                          [class.border-gray-200]="scheduledTimeSlot !== slot.value && slot.available"
-                          [class.bg-white]="scheduledTimeSlot !== slot.value && slot.available"
-                          [class.hover:border-[#42af57]]="slot.available"
-                          [class.opacity-50]="!slot.available"
-                          [class.cursor-not-allowed]="!slot.available"
-                          [class.bg-gray-100]="!slot.available"
-                        >
-                          {{ slot.label }}
+                    <!-- EcoCash Phone Number -->
+                    @if (paymentMethod =='Ecocash') {
+                      <div class="form-group mb-6">
+                        <label class="block text-sm font-medium text-dark mb-2" for="paymentPhoneNumber">
+                          EcoCash Number *
+                          @if (checkoutForm.controls['paymentPhoneNumber']?.invalid && (checkoutForm.controls['paymentPhoneNumber']?.dirty || checkoutForm.controls['paymentPhoneNumber']?.touched)) {
+                            <span class="text-red-500 text-xs ml-1">Required</span>
+                          }
+                        </label>
+                        <ngx-intl-tel-input
+                          [cssClass]="'w-full py-3 bg-gray-100 rounded-xl transition focus:border-[fresh-500] border-2 border-transparent focus:ring-0 focus:outline-none'"
+                          [preferredCountries]="[CountryISO.Zimbabwe, CountryISO.Zambia, CountryISO.SouthAfrica]"
+                          [enableAutoCountrySelect]="true"
+                          [enablePlaceholder]="true"
+                          [searchCountryFlag]="true"
+                          [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+                          [selectFirstCountry]="false"
+                          [selectedCountryISO]="CountryISO.Zimbabwe"
+                          [maxLength]="15"
+                          [phoneValidation]="true"
+                          [inputId]="'paymentPhoneNumber'"
+                          id="paymentPhoneNumber"
+                          name="paymentPhoneNumber"
+                          formControlName="paymentPhoneNumber"
+                        ></ngx-intl-tel-input>
+                      </div>
+                    }
+                    <div class="flex gap-4">
+                      <button class="flex-1 bg-gray-200 hover:bg-gray-300 text-dark font-semibold py-4 rounded-xl transition-all" type="button" (click)="prevStep()">Back</button>
+                      <button class="flex-1 bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2" type="submit">
+                        @if (!isPreviewLoading) {
+                          <span>
+                            <i class="fas fa-lock mr-2"></i>
+                            Confirm Order
+                          </span>
+                        }
+                        @if (isPreviewLoading) {
+                          <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                          </span>
+                        }
+                      </button>
+                    </div>
+                  </div>
+                }
+                <!-- Step 4: Processing Payment -->
+                @if (step === 4) {
+                  <div>
+                    <div class="w-full flex items-center justify-center flex-col py-8">
+                      <h2 class="text-xl font-semibold text-dark mb-4 font-outfit">Processing Order</h2>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500] animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    </div>
+                    @if (paymentMethod === 'InnBucks') {
+                      <div class="w-full flex items-center justify-center flex-col text-center">
+                        @if (innBucksResponse) {
+                          <img src="data:image/png;base64,{{innBucksResponse.qrCode}}" alt="InnBucks QR Code" class="rounded-xl mb-4">
+                          <span class="text-2xl font-bold text-dark mb-2">{{innBucksResponse.code}}</span>
+                          <p class="text-gray-600">Scan the QR using the InnBucks app or Dial *569# and enter the code above to complete your payment</p>
+                        }
+                      </div>
+                    }
+                    @if (paymentMethod === 'Ecocash') {
+                      <div class="w-full flex items-center justify-center flex-col text-center">
+                        <ng-container>
+                          <app-animated-pay-card></app-animated-pay-card>
+                          <p class="text-gray-600 mt-4">Please complete your order on your mobile device</p>
+                        </ng-container>
+                      </div>
+                    }
+                    <!-- Delivery Schedule Info -->
+                    @if (deliveryType === 'scheduled' && scheduledDate && scheduledTimeSlot) {
+                      <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+                        <div class="flex items-center gap-3">
+                          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
+                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                              <line x1="16" x2="16" y1="2" y2="6"/>
+                              <line x1="8" x2="8" y1="2" y2="6"/>
+                              <line x1="3" x2="21" y1="10" y2="10"/>
+                            </svg>
+                          </div>
+                          <div>
+                            <span class="font-semibold text-blue-800 block">Scheduled Delivery</span>
+                            <span class="text-sm text-blue-600">{{ getFormattedScheduledDate() }} between {{ scheduledTimeSlot }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    @if (deliveryType === 'asap') {
+                      <div class="mt-6 p-4 bg-fresh-50 border border-[fresh-500] rounded-xl">
+                        <div class="flex items-center gap-3">
+                          <div class="w-10 h-10 bg-[fresh-500] rounded-full flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                            </svg>
+                          </div>
+                          <div>
+                            <span class="font-semibold text-[fresh-600] block">Express Delivery</span>
+                            <span class="text-sm text-[fresh-500]">Your order will be delivered as soon as possible</span>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    <!-- Order Summary -->
+                    <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                      <div class="flex justify-between py-2 text-gray-600">
+                        <span>Sub Total</span>
+                        <span class="font-medium">{{ subtotal | currency:cartPreview.docCurrency }}</span>
+                      </div>
+                      <div class="flex justify-between py-2 text-gray-600">
+                        <span>Delivery</span>
+                        <span class="font-medium">{{ additionalExpensesTotal | currency:cartPreview.docCurrency }}</span>
+                      </div>
+                      <div class="flex justify-between py-2 text-gray-600">
+                        <span>VAT</span>
+                        <span class="font-medium">{{ cartPreview.vatTotal | currency:cartPreview.docCurrency }}</span>
+                      </div>
+                      <div class="flex justify-between py-3 border-t border-gray-200 mt-2">
+                        <span class="font-semibold text-dark">Total</span>
+                        <span class="font-bold text-xl text-[fresh-500]">{{ cartPreview.docTotal | currency:cartPreview.docCurrency }}</span>
+                      </div>
+                    </div>
+                    <button class="w-full mt-6 bg-gray-200 hover:bg-gray-300 text-dark font-semibold py-4 rounded-xl transition-all" type="button" (click)="prevStep(); cancelOrder()">
+                      Cancel Order
+                    </button>
+                  </div>
+                }
+                <!-- Step 5: Order Result -->
+                @if (step === 5) {
+                  <div>
+                    @if (!error) {
+                      <div class="w-full flex items-center justify-center flex-col py-12 text-center">
+                        <div class="w-20 h-20 bg-fresh-50 rounded-full flex items-center justify-center mb-6">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500]"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-dark mb-2 font-outfit">Order Created Successfully!</h2>
+                        <p class="text-gray-600 mb-8">Thank you for your order. You will receive a confirmation email shortly.</p>
+                        <button class="bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg" type="button" routerLink="/store">
+                          Continue Shopping
                         </button>
                       </div>
-                    </div>
-
-                    <!-- Selected Schedule Summary -->
-                    <div *ngIf="scheduledDate && scheduledTimeSlot" class="flex items-center gap-2 p-3 bg-[#e8f7ef] border border-[#42af57] rounded-lg text-[#3d9332]">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="m9 12 2 2 4-4"/>
-                      </svg>
-                      <span class="text-sm font-medium">
-                        Delivery scheduled for {{ getFormattedScheduledDate() }} between {{ scheduledTimeSlot }}
-                      </span>
-                    </div>
+                    }
+                    @if (error) {
+                      <div class="w-full flex items-center justify-center flex-col py-12 text-center">
+                        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-dark mb-2 font-outfit">Payment Failed</h2>
+                        <p class="text-gray-600 mb-8">Something went wrong with your payment. Please try again.</p>
+                        <button class="bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg" type="button" (click)="retry()">
+                          Try Again
+                        </button>
+                      </div>
+                    }
                   </div>
-                </div>
-
-                <div class="flex gap-4 mt-6">
-                  <button class="flex-1 bg-gray-200 hover:bg-gray-300 text-[#1c352c] font-semibold py-4 rounded-xl transition-all" type="button" (click)="prevStep()">Back</button>
-                  <button
-                    class="flex-1 bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
-                    type="button"
-                    (click)="nextStep()"
-                    [disabled]="deliveryType === 'scheduled' && (!scheduledDate || !scheduledTimeSlot)"
-                  >Continue</button>
-                </div>
-              </div>
-
-              <!-- Step 3: Payment Method -->
-              <div *ngIf="step === 3">
-                <div *ngIf="paymentMethod=='Account'" class="text-gray-600 py-2 mb-4 bg-[#e8f7ef] rounded-xl px-4">
-                  <span class="font-medium">Available Account Balance:</span> {{activeCurrency.code}} {{userDetailsData.currentAccountBalance}}
-                </div>
-
-                <h2 class="text-xl font-semibold text-[#1c352c] mb-2 font-outfit">
-                  Payment Method
-                  <span *ngIf="paymentMethod == ''" class="text-red-500 text-xs ml-1">Required</span>
-                </h2>
-                <p class="text-gray-500 text-sm mb-6">Select your preferred payment method</p>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
-                  <!-- Account -->
-                  <div *ngIf="!isVisitor" class="flex flex-col items-center">
-                    <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[#42af57] transition-all"
-                         [ngStyle]="{'background-image': 'url(/assets/images/payment/wallet.png)', 'background-size': '70%'}"
-                         [class.border-[#42af57]]="paymentMethod === 'Account'"
-                         [class.bg-[#e8f7ef]]="paymentMethod === 'Account'"
-                         (click)="paymentMethod = 'Account'; toggleEcoCashValidators()">
-                      <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Account" class="hidden" />
-                    </div>
-                    <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">Account</span>
-                  </div>
-
-                  <!-- PayNow -->
-                  <div class="flex flex-col items-center">
-                    <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[#42af57] transition-all"
-                         [ngStyle]="{'background-image': 'url(/assets/images/payment/paynow.png)', 'background-size': '70%'}"
-                         [class.border-[#42af57]]="paymentMethod === 'PayNow'"
-                         [class.bg-[#e8f7ef]]="paymentMethod === 'PayNow'"
-                         (click)="paymentMethod = 'PayNow'; toggleEcoCashValidators()">
-                      <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="PayNow" class="hidden" />
-                    </div>
-                    <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">PayNow</span>
-                  </div>
-
-                  <!-- InnBucks -->
-                  <div class="flex flex-col items-center">
-                    <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-innbucks bg-cover relative hover:border-[#42af57] transition-all"
-                         [class.border-[#42af57]]="paymentMethod === 'InnBucks'"
-                         (click)="paymentMethod = 'InnBucks'; toggleEcoCashValidators()">
-                      <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="InnBucks" class="hidden" />
-                    </div>
-                    <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">InnBucks</span>
-                  </div>
-
-                  <!-- EcoCash -->
-                  <div class="flex flex-col items-center">
-                    <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[#42af57] transition-all"
-                         [ngStyle]="{'background-image': 'url(/assets/images/payment/ecocash-logo.jpg)', 'background-size': '70%'}"
-                         [class.border-[#42af57]]="paymentMethod === 'Ecocash'"
-                         [class.bg-[#e8f7ef]]="paymentMethod === 'Ecocash'"
-                         (click)="paymentMethod = 'Ecocash'; toggleEcoCashValidators()">
-                      <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Ecocash" class="hidden" />
-                    </div>
-                    <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">EcoCash</span>
-                  </div>
-
-                  <!-- Cash on Delivery -->
-                  <div *ngIf="!isVisitor" class="flex flex-col items-center">
-                    <div class="w-full h-20 p-3 border-2 border-gray-200 rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative hover:border-[#42af57] transition-all"
-                         [ngStyle]="{'background-image': 'url(/assets/images/payment/cod-logo.png)', 'background-size': '70%'}"
-                         [class.border-[#42af57]]="paymentMethod === 'CashOnDelivery'"
-                         [class.bg-[#e8f7ef]]="paymentMethod === 'CashOnDelivery'"
-                         (click)="paymentMethod = 'CashOnDelivery'; toggleEcoCashValidators()">
-                      <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="CashOnDelivery" class="hidden" />
-                    </div>
-                    <span class="text-center w-full font-medium text-sm pt-2 text-gray-600">COD</span>
-                  </div>
-                </div>
-
-                <!-- EcoCash Phone Number -->
-                <ng-container *ngIf="paymentMethod =='Ecocash'">
-                  <div class="form-group mb-6">
-                    <label class="block text-sm font-medium text-[#1c352c] mb-2" for="paymentPhoneNumber">
-                      EcoCash Number *
-                      <span *ngIf="checkoutForm.controls['paymentPhoneNumber']?.invalid && (checkoutForm.controls['paymentPhoneNumber']?.dirty || checkoutForm.controls['paymentPhoneNumber']?.touched)" class="text-red-500 text-xs ml-1">Required</span>
-                    </label>
-                    <ngx-intl-tel-input
-                      [cssClass]="'w-full py-3 bg-gray-100 rounded-xl transition focus:border-[#42af57] border-2 border-transparent focus:ring-0 focus:outline-none'"
-                      [preferredCountries]="[CountryISO.Zimbabwe, CountryISO.Zambia, CountryISO.SouthAfrica]"
-                      [enableAutoCountrySelect]="true"
-                      [enablePlaceholder]="true"
-                      [searchCountryFlag]="true"
-                      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-                      [selectFirstCountry]="false"
-                      [selectedCountryISO]="CountryISO.Zimbabwe"
-                      [maxLength]="15"
-                      [phoneValidation]="true"
-                      [inputId]="'paymentPhoneNumber'"
-                      id="paymentPhoneNumber"
-                      name="paymentPhoneNumber"
-                      formControlName="paymentPhoneNumber"
-                    ></ngx-intl-tel-input>
-                  </div>
-                </ng-container>
-
-                <div class="flex gap-4">
-                  <button class="flex-1 bg-gray-200 hover:bg-gray-300 text-[#1c352c] font-semibold py-4 rounded-xl transition-all" type="button" (click)="prevStep()">Back</button>
-                  <button class="flex-1 bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg flex items-center justify-center gap-2" type="submit">
-                    <span *ngIf="!isPreviewLoading">
-                      <i class="fas fa-lock mr-2"></i>
-                      Confirm Order
-                    </span>
-                    <span *ngIf="isPreviewLoading">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                    </span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Step 4: Processing Payment -->
-              <div *ngIf="step === 4">
-                <div class="w-full flex items-center justify-center flex-col py-8">
-                  <h2 class="text-xl font-semibold text-[#1c352c] mb-4 font-outfit">Processing Order</h2>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57] animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-                </div>
-
-                <div *ngIf="paymentMethod === 'InnBucks'" class="w-full flex items-center justify-center flex-col text-center">
-                  <ng-container *ngIf="innBucksResponse">
-                    <img src="data:image/png;base64,{{innBucksResponse.qrCode}}" alt="InnBucks QR Code" class="rounded-xl mb-4">
-                    <span class="text-2xl font-bold text-[#1c352c] mb-2">{{innBucksResponse.code}}</span>
-                    <p class="text-gray-600">Scan the QR using the InnBucks app or Dial *569# and enter the code above to complete your payment</p>
-                  </ng-container>
-                </div>
-
-                <div *ngIf="paymentMethod === 'Ecocash'" class="w-full flex items-center justify-center flex-col text-center">
-                  <ng-container>
-                    <app-animated-pay-card></app-animated-pay-card>
-                    <p class="text-gray-600 mt-4">Please complete your order on your mobile device</p>
-                  </ng-container>
-                </div>
-
-                <!-- Delivery Schedule Info -->
-                <div *ngIf="deliveryType === 'scheduled' && scheduledDate && scheduledTimeSlot" class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-                        <line x1="16" x2="16" y1="2" y2="6"/>
-                        <line x1="8" x2="8" y1="2" y2="6"/>
-                        <line x1="3" x2="21" y1="10" y2="10"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <span class="font-semibold text-blue-800 block">Scheduled Delivery</span>
-                      <span class="text-sm text-blue-600">{{ getFormattedScheduledDate() }} between {{ scheduledTimeSlot }}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div *ngIf="deliveryType === 'asap'" class="mt-6 p-4 bg-[#e8f7ef] border border-[#42af57] rounded-xl">
-                  <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-[#42af57] rounded-full flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
-                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <span class="font-semibold text-[#3d9332] block">Express Delivery</span>
-                      <span class="text-sm text-[#42af57]">Your order will be delivered as soon as possible</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Order Summary -->
-                <div class="mt-6 p-4 bg-gray-50 rounded-xl">
-                  <div class="flex justify-between py-2 text-gray-600">
-                    <span>Sub Total</span>
-                    <span class="font-medium">{{ subtotal | currency:cartPreview.docCurrency }}</span>
-                  </div>
-                  <div class="flex justify-between py-2 text-gray-600">
-                    <span>Delivery</span>
-                    <span class="font-medium">{{ additionalExpensesTotal | currency:cartPreview.docCurrency }}</span>
-                  </div>
-                  <div class="flex justify-between py-2 text-gray-600">
-                    <span>VAT</span>
-                    <span class="font-medium">{{ cartPreview.vatTotal | currency:cartPreview.docCurrency }}</span>
-                  </div>
-                  <div class="flex justify-between py-3 border-t border-gray-200 mt-2">
-                    <span class="font-semibold text-[#1c352c]">Total</span>
-                    <span class="font-bold text-xl text-[#42af57]">{{ cartPreview.docTotal | currency:cartPreview.docCurrency }}</span>
-                  </div>
-                </div>
-
-                <button class="w-full mt-6 bg-gray-200 hover:bg-gray-300 text-[#1c352c] font-semibold py-4 rounded-xl transition-all" type="button" (click)="prevStep(); cancelOrder()">
-                  Cancel Order
-                </button>
-              </div>
-
-              <!-- Step 5: Order Result -->
-              <div *ngIf="step === 5">
-                <ng-container *ngIf="!error">
-                  <div class="w-full flex items-center justify-center flex-col py-12 text-center">
-                    <div class="w-20 h-20 bg-[#e8f7ef] rounded-full flex items-center justify-center mb-6">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57]"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-[#1c352c] mb-2 font-outfit">Order Created Successfully!</h2>
-                    <p class="text-gray-600 mb-8">Thank you for your order. You will receive a confirmation email shortly.</p>
-                    <button class="bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg" type="button" routerLink="/store">
-                      Continue Shopping
-                    </button>
-                  </div>
-                </ng-container>
-
-                <ng-container *ngIf="error">
-                  <div class="w-full flex items-center justify-center flex-col py-12 text-center">
-                    <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mb-6">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-[#1c352c] mb-2 font-outfit">Payment Failed</h2>
-                    <p class="text-gray-600 mb-8">Something went wrong with your payment. Please try again.</p>
-                    <button class="bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold px-8 py-4 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg" type="button" (click)="retry()">
-                      Try Again
-                    </button>
-                  </div>
-                </ng-container>
-              </div>
-            </form>
-          </div>
-        </div>
-      </ng-container>
-
-      <!-- Guest Checkout Prompt -->
-      <ng-container *ngIf="cartTotal > 0 && isVisitor">
-        <div class="lg:w-1/2 w-full lg:pl-8">
-          <div class="bg-white rounded-[20px] shadow-sm p-8">
-            <!-- Header -->
-            <div class="text-center mb-8">
-              <div class="w-20 h-20 bg-[#e8f7ef] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57]">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <polyline points="16,11 18,13 22,9"/>
-                </svg>
-              </div>
-              <h2 class="text-2xl font-bold text-[#1c352c] mb-2 font-outfit">Ready to Checkout?</h2>
-              <p class="text-gray-500">Sign in or create an account to complete your purchase</p>
-            </div>
-
-            <!-- Benefits -->
-            <div class="space-y-4 mb-8">
-              <div class="flex items-center gap-3 text-gray-600">
-                <div class="w-8 h-8 bg-[#e8f7ef] rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57]">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                    <polyline points="22 4 12 14.01 9 11.01"/>
-                  </svg>
-                </div>
-                <span>Track your orders in real-time</span>
-              </div>
-              <div class="flex items-center gap-3 text-gray-600">
-                <div class="w-8 h-8 bg-[#e8f7ef] rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57]">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                    <polyline points="22 4 12 14.01 9 11.01"/>
-                  </svg>
-                </div>
-                <span>Save addresses for faster checkout</span>
-              </div>
-              <div class="flex items-center gap-3 text-gray-600">
-                <div class="w-8 h-8 bg-[#e8f7ef] rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#42af57]">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                    <polyline points="22 4 12 14.01 9 11.01"/>
-                  </svg>
-                </div>
-                <span>View order history anytime</span>
-              </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="space-y-3">
-              <a routerLink="/login" class="block w-full bg-[#42af57] hover:bg-[#3d9332] text-white font-semibold py-4 px-6 rounded-xl text-center transition-all hover:-translate-y-0.5 hover:shadow-lg">
-                Sign In
-              </a>
-              <a routerLink="/register-long" class="block w-full bg-white border-2 border-[#42af57] text-[#42af57] hover:bg-[#e8f7ef] font-semibold py-4 px-6 rounded-xl text-center transition-all">
-                Create Account
-              </a>
-            </div>
-
-            <!-- Continue Shopping -->
-            <div class="text-center mt-6 pt-6 border-t border-gray-200">
-              <a routerLink="/store" class="text-gray-500 hover:text-[#42af57] transition-colors">
-                <i class="fas fa-arrow-left mr-2"></i>
-                Continue shopping
-              </a>
+                }
+              </form>
             </div>
           </div>
-        </div>
-      </ng-container>
-
+        }
+        <!-- Guest Checkout Prompt -->
+        @if (cartTotal > 0 && isVisitor) {
+          <div class="lg:w-1/2 w-full lg:pl-8">
+            <div class="bg-white rounded-[20px] shadow-sm p-8">
+              <!-- Header -->
+              <div class="text-center mb-8">
+                <div class="w-20 h-20 bg-fresh-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500]">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <polyline points="16,11 18,13 22,9"/>
+                  </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-dark mb-2 font-outfit">Ready to Checkout?</h2>
+                <p class="text-gray-500">Sign in or create an account to complete your purchase</p>
+              </div>
+              <!-- Benefits -->
+              <div class="space-y-4 mb-8">
+                <div class="flex items-center gap-3 text-gray-600">
+                  <div class="w-8 h-8 bg-fresh-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500]">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <span>Track your orders in real-time</span>
+                </div>
+                <div class="flex items-center gap-3 text-gray-600">
+                  <div class="w-8 h-8 bg-fresh-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500]">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <span>Save addresses for faster checkout</span>
+                </div>
+                <div class="flex items-center gap-3 text-gray-600">
+                  <div class="w-8 h-8 bg-fresh-50 rounded-full flex items-center justify-center flex-shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[fresh-500]">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                      <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                  </div>
+                  <span>View order history anytime</span>
+                </div>
+              </div>
+              <!-- Action Buttons -->
+              <div class="space-y-3">
+                <a routerLink="/login" class="block w-full bg-[fresh-500] hover:bg-[fresh-600] text-white font-semibold py-4 px-6 rounded-xl text-center transition-all hover:-translate-y-0.5 hover:shadow-lg">
+                  Sign In
+                </a>
+                <a routerLink="/register-long" class="block w-full bg-white border-2 border-[fresh-500] text-[fresh-500] hover:bg-fresh-50 font-semibold py-4 px-6 rounded-xl text-center transition-all">
+                  Create Account
+                </a>
+              </div>
+              <!-- Continue Shopping -->
+              <div class="text-center mt-6 pt-6 border-t border-gray-200">
+                <a routerLink="/store" class="text-gray-500 hover:text-[fresh-500] transition-colors">
+                  <i class="fas fa-arrow-left mr-2"></i>
+                  Continue shopping
+                </a>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+}
 
 <!-- Order Preview Section -->
-<section *ngIf="isPreview" class="py-12 bg-gray-100">
-  <div class="container mx-auto px-5">
-    <app-confirm-cart [checkoutData]="cartPreview" (checkout)="createOrder()" (cancel)="cancelOrder()"></app-confirm-cart>
-  </div>
-</section>
+@if (isPreview) {
+  <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-5">
+      <app-confirm-cart [checkoutData]="cartPreview" (checkout)="createOrder()" (cancel)="cancelOrder()"></app-confirm-cart>
+    </div>
+  </section>
+}
 
 <!-- Features Strip -->
 <app-features-strip></app-features-strip>

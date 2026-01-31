@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {catchError, of, Subject, takeUntil} from "rxjs";
 import {StoreService} from "../../../core/services/store/store.service";
 import {Router, RouterModule} from "@angular/router";
-import {DecimalPipe, NgIf} from "@angular/common";
+import { DecimalPipe } from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../../core/services/auth/auth.service";
 
@@ -10,11 +10,10 @@ import {AuthService} from "../../../core/services/auth/auth.service";
   selector: 'app-profile-statements',
   standalone: true,
   imports: [
-    NgIf,
     RouterModule,
     FormsModule,
     DecimalPipe
-  ],
+],
   templateUrl: './profile-statements.component.html',
   styleUrl: './profile-statements.component.css'
 })

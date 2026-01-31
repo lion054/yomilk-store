@@ -11,7 +11,7 @@ import {
 import {AuthService} from "../../../core/services/auth/auth.service";
 import Swal from "sweetalert2";
 import {environment} from "../../../../environments/environment";
-import {CommonModule} from "@angular/common";
+
 import {GoogleAnalyticsService} from "../../../core/services/google-analytics/google-analytics.service";
 
 @Component({
@@ -19,9 +19,8 @@ import {GoogleAnalyticsService} from "../../../core/services/google-analytics/go
   standalone: true,
   imports: [
     RouterLink,
-    ReactiveFormsModule,
-    CommonModule
-  ],
+    ReactiveFormsModule
+],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

@@ -1,14 +1,22 @@
 <div class="breadcrumb">
   <div class="container">
     <div class="breadcrumb-content">
-      <ng-container *ngFor="let item of items; let last = last">
-        <a *ngIf="item.link && !last" [routerLink]="item.link">
-          <i *ngIf="item.icon" [class]="item.icon"></i>
-          {{ item.label }}
-        </a>
-        <span *ngIf="!last" class="separator">/</span>
-        <span *ngIf="last" class="current">{{ item.label }}</span>
-      </ng-container>
+      @for (item of items; track item; let last = $last) {
+        @if (item.link && !last) {
+          <a [routerLink]="item.link">
+            @if (item.icon) {
+              <i [class]="item.icon"></i>
+            }
+            {{ item.label }}
+          </a>
+        }
+        @if (!last) {
+          <span class="separator">/</span>
+        }
+        @if (last) {
+          <span class="current">{{ item.label }}</span>
+        }
+      }
     </div>
   </div>
 </div>

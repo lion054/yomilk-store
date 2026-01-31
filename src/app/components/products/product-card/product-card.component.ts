@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, OnDestroy, ViewChild, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {CurrencyService} from "../../../core/services/currency/currency.service";
-import {CurrencyPipe, DecimalPipe, NgClass, NgFor, NgForOf, NgIf, NgStyle} from "@angular/common";
+import { CurrencyPipe, DecimalPipe, NgClass, NgStyle } from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {CartService} from "../../../core/services/cart/cart.service";
 import {MetaPixelService} from "../../../core/services/meta-pixel/meta-pixel.service";
@@ -14,13 +14,11 @@ import {Subject, takeUntil} from 'rxjs';
   standalone: true,
   imports: [
     DecimalPipe,
-    NgFor,
     FormsModule,
-    NgIf,
     NgStyle,
     NgClass,
     CurrencyPipe
-  ],
+],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.css'
 })

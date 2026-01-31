@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {FaqComponent} from "../faq/faq.component";
@@ -11,14 +11,13 @@ import {FeaturesStripComponent} from "../../components/features-strip/features-s
   selector: 'app-contact-us',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     FormsModule,
     FaqComponent,
     DeliveryZonesMapComponent,
     BreadcrumbComponent,
     FeaturesStripComponent
-  ],
+],
   templateUrl: './contact-us.component.html',
   styleUrl: './contact-us.component.css'
 })

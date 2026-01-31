@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-skeleton-loader',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div [class]="getSkeletonClass()" [style.width]="width" [style.height]="height">
       <div class="animate-shimmer-bg"></div>

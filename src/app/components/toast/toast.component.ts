@@ -14,61 +14,62 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
       role="region"
       aria-label="Notifications"
       aria-live="polite"
-    >
-      <div
-        *ngFor="let toast of toasts; trackBy: trackById"
-        [@slideIn]
-        class="pointer-events-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border overflow-hidden transform transition-all duration-300 hover:scale-[1.02]"
-        [ngClass]="getBorderClass(toast.type)"
-        role="alert"
-        [attr.aria-label]="toast.title"
       >
-        <div class="flex items-start gap-3 p-4">
-          <!-- Icon -->
-          <div
-            class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-            [ngClass]="getIconBgClass(toast.type)"
+      @for (toast of toasts; track trackById($index, toast)) {
+        <div
+          [@slideIn]
+          class="pointer-events-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border overflow-hidden transform transition-all duration-300 hover:scale-[1.02]"
+          [ngClass]="getBorderClass(toast.type)"
+          role="alert"
+          [attr.aria-label]="toast.title"
           >
-            <i [class]="getIconClass(toast.type)" [ngClass]="getIconColorClass(toast.type)"></i>
-          </div>
-
-          <!-- Content -->
-          <div class="flex-1 min-w-0">
-            <p class="font-semibold text-gray-900 dark:text-white text-sm">{{ toast.title }}</p>
-            <p *ngIf="toast.message" class="text-gray-500 dark:text-gray-400 text-xs mt-0.5 line-clamp-2">
-              {{ toast.message }}
-            </p>
+          <div class="flex items-start gap-3 p-4">
+            <!-- Icon -->
+            <div
+              class="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+              [ngClass]="getIconBgClass(toast.type)"
+              >
+              <i [class]="getIconClass(toast.type)" [ngClass]="getIconColorClass(toast.type)"></i>
+            </div>
+            <!-- Content -->
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-900 dark:text-white text-sm">{{ toast.title }}</p>
+              @if (toast.message) {
+                <p class="text-gray-500 dark:text-gray-400 text-xs mt-0.5 line-clamp-2">
+                  {{ toast.message }}
+                </p>
+              }
+              @if (toast.action) {
+                <button
+                  (click)="handleAction(toast)"
+                  class="mt-2 text-xs font-semibold hover:underline"
+                  [ngClass]="getActionClass(toast.type)"
+                  >
+                  {{ toast.action.label }}
+                </button>
+              }
+            </div>
+            <!-- Close Button -->
             <button
-              *ngIf="toast.action"
-              (click)="handleAction(toast)"
-              class="mt-2 text-xs font-semibold hover:underline"
-              [ngClass]="getActionClass(toast.type)"
-            >
-              {{ toast.action.label }}
+              (click)="dismiss(toast.id)"
+              class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Dismiss notification"
+              >
+              <i class="fas fa-times text-sm"></i>
             </button>
           </div>
-
-          <!-- Close Button -->
-          <button
-            (click)="dismiss(toast.id)"
-            class="flex-shrink-0 p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Dismiss notification"
-          >
-            <i class="fas fa-times text-sm"></i>
-          </button>
+          <!-- Progress Bar -->
+          <div class="h-1 bg-gray-100 dark:bg-gray-700 overflow-hidden">
+            <div
+              class="h-full transition-all ease-linear"
+              [ngClass]="getProgressClass(toast.type)"
+              [style.animation]="'shrink ' + (toast.duration || 4000) + 'ms linear forwards'"
+            ></div>
+          </div>
         </div>
-
-        <!-- Progress Bar -->
-        <div class="h-1 bg-gray-100 dark:bg-gray-700 overflow-hidden">
-          <div
-            class="h-full transition-all ease-linear"
-            [ngClass]="getProgressClass(toast.type)"
-            [style.animation]="'shrink ' + (toast.duration || 4000) + 'ms linear forwards'"
-          ></div>
-        </div>
-      </div>
+      }
     </div>
-  `,
+    `,
   styles: [`
     @keyframes shrink {
       from { width: 100%; }

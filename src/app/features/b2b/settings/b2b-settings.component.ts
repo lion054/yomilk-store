@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
@@ -7,7 +7,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 @Component({
   selector: 'app-b2b-settings',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [RouterModule, FormsModule],
   template: `
     <div class="space-y-6">
       <!-- Header -->

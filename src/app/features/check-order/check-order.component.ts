@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CurrencyPipe, DatePipe, NgForOf, NgIf} from "@angular/common";
+import { CurrencyPipe, DatePipe } from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {CartService} from "../../core/services/cart/cart.service";
 import {interval, switchMap, take, takeWhile} from "rxjs";
@@ -10,12 +10,10 @@ import {StoreService} from "../../core/services/store/store.service";
   selector: 'app-check-order',
   standalone: true,
   imports: [
-    NgIf,
     RouterLink,
     CurrencyPipe,
-    DatePipe,
-    NgForOf
-  ],
+    DatePipe
+],
   templateUrl: './check-order.component.html',
   styleUrl: './check-order.component.css'
 })

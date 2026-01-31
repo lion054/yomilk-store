@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { GoogleAnalyticsService } from '../../core/services/google-analytics/google-analytics.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-consent-banner',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './consent-banner.component.html'
 })
 export class ConsentBannerComponent implements OnInit {

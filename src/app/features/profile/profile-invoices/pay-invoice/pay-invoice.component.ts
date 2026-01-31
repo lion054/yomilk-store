@@ -5,7 +5,7 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {StoreService} from "../../../../core/services/store/store.service";
 import {AuthService} from "../../../../core/services/auth/auth.service";
 import {CartService} from "../../../../core/services/cart/cart.service";
-import {DecimalPipe, NgIf, NgStyle} from "@angular/common";
+import { DecimalPipe, NgStyle } from "@angular/common";
 import {AnimatedPayCardComponent} from "../../../../components/animated-pay-card/animated-pay-card.component";
 import {environment} from "../../../../../environments/environment";
 
@@ -15,12 +15,11 @@ import {environment} from "../../../../../environments/environment";
   imports: [
     DecimalPipe,
     FormsModule,
-    NgIf,
     ReactiveFormsModule,
     RouterLink,
     AnimatedPayCardComponent,
     NgStyle
-  ],
+],
   templateUrl: './pay-invoice.component.html',
   styleUrl: './pay-invoice.component.css'
 })

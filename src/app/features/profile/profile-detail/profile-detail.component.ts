@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {catchError, of, Subject, takeUntil} from "rxjs";
 import {StoreService} from "../../../core/services/store/store.service";
 import {Router, RouterLink} from "@angular/router";
-import {CurrencyPipe, DecimalPipe, NgClass, NgIf, NgOptimizedImage} from "@angular/common";
+import { CurrencyPipe, DecimalPipe, NgClass, NgOptimizedImage } from "@angular/common";
 import {AuthService} from "../../../core/services/auth/auth.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 
@@ -11,13 +11,12 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
   standalone: true,
   imports: [
     DecimalPipe,
-    NgIf,
     RouterLink,
     ReactiveFormsModule,
     NgClass,
     NgOptimizedImage,
     CurrencyPipe
-  ],
+],
   templateUrl: './profile-detail.component.html',
   styleUrl: './profile-detail.component.css'
 })

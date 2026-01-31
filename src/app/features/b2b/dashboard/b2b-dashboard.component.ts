@@ -20,13 +20,13 @@ import { AuthService } from '../../../core/services/auth/auth.service';
           <a
             routerLink="/b2b/new-order"
             class="inline-flex items-center justify-center gap-2 bg-white text-[#42af57] px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition-all whitespace-nowrap"
-          >
+            >
             <i class="fas fa-plus"></i>
             New Order
           </a>
         </div>
       </div>
-
+    
       <!-- Stats Cards -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-white rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
@@ -40,7 +40,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
             </div>
           </div>
         </div>
-
+    
         <div class="bg-white rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
@@ -52,7 +52,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
             </div>
           </div>
         </div>
-
+    
         <div class="bg-white rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
@@ -64,7 +64,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
             </div>
           </div>
         </div>
-
+    
         <div class="bg-white rounded-xl p-5 border border-gray-200 hover:shadow-md transition-shadow">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
@@ -77,7 +77,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
           </div>
         </div>
       </div>
-
+    
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Available Schedules -->
         <div class="bg-white rounded-xl border border-gray-200">
@@ -91,53 +91,62 @@ import { AuthService } from '../../../core/services/auth/auth.service';
             </a>
           </div>
           <div class="p-5">
-            <div *ngIf="isLoadingSchedules" class="space-y-4">
-              <div *ngFor="let i of [1,2,3]" class="animate-pulse">
-                <div class="h-20 bg-gray-100 rounded-lg"></div>
+            @if (isLoadingSchedules) {
+              <div class="space-y-4">
+                @for (i of [1,2,3]; track i) {
+                  <div class="animate-pulse">
+                    <div class="h-20 bg-gray-100 rounded-lg"></div>
+                  </div>
+                }
               </div>
-            </div>
-
-            <div *ngIf="!isLoadingSchedules && schedules.length === 0" class="text-center py-8">
-              <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-calendar-times text-gray-400 text-2xl"></i>
+            }
+    
+            @if (!isLoadingSchedules && schedules.length === 0) {
+              <div class="text-center py-8">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-calendar-times text-gray-400 text-2xl"></i>
+                </div>
+                <p class="text-gray-500">No active schedules available</p>
               </div>
-              <p class="text-gray-500">No active schedules available</p>
-            </div>
-
-            <div *ngIf="!isLoadingSchedules && schedules.length > 0" class="space-y-3">
-              <div
-                *ngFor="let schedule of schedules.slice(0, 3)"
-                class="border border-gray-200 rounded-xl p-4 hover:border-[#42af57] hover:shadow-sm transition-all cursor-pointer"
-                [routerLink]="['/b2b/new-order']"
-                [queryParams]="{ schedule: schedule.DocEntry }"
-              >
-                <div class="flex items-start justify-between">
-                  <div>
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="font-semibold text-gray-900">Schedule #{{ schedule.DocNum }}</span>
-                      <span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
-                        {{ schedule.Status }}
-                      </span>
-                    </div>
-                    <p class="text-sm text-gray-500 mb-2">{{ schedule.Remark || 'Order Schedule' }}</p>
-                    <div class="flex items-center gap-4 text-xs text-gray-500">
-                      <span>
-                        <i class="fas fa-calendar mr-1"></i>
-                        {{ schedule.StartDate | date:'MMM d' }} - {{ schedule.EndDate | date:'MMM d' }}
-                      </span>
-                      <span>
-                        <i class="fas fa-truck mr-1"></i>
-                        {{ schedule.AvailableDeliveryDates?.length || 0 }} delivery dates
-                      </span>
+            }
+    
+            @if (!isLoadingSchedules && schedules.length > 0) {
+              <div class="space-y-3">
+                @for (schedule of schedules.slice(0, 3); track schedule) {
+                  <div
+                    class="border border-gray-200 rounded-xl p-4 hover:border-[#42af57] hover:shadow-sm transition-all cursor-pointer"
+                    [routerLink]="['/b2b/new-order']"
+                    [queryParams]="{ schedule: schedule.DocEntry }"
+                    >
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="font-semibold text-gray-900">Schedule #{{ schedule.DocNum }}</span>
+                          <span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">
+                            {{ schedule.Status }}
+                          </span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2">{{ schedule.Remark || 'Order Schedule' }}</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                          <span>
+                            <i class="fas fa-calendar mr-1"></i>
+                            {{ schedule.StartDate | date:'MMM d' }} - {{ schedule.EndDate | date:'MMM d' }}
+                          </span>
+                          <span>
+                            <i class="fas fa-truck mr-1"></i>
+                            {{ schedule.AvailableDeliveryDates?.length || 0 }} delivery dates
+                          </span>
+                        </div>
+                      </div>
+                      <i class="fas fa-chevron-right text-gray-400"></i>
                     </div>
                   </div>
-                  <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
+                }
               </div>
-            </div>
+            }
           </div>
         </div>
-
+    
         <!-- Recent Orders -->
         <div class="bg-white rounded-xl border border-gray-200">
           <div class="p-5 border-b border-gray-200 flex items-center justify-between">
@@ -150,65 +159,74 @@ import { AuthService } from '../../../core/services/auth/auth.service';
             </a>
           </div>
           <div class="p-5">
-            <div *ngIf="isLoadingOrders" class="space-y-4">
-              <div *ngFor="let i of [1,2,3]" class="animate-pulse">
-                <div class="h-20 bg-gray-100 rounded-lg"></div>
+            @if (isLoadingOrders) {
+              <div class="space-y-4">
+                @for (i of [1,2,3]; track i) {
+                  <div class="animate-pulse">
+                    <div class="h-20 bg-gray-100 rounded-lg"></div>
+                  </div>
+                }
               </div>
-            </div>
-
-            <div *ngIf="!isLoadingOrders && orders.length === 0" class="text-center py-8">
-              <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-shopping-cart text-gray-400 text-2xl"></i>
+            }
+    
+            @if (!isLoadingOrders && orders.length === 0) {
+              <div class="text-center py-8">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-shopping-cart text-gray-400 text-2xl"></i>
+                </div>
+                <p class="text-gray-500 mb-4">No orders yet</p>
+                <a
+                  routerLink="/b2b/new-order"
+                  class="inline-flex items-center gap-2 text-[#42af57] font-medium hover:underline"
+                  >
+                  <i class="fas fa-plus"></i>
+                  Create your first order
+                </a>
               </div>
-              <p class="text-gray-500 mb-4">No orders yet</p>
-              <a
-                routerLink="/b2b/new-order"
-                class="inline-flex items-center gap-2 text-[#42af57] font-medium hover:underline"
-              >
-                <i class="fas fa-plus"></i>
-                Create your first order
-              </a>
-            </div>
-
-            <div *ngIf="!isLoadingOrders && orders.length > 0" class="space-y-3">
-              <div
-                *ngFor="let order of orders.slice(0, 4)"
-                class="border border-gray-200 rounded-xl p-4 hover:border-[#42af57] hover:shadow-sm transition-all cursor-pointer"
-                [routerLink]="['/b2b/orders', order.DocEntry]"
-              >
-                <div class="flex items-start justify-between">
-                  <div>
-                    <div class="flex items-center gap-2 mb-1">
-                      <span class="font-semibold text-gray-900">Order #{{ order.DocNum }}</span>
-                      <span
-                        class="text-xs px-2 py-0.5 rounded-full"
-                        [ngClass]="getStatusClass(order.U_Status)"
-                      >
-                        {{ order.U_Status }}
-                      </span>
-                    </div>
-                    <p class="text-sm text-gray-900 font-medium">
-                      {{ order.U_DocCurrency }} {{ order.U_DocTotal | number:'1.2-2' }}
-                    </p>
-                    <div class="flex items-center gap-4 text-xs text-gray-500 mt-1">
-                      <span>
-                        <i class="fas fa-truck mr-1"></i>
-                        {{ order.U_DeliveryDate | date:'MMM d, yyyy' }}
-                      </span>
-                      <span>
-                        <i class="fas fa-box mr-1"></i>
-                        {{ order.ONA_SPOR1Collection?.length || 0 }} items
-                      </span>
+            }
+    
+            @if (!isLoadingOrders && orders.length > 0) {
+              <div class="space-y-3">
+                @for (order of orders.slice(0, 4); track order) {
+                  <div
+                    class="border border-gray-200 rounded-xl p-4 hover:border-[#42af57] hover:shadow-sm transition-all cursor-pointer"
+                    [routerLink]="['/b2b/orders', order.DocEntry]"
+                    >
+                    <div class="flex items-start justify-between">
+                      <div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="font-semibold text-gray-900">Order #{{ order.DocNum }}</span>
+                          <span
+                            class="text-xs px-2 py-0.5 rounded-full"
+                            [ngClass]="getStatusClass(order.U_Status)"
+                            >
+                            {{ order.U_Status }}
+                          </span>
+                        </div>
+                        <p class="text-sm text-gray-900 font-medium">
+                          {{ order.U_DocCurrency }} {{ order.U_DocTotal | number:'1.2-2' }}
+                        </p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500 mt-1">
+                          <span>
+                            <i class="fas fa-truck mr-1"></i>
+                            {{ order.U_DeliveryDate | date:'MMM d, yyyy' }}
+                          </span>
+                          <span>
+                            <i class="fas fa-box mr-1"></i>
+                            {{ order.ONA_SPOR1Collection?.length || 0 }} items
+                          </span>
+                        </div>
+                      </div>
+                      <i class="fas fa-chevron-right text-gray-400"></i>
                     </div>
                   </div>
-                  <i class="fas fa-chevron-right text-gray-400"></i>
-                </div>
+                }
               </div>
-            </div>
+            }
           </div>
         </div>
       </div>
-
+    
       <!-- Quick Actions -->
       <div class="bg-white rounded-xl border border-gray-200 p-5">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">
@@ -219,35 +237,35 @@ import { AuthService } from '../../../core/services/auth/auth.service';
           <a
             routerLink="/b2b/new-order"
             class="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-xl hover:bg-[#42af57]/10 hover:text-[#42af57] transition-colors text-center"
-          >
+            >
             <i class="fas fa-plus-circle text-2xl"></i>
             <span class="text-sm font-medium">New Order</span>
           </a>
           <a
             routerLink="/b2b/schedules"
             class="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-xl hover:bg-[#42af57]/10 hover:text-[#42af57] transition-colors text-center"
-          >
+            >
             <i class="fas fa-calendar-alt text-2xl"></i>
             <span class="text-sm font-medium">View Schedules</span>
           </a>
           <a
             routerLink="/b2b/orders"
             class="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-xl hover:bg-[#42af57]/10 hover:text-[#42af57] transition-colors text-center"
-          >
+            >
             <i class="fas fa-history text-2xl"></i>
             <span class="text-sm font-medium">Order History</span>
           </a>
           <a
             routerLink="/b2b/account"
             class="flex flex-col items-center gap-2 p-4 bg-gray-50 rounded-xl hover:bg-[#42af57]/10 hover:text-[#42af57] transition-colors text-center"
-          >
+            >
             <i class="fas fa-user-circle text-2xl"></i>
             <span class="text-sm font-medium">My Account</span>
           </a>
         </div>
       </div>
     </div>
-  `
+    `
 })
 export class B2bDashboardComponent implements OnInit {
   userName = 'Business Partner';

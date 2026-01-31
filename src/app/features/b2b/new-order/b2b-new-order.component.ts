@@ -24,39 +24,45 @@ interface CartItem extends ScheduledOrderLine {
           <p class="text-gray-500 mt-1">Select a schedule, choose products, and place your order</p>
         </div>
       </div>
-
+    
       <!-- Stepper -->
       <div class="bg-white rounded-xl border border-gray-200 p-4">
         <div class="flex items-center justify-between">
-          <div
-            *ngFor="let step of steps; let i = index"
-            class="flex items-center"
-            [class.flex-1]="i < steps.length - 1"
-          >
-            <div class="flex items-center gap-3">
-              <div
-                class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
-                [ngClass]="currentStep >= i + 1 ? 'bg-[#42af57] text-white' : 'bg-gray-200 text-gray-500'"
-              >
-                <i *ngIf="currentStep > i + 1" class="fas fa-check"></i>
-                <span *ngIf="currentStep <= i + 1">{{ i + 1 }}</span>
-              </div>
-              <span
-                class="hidden sm:block text-sm font-medium"
-                [ngClass]="currentStep >= i + 1 ? 'text-gray-900' : 'text-gray-400'"
-              >
-                {{ step }}
-              </span>
-            </div>
+          @for (step of steps; track step; let i = $index) {
             <div
-              *ngIf="i < steps.length - 1"
-              class="flex-1 h-0.5 mx-4"
-              [ngClass]="currentStep > i + 1 ? 'bg-[#42af57]' : 'bg-gray-200'"
-            ></div>
-          </div>
+              class="flex items-center"
+              [class.flex-1]="i < steps.length - 1"
+              >
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all"
+                  [ngClass]="currentStep >= i + 1 ? 'bg-[#42af57] text-white' : 'bg-gray-200 text-gray-500'"
+                  >
+                  @if (currentStep > i + 1) {
+                    <i class="fas fa-check"></i>
+                  }
+                  @if (currentStep <= i + 1) {
+                    <span>{{ i + 1 }}</span>
+                  }
+                </div>
+                <span
+                  class="hidden sm:block text-sm font-medium"
+                  [ngClass]="currentStep >= i + 1 ? 'text-gray-900' : 'text-gray-400'"
+                  >
+                  {{ step }}
+                </span>
+              </div>
+              @if (i < steps.length - 1) {
+                <div
+                  class="flex-1 h-0.5 mx-4"
+                  [ngClass]="currentStep > i + 1 ? 'bg-[#42af57]' : 'bg-gray-200'"
+                ></div>
+              }
+            </div>
+          }
         </div>
       </div>
-
+    
       <!-- Delivery Info Banner -->
       <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
         <div class="flex items-center gap-3">
@@ -74,429 +80,466 @@ interface CartItem extends ScheduledOrderLine {
           </div>
         </div>
       </div>
-
+    
       <!-- Step 1: Select Schedule -->
-      <div *ngIf="currentStep === 1" class="space-y-4">
-        <div *ngIf="isLoadingSchedules" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div *ngFor="let i of [1,2]" class="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
-            <div class="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
-            <div class="h-4 bg-gray-100 rounded w-2/3"></div>
-          </div>
-        </div>
-
-        <div *ngIf="!isLoadingSchedules && schedules.length === 0" class="bg-white rounded-xl border border-gray-200 p-12 text-center">
-          <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i class="fas fa-calendar-times text-gray-400 text-2xl"></i>
-          </div>
-          <h3 class="text-lg font-semibold text-gray-900 mb-2">No schedules available</h3>
-          <p class="text-gray-500">There are no open schedules at the moment. Please check back later.</p>
-        </div>
-
-        <div *ngIf="!isLoadingSchedules && schedules.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div
-            *ngFor="let schedule of schedules"
-            (click)="selectSchedule(schedule)"
-            class="bg-white rounded-xl border-2 p-5 cursor-pointer transition-all"
-            [ngClass]="selectedSchedule?.DocEntry === schedule.DocEntry ? 'border-[#42af57] bg-[#42af57]/5' : 'border-gray-200 hover:border-[#42af57]'"
-          >
-            <div class="flex items-start justify-between mb-3">
-              <div>
-                <h3 class="font-semibold text-gray-900">Schedule #{{ schedule.DocNum }}</h3>
-                <p class="text-sm text-gray-500">{{ schedule.Remark || 'Order Schedule' }}</p>
-              </div>
-              <div
-                class="w-6 h-6 rounded-full border-2 flex items-center justify-center"
-                [ngClass]="selectedSchedule?.DocEntry === schedule.DocEntry ? 'border-[#42af57] bg-[#42af57]' : 'border-gray-300'"
-              >
-                <i *ngIf="selectedSchedule?.DocEntry === schedule.DocEntry" class="fas fa-check text-white text-xs"></i>
-              </div>
-            </div>
-            <div class="space-y-2 text-sm">
-              <div class="flex items-center gap-2 text-gray-600">
-                <i class="fas fa-calendar w-4 text-gray-400"></i>
-                Order window: {{ schedule.StartDate | date:'MMM d' }} - {{ schedule.EndDate | date:'MMM d' }}
-              </div>
-              <div class="flex items-center gap-2 text-gray-600">
-                <i class="fas fa-truck w-4 text-gray-400"></i>
-                {{ schedule.AvailableDeliveryDates?.length || 0 }} delivery dates available
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step 2: Select Delivery Date -->
-      <div *ngIf="currentStep === 2" class="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Select Delivery Date</h3>
-        <p class="text-gray-500 mb-6">Choose when you'd like your order delivered</p>
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-          <button
-            *ngFor="let date of selectedSchedule?.AvailableDeliveryDates"
-            (click)="selectedDeliveryDate = date"
-            class="p-4 rounded-xl border-2 text-center transition-all"
-            [ngClass]="selectedDeliveryDate === date ? 'border-[#42af57] bg-[#42af57]/5' : 'border-gray-200 hover:border-[#42af57]'"
-          >
-            <p class="text-xs text-gray-500">{{ date | date:'EEE' }}</p>
-            <p class="text-lg font-bold text-gray-900">{{ date | date:'d' }}</p>
-            <p class="text-sm text-gray-600">{{ date | date:'MMM' }}</p>
-          </button>
-        </div>
-      </div>
-
-      <!-- Step 3: Add Products -->
-      <div *ngIf="currentStep === 3" class="space-y-6">
-        <!-- Search and Filter -->
-        <div class="bg-white rounded-xl border border-gray-200 p-4">
-          <div class="flex flex-col sm:flex-row gap-4">
-            <div class="flex-1 relative">
-              <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
-              <input
-                type="text"
-                [(ngModel)]="productSearchQuery"
-                placeholder="Search products..."
-                class="w-full pl-11 pr-4 py-2.5 border border-gray-200 rounded-lg focus:border-[#42af57] focus:outline-none"
-              />
-            </div>
-            <select
-              [(ngModel)]="categoryFilter"
-              class="px-4 py-2.5 border border-gray-200 rounded-lg focus:border-[#42af57] focus:outline-none cursor-pointer"
-            >
-              <option value="">All Categories</option>
-              <option value="dairy">Dairy</option>
-              <option value="bread">Bread & Bakery</option>
-              <option value="beverages">Beverages</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <!-- Products Grid -->
-          <div class="lg:col-span-2">
-            <div *ngIf="isLoadingProducts" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <div *ngFor="let i of [1,2,3,4,5,6]" class="bg-white rounded-xl border border-gray-200 p-4 animate-pulse">
-                <div class="w-full h-24 bg-gray-100 rounded-lg mb-3"></div>
-                <div class="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
-                <div class="h-4 bg-gray-100 rounded w-1/2"></div>
-              </div>
-            </div>
-
-            <div *ngIf="!isLoadingProducts" class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              <div
-                *ngFor="let product of filteredProducts"
-                class="bg-white rounded-xl border border-gray-200 p-4 hover:border-[#42af57] transition-all"
-              >
-                <div class="w-full h-24 bg-gray-100 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
-                  <img
-                    *ngIf="product.image"
-                    [src]="product.image"
-                    [alt]="product.ItemName"
-                    class="w-full h-full object-contain p-2"
-                    (error)="product.image = ''"
-                  />
-                  <i *ngIf="!product.image" class="fas fa-box text-gray-300 text-3xl"></i>
+      @if (currentStep === 1) {
+        <div class="space-y-4">
+          @if (isLoadingSchedules) {
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              @for (i of [1,2]; track i) {
+                <div class="bg-white rounded-xl border border-gray-200 p-6 animate-pulse">
+                  <div class="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+                  <div class="h-4 bg-gray-100 rounded w-2/3"></div>
                 </div>
-                <h4 class="font-medium text-gray-900 text-sm mb-1 line-clamp-2">{{ product.ItemName }}</h4>
-                <p class="text-xs text-gray-500 mb-2">{{ product.ItemCode }}</p>
-                <p class="font-bold text-[#42af57] mb-3">USD {{ product.PriceAfterVAT | number:'1.2-2' }}</p>
-                <div class="flex items-center gap-2">
-                  <button
-                    (click)="decrementQuantity(product)"
-                    class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
-                  >
-                    <i class="fas fa-minus text-xs"></i>
-                  </button>
-                  <input
-                    type="number"
-                    [(ngModel)]="product.quantity"
-                    min="0"
-                    class="w-12 text-center border border-gray-200 rounded-lg py-1 text-sm"
-                  />
-                  <button
-                    (click)="incrementQuantity(product)"
-                    class="w-8 h-8 rounded-lg bg-[#42af57] hover:bg-[#3d9332] text-white flex items-center justify-center"
-                  >
-                    <i class="fas fa-plus text-xs"></i>
-                  </button>
-                </div>
-              </div>
+              }
             </div>
-          </div>
-
-          <!-- Cart Summary -->
-          <div class="lg:col-span-1">
-            <div class="bg-white rounded-xl border border-gray-200 sticky top-4">
-              <div class="p-5 border-b border-gray-100">
-                <h3 class="font-semibold text-gray-900">
-                  <i class="fas fa-shopping-cart text-[#42af57] mr-2"></i>
-                  Cart ({{ cartItems.length }})
-                </h3>
+          }
+          @if (!isLoadingSchedules && schedules.length === 0) {
+            <div class="bg-white rounded-xl border border-gray-200 p-12 text-center">
+              <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-calendar-times text-gray-400 text-2xl"></i>
               </div>
-
-              <div *ngIf="cartItems.length === 0" class="p-5 text-center">
-                <i class="fas fa-shopping-basket text-gray-300 text-4xl mb-3"></i>
-                <p class="text-gray-500 text-sm">Your cart is empty</p>
-              </div>
-
-              <div *ngIf="cartItems.length > 0" class="max-h-80 overflow-y-auto">
-                <div *ngFor="let item of cartItems" class="p-4 border-b border-gray-100 last:border-0">
-                  <div class="flex items-start justify-between gap-2">
-                    <div class="flex-1">
-                      <p class="font-medium text-gray-900 text-sm">{{ item.ItemName }}</p>
-                      <p class="text-xs text-gray-500">{{ item.Quantity }} x USD {{ item.PriceAfterVAT | number:'1.2-2' }}</p>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">No schedules available</h3>
+              <p class="text-gray-500">There are no open schedules at the moment. Please check back later.</p>
+            </div>
+          }
+          @if (!isLoadingSchedules && schedules.length > 0) {
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              @for (schedule of schedules; track schedule) {
+                <div
+                  (click)="selectSchedule(schedule)"
+                  class="bg-white rounded-xl border-2 p-5 cursor-pointer transition-all"
+                  [ngClass]="selectedSchedule?.DocEntry === schedule.DocEntry ? 'border-[#42af57] bg-[#42af57]/5' : 'border-gray-200 hover:border-[#42af57]'"
+                  >
+                  <div class="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 class="font-semibold text-gray-900">Schedule #{{ schedule.DocNum }}</h3>
+                      <p class="text-sm text-gray-500">{{ schedule.Remark || 'Order Schedule' }}</p>
                     </div>
-                    <div class="text-right">
-                      <p class="font-semibold text-gray-900 text-sm">USD {{ item.LineTotal | number:'1.2-2' }}</p>
-                      <button
-                        (click)="removeFromCart(item)"
-                        class="text-xs text-red-500 hover:underline"
+                    <div
+                      class="w-6 h-6 rounded-full border-2 flex items-center justify-center"
+                      [ngClass]="selectedSchedule?.DocEntry === schedule.DocEntry ? 'border-[#42af57] bg-[#42af57]' : 'border-gray-300'"
                       >
-                        Remove
-                      </button>
+                      @if (selectedSchedule?.DocEntry === schedule.DocEntry) {
+                        <i class="fas fa-check text-white text-xs"></i>
+                      }
+                    </div>
+                  </div>
+                  <div class="space-y-2 text-sm">
+                    <div class="flex items-center gap-2 text-gray-600">
+                      <i class="fas fa-calendar w-4 text-gray-400"></i>
+                      Order window: {{ schedule.StartDate | date:'MMM d' }} - {{ schedule.EndDate | date:'MMM d' }}
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-600">
+                      <i class="fas fa-truck w-4 text-gray-400"></i>
+                      {{ schedule.AvailableDeliveryDates?.length || 0 }} delivery dates available
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div *ngIf="cartItems.length > 0" class="p-5 bg-gray-50 border-t border-gray-100">
-                <div class="flex items-center justify-between mb-4">
-                  <span class="font-semibold text-gray-900">Total</span>
-                  <span class="text-xl font-bold text-[#42af57]">USD {{ cartTotal | number:'1.2-2' }}</span>
-                </div>
-              </div>
+              }
             </div>
+          }
+        </div>
+      }
+    
+      <!-- Step 2: Select Delivery Date -->
+      @if (currentStep === 2) {
+        <div class="bg-white rounded-xl border border-gray-200 p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Select Delivery Date</h3>
+          <p class="text-gray-500 mb-6">Choose when you'd like your order delivered</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+            @for (date of selectedSchedule?.AvailableDeliveryDates; track date) {
+              <button
+                (click)="selectedDeliveryDate = date"
+                class="p-4 rounded-xl border-2 text-center transition-all"
+                [ngClass]="selectedDeliveryDate === date ? 'border-[#42af57] bg-[#42af57]/5' : 'border-gray-200 hover:border-[#42af57]'"
+                >
+                <p class="text-xs text-gray-500">{{ date | date:'EEE' }}</p>
+                <p class="text-lg font-bold text-gray-900">{{ date | date:'d' }}</p>
+                <p class="text-sm text-gray-600">{{ date | date:'MMM' }}</p>
+              </button>
+            }
           </div>
         </div>
-      </div>
-
-      <!-- Step 4: Review & Confirm -->
-      <div *ngIf="currentStep === 4" class="space-y-6">
-        <!-- Order Summary -->
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          <div class="p-5 border-b border-gray-100">
-            <h3 class="font-semibold text-gray-900">Order Summary</h3>
-          </div>
-          <div class="p-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div>
-              <p class="text-sm text-gray-500">Schedule</p>
-              <p class="font-semibold text-gray-900">#{{ selectedSchedule?.DocNum }}</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Delivery Date</p>
-              <p class="font-semibold text-gray-900">{{ selectedDeliveryDate | date:'MMM d, yyyy' }}</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Items</p>
-              <p class="font-semibold text-gray-900">{{ cartItems.length }} products</p>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Payment</p>
-              <p class="font-semibold text-gray-900">Cash on Delivery</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Cart Items -->
-        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
-          <div class="p-5 border-b border-gray-100">
-            <h3 class="font-semibold text-gray-900">Order Items</h3>
-          </div>
-          <div class="divide-y divide-gray-100">
-            <div *ngFor="let item of cartItems" class="p-4 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  <img
-                    *ngIf="item.ItemImage"
-                    [src]="item.ItemImage"
-                    [alt]="item.ItemName"
-                    class="w-full h-full object-contain p-1"
+      }
+    
+      <!-- Step 3: Add Products -->
+      @if (currentStep === 3) {
+        <div class="space-y-6">
+          <!-- Search and Filter -->
+          <div class="bg-white rounded-xl border border-gray-200 p-4">
+            <div class="flex flex-col sm:flex-row gap-4">
+              <div class="flex-1 relative">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <input
+                  type="text"
+                  [(ngModel)]="productSearchQuery"
+                  placeholder="Search products..."
+                  class="w-full pl-11 pr-4 py-2.5 border border-gray-200 rounded-lg focus:border-[#42af57] focus:outline-none"
                   />
-                  <i *ngIf="!item.ItemImage" class="fas fa-box text-gray-400"></i>
-                </div>
-                <div>
-                  <p class="font-medium text-gray-900">{{ item.ItemName }}</p>
-                  <p class="text-sm text-gray-500">{{ item.ItemCode }} | Qty: {{ item.Quantity }}</p>
-                </div>
               </div>
-              <p class="font-semibold text-gray-900">USD {{ item.LineTotal | number:'1.2-2' }}</p>
+              <select
+                [(ngModel)]="categoryFilter"
+                class="px-4 py-2.5 border border-gray-200 rounded-lg focus:border-[#42af57] focus:outline-none cursor-pointer"
+                >
+                <option value="">All Categories</option>
+                <option value="dairy">Dairy</option>
+                <option value="bread">Bread & Bakery</option>
+                <option value="beverages">Beverages</option>
+              </select>
             </div>
           </div>
-          <div class="p-5 bg-gray-50 flex items-center justify-between">
-            <span class="text-lg font-semibold text-gray-900">Grand Total</span>
-            <span class="text-2xl font-bold text-[#42af57]">USD {{ cartTotal | number:'1.2-2' }}</span>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Products Grid -->
+            <div class="lg:col-span-2">
+              @if (isLoadingProducts) {
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  @for (i of [1,2,3,4,5,6]; track i) {
+                    <div class="bg-white rounded-xl border border-gray-200 p-4 animate-pulse">
+                      <div class="w-full h-24 bg-gray-100 rounded-lg mb-3"></div>
+                      <div class="h-4 bg-gray-200 rounded w-2/3 mb-2"></div>
+                      <div class="h-4 bg-gray-100 rounded w-1/2"></div>
+                    </div>
+                  }
+                </div>
+              }
+              @if (!isLoadingProducts) {
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  @for (product of filteredProducts; track product) {
+                    <div
+                      class="bg-white rounded-xl border border-gray-200 p-4 hover:border-[#42af57] transition-all"
+                      >
+                      <div class="w-full h-24 bg-gray-100 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
+                        @if (product.image) {
+                          <img
+                            [src]="product.image"
+                            [alt]="product.ItemName"
+                            class="w-full h-full object-contain p-2"
+                            (error)="product.image = ''"
+                            />
+                        }
+                        @if (!product.image) {
+                          <i class="fas fa-box text-gray-300 text-3xl"></i>
+                        }
+                      </div>
+                      <h4 class="font-medium text-gray-900 text-sm mb-1 line-clamp-2">{{ product.ItemName }}</h4>
+                      <p class="text-xs text-gray-500 mb-2">{{ product.ItemCode }}</p>
+                      <p class="font-bold text-[#42af57] mb-3">USD {{ product.PriceAfterVAT | number:'1.2-2' }}</p>
+                      <div class="flex items-center gap-2">
+                        <button
+                          (click)="decrementQuantity(product)"
+                          class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                          >
+                          <i class="fas fa-minus text-xs"></i>
+                        </button>
+                        <input
+                          type="number"
+                          [(ngModel)]="product.quantity"
+                          min="0"
+                          class="w-12 text-center border border-gray-200 rounded-lg py-1 text-sm"
+                          />
+                        <button
+                          (click)="incrementQuantity(product)"
+                          class="w-8 h-8 rounded-lg bg-[#42af57] hover:bg-[#3d9332] text-white flex items-center justify-center"
+                          >
+                          <i class="fas fa-plus text-xs"></i>
+                        </button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+            <!-- Cart Summary -->
+            <div class="lg:col-span-1">
+              <div class="bg-white rounded-xl border border-gray-200 sticky top-4">
+                <div class="p-5 border-b border-gray-100">
+                  <h3 class="font-semibold text-gray-900">
+                    <i class="fas fa-shopping-cart text-[#42af57] mr-2"></i>
+                    Cart ({{ cartItems.length }})
+                  </h3>
+                </div>
+                @if (cartItems.length === 0) {
+                  <div class="p-5 text-center">
+                    <i class="fas fa-shopping-basket text-gray-300 text-4xl mb-3"></i>
+                    <p class="text-gray-500 text-sm">Your cart is empty</p>
+                  </div>
+                }
+                @if (cartItems.length > 0) {
+                  <div class="max-h-80 overflow-y-auto">
+                    @for (item of cartItems; track item) {
+                      <div class="p-4 border-b border-gray-100 last:border-0">
+                        <div class="flex items-start justify-between gap-2">
+                          <div class="flex-1">
+                            <p class="font-medium text-gray-900 text-sm">{{ item.ItemName }}</p>
+                            <p class="text-xs text-gray-500">{{ item.Quantity }} x USD {{ item.PriceAfterVAT | number:'1.2-2' }}</p>
+                          </div>
+                          <div class="text-right">
+                            <p class="font-semibold text-gray-900 text-sm">USD {{ item.LineTotal | number:'1.2-2' }}</p>
+                            <button
+                              (click)="removeFromCart(item)"
+                              class="text-xs text-red-500 hover:underline"
+                              >
+                              Remove
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                }
+                @if (cartItems.length > 0) {
+                  <div class="p-5 bg-gray-50 border-t border-gray-100">
+                    <div class="flex items-center justify-between mb-4">
+                      <span class="font-semibold text-gray-900">Total</span>
+                      <span class="text-xl font-bold text-[#42af57]">USD {{ cartTotal | number:'1.2-2' }}</span>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Comments -->
-        <div class="bg-white rounded-xl border border-gray-200 p-5">
-          <label class="block text-sm font-medium text-gray-700 mb-2">Order Comments (Optional)</label>
-          <textarea
-            [(ngModel)]="orderComments"
-            rows="3"
-            placeholder="Add any special instructions or notes for this order..."
-            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-[#42af57] focus:outline-none resize-none"
-          ></textarea>
-        </div>
-      </div>
-
-      <!-- AI-Powered Recommendation Popup -->
-      <div
-        *ngIf="showRecommendation && currentStep === 3"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-        (click)="dismissRecommendation()"
-      >
-        <div
-          class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all animate-pulse-once"
-          (click)="$event.stopPropagation()"
-        >
-          <!-- AI Header with animated gradient -->
-          <div class="relative bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-6 overflow-hidden">
-            <!-- Animated background circles -->
-            <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
-            <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
-
-            <div class="relative flex items-center gap-4">
-              <div class="w-14 h-14 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center">
-                <i class="fas fa-wand-magic-sparkles text-white text-2xl"></i>
+      }
+    
+      <!-- Step 4: Review & Confirm -->
+      @if (currentStep === 4) {
+        <div class="space-y-6">
+          <!-- Order Summary -->
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="p-5 border-b border-gray-100">
+              <h3 class="font-semibold text-gray-900">Order Summary</h3>
+            </div>
+            <div class="p-5 grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div>
+                <p class="text-sm text-gray-500">Schedule</p>
+                <p class="font-semibold text-gray-900">#{{ selectedSchedule?.DocNum }}</p>
               </div>
               <div>
-                <div class="flex items-center gap-2 mb-1">
-                  <span class="px-2 py-0.5 bg-white/20 rounded-full text-xs font-medium text-white/90">AI Insight</span>
-                  <span class="flex items-center gap-1 text-white/70 text-xs">
-                    <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                    Live
-                  </span>
-                </div>
-                <h3 class="text-xl font-bold text-white">Hey, quick thought!</h3>
+                <p class="text-sm text-gray-500">Delivery Date</p>
+                <p class="font-semibold text-gray-900">{{ selectedDeliveryDate | date:'MMM d, yyyy' }}</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Items</p>
+                <p class="font-semibold text-gray-900">{{ cartItems.length }} products</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500">Payment</p>
+                <p class="font-semibold text-gray-900">Cash on Delivery</p>
               </div>
             </div>
           </div>
-
-          <!-- Content -->
-          <div class="p-6">
-            <!-- AI Message bubble -->
-            <div class="bg-gradient-to-br from-gray-50 to-slate-100 rounded-2xl p-5 mb-5 relative">
-              <div class="absolute -top-2 left-6 w-4 h-4 bg-gray-50 rotate-45"></div>
-              <div class="flex items-start gap-4">
-                <div class="w-16 h-16 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <i class="fas fa-cheese text-amber-500 text-2xl"></i>
-                </div>
-                <div class="flex-1">
-                  <p class="text-violet-600 text-sm font-medium mb-2 flex items-center gap-2">
-                    <i class="fas fa-brain"></i>
-                    Based on your patterns
-                  </p>
-                  <h4 class="font-bold text-gray-900 text-lg leading-tight">
-                    You haven't ordered <span class="text-violet-600">{{ recommendedProduct.name }}</span> in {{ recommendedProduct.daysSincePurchase }} days
-                  </h4>
-                  <p class="text-gray-500 text-sm mt-2">
-                    You typically restock every <span class="font-semibold text-gray-700">{{ recommendedProduct.usualFrequency }} days</span>. Running low?
-                  </p>
-                </div>
-              </div>
+          <!-- Cart Items -->
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="p-5 border-b border-gray-100">
+              <h3 class="font-semibold text-gray-900">Order Items</h3>
             </div>
-
-            <!-- Quick add section -->
-            <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 mb-5">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-2">
-                  <i class="fas fa-bolt text-amber-500"></i>
-                  <span class="font-semibold text-gray-800">Quick Add</span>
+            <div class="divide-y divide-gray-100">
+              @for (item of cartItems; track item) {
+                <div class="p-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                      @if (item.ItemImage) {
+                        <img
+                          [src]="item.ItemImage"
+                          [alt]="item.ItemName"
+                          class="w-full h-full object-contain p-1"
+                          />
+                      }
+                      @if (!item.ItemImage) {
+                        <i class="fas fa-box text-gray-400"></i>
+                      }
+                    </div>
+                    <div>
+                      <p class="font-medium text-gray-900">{{ item.ItemName }}</p>
+                      <p class="text-sm text-gray-500">{{ item.ItemCode }} | Qty: {{ item.Quantity }}</p>
+                    </div>
+                  </div>
+                  <p class="font-semibold text-gray-900">USD {{ item.LineTotal | number:'1.2-2' }}</p>
                 </div>
-                <span class="text-xl font-bold text-[#42af57]">USD {{ recommendedProduct.price | number:'1.2-2' }}</span>
-              </div>
-              <div class="flex items-center justify-center gap-4">
-                <button
-                  (click)="decrementRecommendedQty()"
-                  class="w-12 h-12 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-all active:scale-95"
-                >
-                  <i class="fas fa-minus text-gray-700"></i>
-                </button>
-                <div class="text-center">
-                  <input
-                    type="number"
-                    [(ngModel)]="recommendedQuantity"
-                    min="1"
-                    class="w-20 text-center text-2xl font-bold text-gray-900 border-0 bg-transparent focus:outline-none"
-                  />
-                  <p class="text-xs text-gray-400 -mt-1">quantity</p>
-                </div>
-                <button
-                  (click)="incrementRecommendedQty()"
-                  class="w-12 h-12 rounded-xl bg-violet-100 hover:bg-violet-200 text-violet-700 flex items-center justify-center transition-all active:scale-95"
-                >
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
-              <div class="text-center mt-3 pt-3 border-t border-gray-100">
-                <span class="text-gray-500">Total: </span>
-                <span class="text-lg font-bold text-gray-900">USD {{ (recommendedProduct.price * recommendedQuantity) | number:'1.2-2' }}</span>
-              </div>
+              }
             </div>
-
-            <!-- Actions -->
-            <div class="flex gap-3">
-              <button
-                (click)="dismissRecommendation()"
-                class="flex-1 px-5 py-3.5 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all active:scale-98"
-              >
-                No thanks
-              </button>
-              <button
-                (click)="addRecommendedToCart()"
-                class="flex-1 px-5 py-3.5 bg-gradient-to-r from-[#42af57] to-[#2d9a45] text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/25 transition-all active:scale-98 flex items-center justify-center gap-2"
-              >
-                <i class="fas fa-plus"></i>
-                Yes, add it!
-              </button>
+            <div class="p-5 bg-gray-50 flex items-center justify-between">
+              <span class="text-lg font-semibold text-gray-900">Grand Total</span>
+              <span class="text-2xl font-bold text-[#42af57]">USD {{ cartTotal | number:'1.2-2' }}</span>
             </div>
           </div>
-
-          <!-- Footer insight with sparkle -->
-          <div class="bg-gradient-to-r from-violet-50 to-indigo-50 px-6 py-3 border-t border-violet-100">
-            <p class="text-xs text-violet-600 flex items-center justify-center gap-2">
-              <i class="fas fa-sparkles"></i>
-              <span>Powered by your purchase history • Updated in real-time</span>
-            </p>
+          <!-- Comments -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Order Comments (Optional)</label>
+            <textarea
+              [(ngModel)]="orderComments"
+              rows="3"
+              placeholder="Add any special instructions or notes for this order..."
+              class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-[#42af57] focus:outline-none resize-none"
+            ></textarea>
           </div>
         </div>
-      </div>
-
+      }
+    
+      <!-- AI-Powered Recommendation Popup -->
+      @if (showRecommendation && currentStep === 3) {
+        <div
+          class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          (click)="dismissRecommendation()"
+          >
+          <div
+            class="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all animate-pulse-once"
+            (click)="$event.stopPropagation()"
+            >
+            <!-- AI Header with animated gradient -->
+            <div class="relative bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 p-6 overflow-hidden">
+              <!-- Animated background circles -->
+              <div class="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+              <div class="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+              <div class="relative flex items-center gap-4">
+                <div class="w-14 h-14 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center">
+                  <i class="fas fa-wand-magic-sparkles text-white text-2xl"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="px-2 py-0.5 bg-white/20 rounded-full text-xs font-medium text-white/90">AI Insight</span>
+                    <span class="flex items-center gap-1 text-white/70 text-xs">
+                      <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                      Live
+                    </span>
+                  </div>
+                  <h3 class="text-xl font-bold text-white">Hey, quick thought!</h3>
+                </div>
+              </div>
+            </div>
+            <!-- Content -->
+            <div class="p-6">
+              <!-- AI Message bubble -->
+              <div class="bg-gradient-to-br from-gray-50 to-slate-100 rounded-2xl p-5 mb-5 relative">
+                <div class="absolute -top-2 left-6 w-4 h-4 bg-gray-50 rotate-45"></div>
+                <div class="flex items-start gap-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm">
+                    <i class="fas fa-cheese text-amber-500 text-2xl"></i>
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-violet-600 text-sm font-medium mb-2 flex items-center gap-2">
+                      <i class="fas fa-brain"></i>
+                      Based on your patterns
+                    </p>
+                    <h4 class="font-bold text-gray-900 text-lg leading-tight">
+                      You haven't ordered <span class="text-violet-600">{{ recommendedProduct.name }}</span> in {{ recommendedProduct.daysSincePurchase }} days
+                    </h4>
+                    <p class="text-gray-500 text-sm mt-2">
+                      You typically restock every <span class="font-semibold text-gray-700">{{ recommendedProduct.usualFrequency }} days</span>. Running low?
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- Quick add section -->
+              <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 mb-5">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center gap-2">
+                    <i class="fas fa-bolt text-amber-500"></i>
+                    <span class="font-semibold text-gray-800">Quick Add</span>
+                  </div>
+                  <span class="text-xl font-bold text-[#42af57]">USD {{ recommendedProduct.price | number:'1.2-2' }}</span>
+                </div>
+                <div class="flex items-center justify-center gap-4">
+                  <button
+                    (click)="decrementRecommendedQty()"
+                    class="w-12 h-12 rounded-xl bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-all active:scale-95"
+                    >
+                    <i class="fas fa-minus text-gray-700"></i>
+                  </button>
+                  <div class="text-center">
+                    <input
+                      type="number"
+                      [(ngModel)]="recommendedQuantity"
+                      min="1"
+                      class="w-20 text-center text-2xl font-bold text-gray-900 border-0 bg-transparent focus:outline-none"
+                      />
+                    <p class="text-xs text-gray-400 -mt-1">quantity</p>
+                  </div>
+                  <button
+                    (click)="incrementRecommendedQty()"
+                    class="w-12 h-12 rounded-xl bg-violet-100 hover:bg-violet-200 text-violet-700 flex items-center justify-center transition-all active:scale-95"
+                    >
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="text-center mt-3 pt-3 border-t border-gray-100">
+                  <span class="text-gray-500">Total: </span>
+                  <span class="text-lg font-bold text-gray-900">USD {{ (recommendedProduct.price * recommendedQuantity) | number:'1.2-2' }}</span>
+                </div>
+              </div>
+              <!-- Actions -->
+              <div class="flex gap-3">
+                <button
+                  (click)="dismissRecommendation()"
+                  class="flex-1 px-5 py-3.5 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition-all active:scale-98"
+                  >
+                  No thanks
+                </button>
+                <button
+                  (click)="addRecommendedToCart()"
+                  class="flex-1 px-5 py-3.5 bg-gradient-to-r from-[#42af57] to-[#2d9a45] text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/25 transition-all active:scale-98 flex items-center justify-center gap-2"
+                  >
+                  <i class="fas fa-plus"></i>
+                  Yes, add it!
+                </button>
+              </div>
+            </div>
+            <!-- Footer insight with sparkle -->
+            <div class="bg-gradient-to-r from-violet-50 to-indigo-50 px-6 py-3 border-t border-violet-100">
+              <p class="text-xs text-violet-600 flex items-center justify-center gap-2">
+                <i class="fas fa-sparkles"></i>
+                <span>Powered by your purchase history • Updated in real-time</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      }
+    
       <!-- Navigation Buttons -->
       <div class="flex items-center justify-between bg-white rounded-xl border border-gray-200 p-4">
-        <button
-          *ngIf="currentStep > 1"
-          (click)="previousStep()"
-          class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium"
-        >
-          <i class="fas fa-arrow-left"></i>
-          Previous
-        </button>
-        <div *ngIf="currentStep === 1"></div>
-
-        <button
-          *ngIf="currentStep < 4"
-          (click)="nextStep()"
-          [disabled]="!canProceed()"
-          class="inline-flex items-center gap-2 bg-[#42af57] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#3d9332] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Next
-          <i class="fas fa-arrow-right"></i>
-        </button>
-
-        <button
-          *ngIf="currentStep === 4"
-          (click)="submitOrder()"
-          [disabled]="isSubmitting"
-          class="inline-flex items-center gap-2 bg-[#42af57] text-white px-8 py-2.5 rounded-xl font-semibold hover:bg-[#3d9332] transition-all disabled:opacity-50"
-        >
-          <i *ngIf="isSubmitting" class="fas fa-spinner fa-spin"></i>
-          <i *ngIf="!isSubmitting" class="fas fa-check"></i>
-          {{ isSubmitting ? 'Placing Order...' : 'Place Order' }}
-        </button>
+        @if (currentStep > 1) {
+          <button
+            (click)="previousStep()"
+            class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium"
+            >
+            <i class="fas fa-arrow-left"></i>
+            Previous
+          </button>
+        }
+        @if (currentStep === 1) {
+          <div></div>
+        }
+    
+        @if (currentStep < 4) {
+          <button
+            (click)="nextStep()"
+            [disabled]="!canProceed()"
+            class="inline-flex items-center gap-2 bg-[#42af57] text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-[#3d9332] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+            Next
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        }
+    
+        @if (currentStep === 4) {
+          <button
+            (click)="submitOrder()"
+            [disabled]="isSubmitting"
+            class="inline-flex items-center gap-2 bg-[#42af57] text-white px-8 py-2.5 rounded-xl font-semibold hover:bg-[#3d9332] transition-all disabled:opacity-50"
+            >
+            @if (isSubmitting) {
+              <i class="fas fa-spinner fa-spin"></i>
+            }
+            @if (!isSubmitting) {
+              <i class="fas fa-check"></i>
+            }
+            {{ isSubmitting ? 'Placing Order...' : 'Place Order' }}
+          </button>
+        }
       </div>
     </div>
-  `
+    `
 })
 export class B2bNewOrderComponent implements OnInit {
   steps = ['Select Schedule', 'Delivery Date', 'Add Products', 'Review'];

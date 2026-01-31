@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild} from '@angular/core';
 import {StoreService} from "../../core/services/store/store.service";
 import {CurrencyService} from "../../core/services/currency/currency.service";
-import {NgIf} from "@angular/common";
+
 import {ProductCardComponent} from "../products/product-card/product-card.component";
 import {RouterLink} from "@angular/router";
 
@@ -9,10 +9,9 @@ import {RouterLink} from "@angular/router";
   selector: 'app-product-shelf-alt',
   standalone: true,
   imports: [
-    NgIf,
     ProductCardComponent,
     RouterLink
-  ],
+],
   templateUrl: './product-shelf-alt.component.html',
   styleUrl: './product-shelf-alt.component.css'
 })

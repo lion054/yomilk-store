@@ -1,13 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {NgClass, NgIf} from "@angular/common";
+import { NgClass } from "@angular/common";
 
 @Component({
   selector: 'app-stepper',
   standalone: true,
   imports: [
-    NgClass,
-    NgIf
-  ],
+    NgClass
+],
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.css'
 })

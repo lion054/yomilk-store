@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-b2b-layout',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   template: `
     <div class="min-h-screen bg-gray-50">
       <!-- Top Header -->

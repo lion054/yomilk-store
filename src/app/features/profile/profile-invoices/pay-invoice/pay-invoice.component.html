@@ -1,215 +1,223 @@
 
 <section>
   <div class="flex items-center justify-center max-w-screen-lg md:flex-row flex-col">
-<!--    <div *ngIf="step != 3 && !loading" class="w-full max-w-md bg-gray-100 rounded-lg p-5 min-h-72 h-full">-->
-<!--      <h2>Paying Invoice #</h2>-->
-<!--      <div class="text-6xl font-bold my-5 w-full flex justify-center h-full items-center">{{invoice.DocNum}} <span class="text-sm font-light"></span></div>-->
-<!--      <div>-->
-<!--        <label for="total" class="text-gray-600">Total Due </label>-->
-<!--        <div id="total" class="text-xl">{{invoice.DocCurrency}} {{invoice.DocTotal}}</div>-->
-<!--      </div>-->
-<!--      <br>-->
-<!--      <div>-->
-<!--        <label for="dueDate" class="text-gray-600">Due Date </label>-->
-<!--        <div id="dueDate" class="text-xl"> {{invoice.DocDueDate}}</div>-->
+    <!--    <div *ngIf="step != 3 && !loading" class="w-full max-w-md bg-gray-100 rounded-lg p-5 min-h-72 h-full">-->
+    <!--      <h2>Paying Invoice #</h2>-->
+    <!--      <div class="text-6xl font-bold my-5 w-full flex justify-center h-full items-center">{{invoice.DocNum}} <span class="text-sm font-light"></span></div>-->
+    <!--      <div>-->
+    <!--        <label for="total" class="text-gray-600">Total Due </label>-->
+    <!--        <div id="total" class="text-xl">{{invoice.DocCurrency}} {{invoice.DocTotal}}</div>-->
+  <!--      </div>-->
+  <!--      <br>-->
+  <!--      <div>-->
+  <!--        <label for="dueDate" class="text-gray-600">Due Date </label>-->
+  <!--        <div id="dueDate" class="text-xl"> {{invoice.DocDueDate}}</div>-->
 <!--      </div>-->
 <!--    </div>-->
 
-    <div
-      *ngIf="step != 3 && !loading"
-      class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl"
+@if (step != 3 && !loading) {
+  <div
+    class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 transition-all duration-300 hover:shadow-xl"
     >
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Invoice Payment</h2>
-        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-          </svg>
-        </div>
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Invoice Payment</h2>
+      <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+        </svg>
       </div>
-
-      <div class="space-y-6">
-        <div class="text-center">
-          <p class="text-sm font-medium text-gray-500 mb-2">Paying Invoice</p>
-          <div class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 inline-block text-transparent bg-clip-text">
-            #{{invoice.DocNum}}
-          </div>
-          <p class="text-sm text-gray-400 mt-1">Invoice Number</p>
+    </div>
+    <div class="space-y-6">
+      <div class="text-center">
+        <p class="text-sm font-medium text-gray-500 mb-2">Paying Invoice</p>
+        <div class="text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 inline-block text-transparent bg-clip-text">
+          #{{invoice.DocNum}}
         </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          <div class="bg-gray-50 p-4 rounded-lg">
-            <label class="text-xs font-medium text-gray-400">Total Due</label>
-            <div class="text-xl font-semibold text-gray-800 mt-1">
-              <span class="text-blue-600">{{invoice.DocCurrency}}</span> {{invoice.DocTotal}}
-            </div>
+        <p class="text-sm text-gray-400 mt-1">Invoice Number</p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <label class="text-xs font-medium text-gray-400">Total Due</label>
+          <div class="text-xl font-semibold text-gray-800 mt-1">
+            <span class="text-blue-600">{{invoice.DocCurrency}}</span> {{invoice.DocTotal}}
           </div>
-
-          <div class="bg-gray-50 p-4 rounded-lg">
-            <label class="text-xs font-medium text-gray-400">Due Date</label>
-            <div class="text-xl font-semibold text-gray-800 mt-1 flex items-center">
-              <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-              </svg>
-              {{invoice.DocDueDate}}
-            </div>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg">
+          <label class="text-xs font-medium text-gray-400">Due Date</label>
+          <div class="text-xl font-semibold text-gray-800 mt-1 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            {{invoice.DocDueDate}}
           </div>
         </div>
       </div>
     </div>
+  </div>
+}
 
 
-    <div *ngIf="step == 1 || (step == 2 && !loading)" class="w-full max-w-24"></div>
-    <div class="px-5 " *ngIf="step === 1">
-      <form [formGroup]="checkoutForm">
-        <div>
-          <h1 class="text-xl pb-2">Payment Method
-            <span *ngIf="paymentMethod == null" class="text-red-500 text-xs" >Required</span>
-          </h1>
-
-          <div class="flex flex-wrap gap-5 justify-start max-w-md">
-            <!-- PayPal -->
-            <!--          <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"-->
-            <!--               [class.selected]="paymentMethod === 'Paypal'"-->
-            <!--               (click)="paymentMethod = 'Paypal'">-->
-            <!--            <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Paypal" class="hidden" />-->
-            <!--            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"-->
-            <!--                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">-->
-            <!--              <rect width="20" height="14" x="2" y="5" rx="2" />-->
-            <!--              <line x1="2" x2="22" y1="10" y2="10" />-->
-            <!--            </svg>-->
-            <!--            <span class="text-start w-full font-light text-sm pt-1">PayPal</span>-->
-            <!--          </div>-->
-
-            <!--          &lt;!&ndash; Paynow &ndash;&gt;-->
-            <!--          <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"-->
-            <!--               [class.selected]="paymentMethod === 'Paynow'"-->
-            <!--               (click)="paymentMethod = 'Paynow'">-->
-            <!--            <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Paynow" class="hidden" />-->
-            <!--            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"-->
-            <!--                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">-->
-            <!--              <rect width="20" height="14" x="2" y="5" rx="2" />-->
-            <!--              <line x1="2" x2="22" y1="10" y2="10" />-->
-            <!--            </svg>-->
-            <!--            <span class="text-start w-full font-light text-sm pt-1">Paynow</span>-->
-            <!--          </div>-->
-
-            <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"
-                 [class.selected]="paymentMethod === 'InnBucks'"
-                 (click)="paymentMethod = 'InnBucks';  toggleEcoCashValidators()">
-              <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="InnBucks" class="hidden" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">
-                <rect width="20" height="14" x="2" y="5" rx="2" />
-                <line x1="2" x2="22" y1="10" y2="10" />
-              </svg>
-              <span class="text-start w-full font-light text-sm pt-1">InnBucks</span>
-            </div>
-
-            <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"
-                 [class.selected]="paymentMethod === 'Ecocash'"
-                 (click)="paymentMethod = 'Ecocash';  toggleEcoCashValidators()">
-              <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Ecocash" class="hidden" />
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
-                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">
-                <rect width="20" height="14" x="2" y="5" rx="2" />
-                <line x1="2" x2="22" y1="10" y2="10" />
-              </svg>
-              <span class="text-start w-full font-light text-sm pt-1">EcoCash</span>
-            </div>
-
-            <div  class="flex flex-col items-center" >
-              <div class="hover:bg-gray-100 w-32 h-20 p-3 border-gray-300 border rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative"
-                   [ngStyle]="{'background-image': 'url(/assets/images/payment/paynow.png)', 'background-size': '90%'}"
-                   [class.selected]="paymentMethod === 'PayNow'"
-                   (click)="paymentMethod = 'PayNow'; toggleEcoCashValidators()">
-                <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="PayNow" class="hidden" />
-              </div>
-              <span class="text-center w-full font-light text-sm pt-1">PayNow</span>
-            </div>
-          </div>
-
-          <div class=" pt-1 max-w-md w-full">
-            <label class="text-gray-500"  for="amount">Amount to Pay
-              <span *ngIf="checkoutForm.controls['amount']?.invalid && (checkoutForm.controls['amount']?.dirty || checkoutForm.controls['amount']?.touched)" class="text-red-500 text-xs" >Required</span>
-            </label>
-            <input id="amount" type="number" formControlName="amount" class="w-full pr-10 py-2 my-2 bg-gray-100 rounded-md p-2.5"
-                   placeholder="1.00" min="1" />
-          </div>
-
-          <div class=" pt-1 max-w-md w-full">
-            <label class="text-gray-500"  for="paymentPhoneNumber">EcoCash Number
-              <span *ngIf="checkoutForm.controls['paymentPhoneNumber']?.invalid && (checkoutForm.controls['paymentPhoneNumber']?.dirty || checkoutForm.controls['paymentPhoneNumber']?.touched)" class="text-red-500 text-xs" >Required</span>
-            </label>
-            <input id="paymentPhoneNumber" type="tel" formControlName="paymentPhoneNumber" class="w-full pr-10 py-2 my-2 bg-gray-100 rounded-md p-2.5"
-                   placeholder="+263 771 234 567"  />
-          </div>
-
-          <div class="flex justify-between items-center">
-            <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" (click)="validateBeforeConfirm()">Confirm</button>
-          </div>
-
-        </div>
-      </form>
-
-    </div>
-
-    <div  class="px-5 max-w-md h-full   min-h-72 relative " *ngIf="step === 2 && !loading ">
-      <h1 class=" pb-2 text-gray-600">Confirm invoice payment
-        <span *ngIf="paymentMethod == ''" class="text-red-500 text-xs" >Required</span>
-      </h1>
-      <span class="text-xl">You are about to pay invoice {{invoice.DocNum}} with <span class="font-bold">{{invoice.DocCurrency}} {{checkoutForm.value.amount | number:'1.2-2'}}</span>  using {{paymentMethod}}</span>
-
-      <div class="flex justify-between items-center absolute bottom-0 w-full pr-10 ">
-        <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" type="button" (click)="step = 1" >Cancel</button>
-        <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" (click)="fundAccount()" >Pay Invoice</button>
-      </div>
-    </div>
-
-    <!--  Innbucks QR-->
-    <div *ngIf="innBucksResponse">
-      <div class="w-full flex items-center justify-center flex-col min-h-72  px-5 max-w-md h-full ">
-        <h1 class="text-xl pb-2">Processing Payment
+@if (step == 1 || (step == 2 && !loading)) {
+  <div class="w-full max-w-24"></div>
+}
+@if (step === 1) {
+  <div class="px-5 ">
+    <form [formGroup]="checkoutForm">
+      <div>
+        <h1 class="text-xl pb-2">Payment Method
+          @if (paymentMethod == null) {
+            <span class="text-red-500 text-xs" >Required</span>
+          }
         </h1>
-        <svg  xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-      </div>
-      <div *ngIf="paymentMethod === 'InnBucks'" class="w-full flex max-w-md  items-center justify-center flex-col">
-        <ng-container *ngIf="innBucksResponse">
+        <div class="flex flex-wrap gap-5 justify-start max-w-md">
+          <!-- PayPal -->
+          <!--          <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"-->
+          <!--               [class.selected]="paymentMethod === 'Paypal'"-->
+          <!--               (click)="paymentMethod = 'Paypal'">-->
+          <!--            <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Paypal" class="hidden" />-->
+          <!--            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"-->
+          <!--                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">-->
+          <!--              <rect width="20" height="14" x="2" y="5" rx="2" />-->
+          <!--              <line x1="2" x2="22" y1="10" y2="10" />-->
+        <!--            </svg>-->
+        <!--            <span class="text-start w-full font-light text-sm pt-1">PayPal</span>-->
+      <!--          </div>-->
+      <!--          &lt;!&ndash; Paynow &ndash;&gt;-->
+      <!--          <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"-->
+      <!--               [class.selected]="paymentMethod === 'Paynow'"-->
+      <!--               (click)="paymentMethod = 'Paynow'">-->
+      <!--            <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Paynow" class="hidden" />-->
+      <!--            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"-->
+      <!--                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">-->
+      <!--              <rect width="20" height="14" x="2" y="5" rx="2" />-->
+      <!--              <line x1="2" x2="22" y1="10" y2="10" />-->
+    <!--            </svg>-->
+    <!--            <span class="text-start w-full font-light text-sm pt-1">Paynow</span>-->
+  <!--          </div>-->
+  <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"
+    [class.selected]="paymentMethod === 'InnBucks'"
+    (click)="paymentMethod = 'InnBucks';  toggleEcoCashValidators()">
+    <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="InnBucks" class="hidden" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">
+      <rect width="20" height="14" x="2" y="5" rx="2" />
+      <line x1="2" x2="22" y1="10" y2="10" />
+    </svg>
+    <span class="text-start w-full font-light text-sm pt-1">InnBucks</span>
+  </div>
+  <div class="flex flex-col start hover:bg-gray-100 w-40 p-5 border-gray-300 border rounded-xl cursor-pointer"
+    [class.selected]="paymentMethod === 'Ecocash'"
+    (click)="paymentMethod = 'Ecocash';  toggleEcoCashValidators()">
+    <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="Ecocash" class="hidden" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">
+      <rect width="20" height="14" x="2" y="5" rx="2" />
+      <line x1="2" x2="22" y1="10" y2="10" />
+    </svg>
+    <span class="text-start w-full font-light text-sm pt-1">EcoCash</span>
+  </div>
+  <div  class="flex flex-col items-center" >
+    <div class="hover:bg-gray-100 w-32 h-20 p-3 border-gray-300 border rounded-xl cursor-pointer bg-center bg-no-repeat bg-contain relative"
+      [ngStyle]="{'background-image': 'url(/assets/images/payment/paynow.png)', 'background-size': '90%'}"
+      [class.selected]="paymentMethod === 'PayNow'"
+      (click)="paymentMethod = 'PayNow'; toggleEcoCashValidators()">
+      <input type="radio" [(ngModel)]="paymentMethod" [ngModelOptions]="{standalone: true}" value="PayNow" class="hidden" />
+    </div>
+    <span class="text-center w-full font-light text-sm pt-1">PayNow</span>
+  </div>
+</div>
+<div class=" pt-1 max-w-md w-full">
+  <label class="text-gray-500"  for="amount">Amount to Pay
+    @if (checkoutForm.controls['amount']?.invalid && (checkoutForm.controls['amount']?.dirty || checkoutForm.controls['amount']?.touched)) {
+      <span class="text-red-500 text-xs" >Required</span>
+    }
+  </label>
+  <input id="amount" type="number" formControlName="amount" class="w-full pr-10 py-2 my-2 bg-gray-100 rounded-md p-2.5"
+    placeholder="1.00" min="1" />
+</div>
+<div class=" pt-1 max-w-md w-full">
+  <label class="text-gray-500"  for="paymentPhoneNumber">EcoCash Number
+    @if (checkoutForm.controls['paymentPhoneNumber']?.invalid && (checkoutForm.controls['paymentPhoneNumber']?.dirty || checkoutForm.controls['paymentPhoneNumber']?.touched)) {
+      <span class="text-red-500 text-xs" >Required</span>
+    }
+  </label>
+  <input id="paymentPhoneNumber" type="tel" formControlName="paymentPhoneNumber" class="w-full pr-10 py-2 my-2 bg-gray-100 rounded-md p-2.5"
+    placeholder="+263 771 234 567"  />
+</div>
+<div class="flex justify-between items-center">
+  <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" (click)="validateBeforeConfirm()">Confirm</button>
+</div>
+</div>
+</form>
+</div>
+}
+
+@if (step === 2 && !loading ) {
+  <div  class="px-5 max-w-md h-full   min-h-72 relative ">
+    <h1 class=" pb-2 text-gray-600">Confirm invoice payment
+      @if (paymentMethod == '') {
+        <span class="text-red-500 text-xs" >Required</span>
+      }
+    </h1>
+    <span class="text-xl">You are about to pay invoice {{invoice.DocNum}} with <span class="font-bold">{{invoice.DocCurrency}} {{checkoutForm.value.amount | number:'1.2-2'}}</span>  using {{paymentMethod}}</span>
+    <div class="flex justify-between items-center absolute bottom-0 w-full pr-10 ">
+      <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" type="button" (click)="step = 1" >Cancel</button>
+      <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" (click)="fundAccount()" >Pay Invoice</button>
+    </div>
+  </div>
+}
+
+<!--  Innbucks QR-->
+@if (innBucksResponse) {
+  <div>
+    <div class="w-full flex items-center justify-center flex-col min-h-72  px-5 max-w-md h-full ">
+      <h1 class="text-xl pb-2">Processing Payment
+      </h1>
+      <svg  xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    </div>
+    @if (paymentMethod === 'InnBucks') {
+      <div class="w-full flex max-w-md  items-center justify-center flex-col">
+        @if (innBucksResponse) {
           <img  src="data:image/png;base64,{{innBucksResponse.qrCode}}" alt="InnBucks QR Code">
           <span class="text-center text-xl mb-2">{{innBucksResponse.code}}</span>
           <p>Scan the QR using the InnBucks app or Dial *569# and enter the code above to complete your payment</p>
-        </ng-container>
+        }
       </div>
+    }
+  </div>
+}
+
+@if (loading && innBucksResponse==null) {
+  <div>
+    <div class="w-full flex items-center justify-center flex-col min-h-72  px-5 max-w-md h-full ">
+      <h1 class="text-xl pb-2">Initiating  Payment
+      </h1>
+      <svg  xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
     </div>
-
-    <div *ngIf="loading && innBucksResponse==null">
-      <div class="w-full flex items-center justify-center flex-col min-h-72  px-5 max-w-md h-full ">
-        <h1 class="text-xl pb-2">Initiating  Payment
-        </h1>
-        <svg  xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-loader-circle animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
-      </div>
-
-      <div *ngIf="paymentMethod === 'Ecocash'" class="w-full flex items-center justify-center flex-col">
+    @if (paymentMethod === 'Ecocash') {
+      <div class="w-full flex items-center justify-center flex-col">
         <ng-container>
           <!--              <img  src="data:image/png;base64,{{innBucksResponse.qrCode}}" alt="InnBucks QR Code">-->
           <app-animated-pay-card></app-animated-pay-card>
           <p>Please complete your order on your mobile device</p>
         </ng-container>
       </div>
-    </div>
+    }
+  </div>
+}
 
-    <div *ngIf="step === 3">
-      <div class="w-full flex items-center justify-center flex-col ">
-        <h1 class="text-xl pb-2">Wallet Credited Successfully
-        </h1>
-        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>          </div>
-
+@if (step === 3) {
+  <div>
+    <div class="w-full flex items-center justify-center flex-col ">
+      <h1 class="text-xl pb-2">Wallet Credited Successfully
+      </h1>
+      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>          </div>
       <div class="flex justify-center items-center mt-10 ">
         <button class="bg-accent-500 p-2.5 rounded w-1/3 text-white" type="button" routerLink="/profile/wallet" >Back</button>
         <!--            <button class="bg-accent-500 p-2.5 rounded  my-5 hover:bg-accent-600 text-white" type="submit" >Complete Order</button>-->
-
       </div>
     </div>
+  }
 
-  </div>
+</div>
 </section>

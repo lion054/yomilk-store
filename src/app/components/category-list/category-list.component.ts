@@ -1,16 +1,14 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {StoreService} from "../../core/services/store/store.service";
-import {CommonModule, NgFor, NgForOf} from "@angular/common";
+
 import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
   imports: [
-    CommonModule,
-    NgFor,
     RouterLink
-  ],
+],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.scss'
 })

@@ -4,7 +4,7 @@
 <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
 
 <!-- Page Header -->
-<section class="page-header bg-gradient-to-r from-[#42af57] to-[#3d9332] py-12">
+<section class="page-header bg-gradient-to-r from-fresh-500 to-fresh-600 py-12">
   <div class="container mx-auto px-5">
     <div class="text-center text-white">
       <h1 class="text-4xl font-bold mb-4 font-outfit">Our Vendors</h1>
@@ -26,8 +26,8 @@
           [(ngModel)]="searchTerm"
           (input)="onSearchChange()"
           placeholder="Search vendors..."
-          class="w-full px-5 py-4 pl-12 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[#42af57] focus:bg-white focus:outline-none transition-all"
-        />
+          class="w-full px-5 py-4 pl-12 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[fresh-500] focus:bg-white focus:outline-none transition-all"
+          />
         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
       </div>
 
@@ -37,18 +37,20 @@
         <select
           [(ngModel)]="selectedCategory"
           (change)="onCategoryChange()"
-          class="px-5 py-4 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer flex-1 md:flex-none"
-        >
+          class="px-5 py-4 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[fresh-500] focus:bg-white focus:outline-none cursor-pointer flex-1 md:flex-none"
+          >
           <option value="">All Categories</option>
-          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          @for (cat of categories; track cat) {
+            <option [value]="cat">{{ cat }}</option>
+          }
         </select>
 
         <!-- Rating Filter -->
         <select
           [(ngModel)]="selectedRating"
           (change)="onRatingChange()"
-          class="px-5 py-4 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[#42af57] focus:bg-white focus:outline-none cursor-pointer flex-1 md:flex-none"
-        >
+          class="px-5 py-4 bg-gray-100 border-2 border-transparent rounded-xl focus:border-[fresh-500] focus:bg-white focus:outline-none cursor-pointer flex-1 md:flex-none"
+          >
           <option value="">All Ratings</option>
           <option value="4">4+ Stars</option>
           <option value="4.5">4.5+ Stars</option>
@@ -59,7 +61,7 @@
 
     <!-- Results Count -->
     <div class="mt-4 text-gray-600">
-      Showing <span class="font-semibold text-[#1c352c]">{{ filteredVendors.length }}</span> vendors
+      Showing <span class="font-semibold text-[dark]">{{ filteredVendors.length }}</span> vendors
     </div>
   </div>
 </section>
@@ -68,81 +70,81 @@
 <section class="py-12 bg-gray-100">
   <div class="container mx-auto px-5">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <div
-        *ngFor="let vendor of filteredVendors"
-        class="vendor-card bg-white rounded-[20px] p-6 relative transition-all duration-300 border-2 border-transparent hover:border-[#42af57] hover:shadow-lg"
-      >
-        <!-- Badge -->
-        <span
-          class="vendor-badge absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold"
+      @for (vendor of filteredVendors; track vendor) {
+        <div
+          class="vendor-card bg-white rounded-[20px] p-6 relative transition-all duration-300 border-2 border-transparent hover:border-[fresh-500] hover:shadow-lg"
+          >
+          <!-- Badge -->
+          <span
+            class="vendor-badge absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold"
           [ngClass]="{
             'bg-[#8dc1ed] text-white': vendor.badge === 'featured',
-            'bg-[#42af57] text-white': vendor.badge === 'verified',
-            'bg-[#ffc107] text-[#1c352c]': vendor.badge === 'new'
+            'bg-[fresh-500] text-white': vendor.badge === 'verified',
+            'bg-[#ffc107] text-[dark]': vendor.badge === 'new'
           }"
-        >
-          {{ vendor.badge === 'featured' ? 'Featured' : vendor.badge === 'verified' ? 'Verified' : 'New' }}
-        </span>
-
-        <!-- Header -->
-        <div class="vendor-header flex items-center gap-4 mb-5">
-          <div class="vendor-logo w-[70px] h-[70px] bg-gray-100 rounded-xl flex items-center justify-center text-4xl flex-shrink-0">
-            {{ vendor.logo }}
-          </div>
-          <div class="vendor-info flex-1">
-            <h4 class="font-semibold text-base mb-1 text-[#1c352c]">{{ vendor.name }}</h4>
-            <div class="flex items-center gap-1 text-sm">
-              <div class="stars text-yellow-400 flex">
-                <i class="fas fa-star text-xs" *ngFor="let star of getStars(vendor.rating); let i = index"
-                   [ngClass]="{'text-gray-300': star === 0, 'text-yellow-400': star >= 0.5}"></i>
-              </div>
-              <span class="text-gray-500">({{ vendor.rating }})</span>
+            >
+            {{ vendor.badge === 'featured' ? 'Featured' : vendor.badge === 'verified' ? 'Verified' : 'New' }}
+          </span>
+          <!-- Header -->
+          <div class="vendor-header flex items-center gap-4 mb-5">
+            <div class="vendor-logo w-[70px] h-[70px] bg-gray-100 rounded-xl flex items-center justify-center text-4xl flex-shrink-0">
+              {{ vendor.logo }}
             </div>
-            <span class="text-xs text-gray-500">Since {{ vendor.since }}</span>
+            <div class="vendor-info flex-1">
+              <h4 class="font-semibold text-base mb-1 text-[dark]">{{ vendor.name }}</h4>
+              <div class="flex items-center gap-1 text-sm">
+                <div class="stars text-yellow-400 flex">
+                  @for (star of getStars(vendor.rating); track star; let i = $index) {
+                    <i class="fas fa-star text-xs"
+                    [ngClass]="{'text-gray-300': star === 0, 'text-yellow-400': star >= 0.5}"></i>
+                  }
+                </div>
+                <span class="text-gray-500">({{ vendor.rating }})</span>
+              </div>
+              <span class="text-xs text-gray-500">Since {{ vendor.since }}</span>
+            </div>
           </div>
+          <!-- Description -->
+          <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ vendor.description }}</p>
+          <!-- Stats -->
+          <div class="vendor-stats flex gap-5 py-4 border-t border-b border-gray-200 mb-4">
+            <div class="vendor-stat text-center flex-1">
+              <span class="block text-lg font-bold text-[fresh-500]">{{ vendor.products }}</span>
+              <small class="text-xs text-gray-600">Products</small>
+            </div>
+            <div class="vendor-stat text-center flex-1">
+              <span class="block text-lg font-bold text-[fresh-500]">{{ vendor.positive }}%</span>
+              <small class="text-xs text-gray-600">Positive</small>
+            </div>
+            <div class="vendor-stat text-center flex-1">
+              <span class="block text-lg font-bold text-[fresh-500]">{{ vendor.orders }}</span>
+              <small class="text-xs text-gray-600">Orders</small>
+            </div>
+          </div>
+          <!-- Address -->
+          <div class="vendor-address flex items-start gap-2 text-sm text-gray-600 mb-4">
+            <i class="fas fa-map-marker-alt text-[fresh-500] mt-1"></i>
+            <span>{{ vendor.address }}</span>
+          </div>
+          <!-- Action Button -->
+          <button
+            class="w-full py-3 bg-[fresh-500] text-white rounded-xl font-semibold hover:bg-[fresh-600] transition-all hover:-translate-y-0.5 hover:shadow-lg"
+            routerLink="/store"
+            >
+            Visit Store
+          </button>
         </div>
-
-        <!-- Description -->
-        <p class="text-sm text-gray-600 mb-4 line-clamp-2">{{ vendor.description }}</p>
-
-        <!-- Stats -->
-        <div class="vendor-stats flex gap-5 py-4 border-t border-b border-gray-200 mb-4">
-          <div class="vendor-stat text-center flex-1">
-            <span class="block text-lg font-bold text-[#42af57]">{{ vendor.products }}</span>
-            <small class="text-xs text-gray-600">Products</small>
-          </div>
-          <div class="vendor-stat text-center flex-1">
-            <span class="block text-lg font-bold text-[#42af57]">{{ vendor.positive }}%</span>
-            <small class="text-xs text-gray-600">Positive</small>
-          </div>
-          <div class="vendor-stat text-center flex-1">
-            <span class="block text-lg font-bold text-[#42af57]">{{ vendor.orders }}</span>
-            <small class="text-xs text-gray-600">Orders</small>
-          </div>
-        </div>
-
-        <!-- Address -->
-        <div class="vendor-address flex items-start gap-2 text-sm text-gray-600 mb-4">
-          <i class="fas fa-map-marker-alt text-[#42af57] mt-1"></i>
-          <span>{{ vendor.address }}</span>
-        </div>
-
-        <!-- Action Button -->
-        <button
-          class="w-full py-3 bg-[#42af57] text-white rounded-xl font-semibold hover:bg-[#3d9332] transition-all hover:-translate-y-0.5 hover:shadow-lg"
-          routerLink="/store"
-        >
-          Visit Store
-        </button>
-      </div>
+      }
     </div>
 
     <!-- Empty State -->
-    <div *ngIf="filteredVendors.length === 0" class="text-center py-16">
-      <div class="text-6xl mb-4">🔍</div>
-      <h3 class="text-xl font-semibold text-[#1c352c] mb-2">No vendors found</h3>
-      <p class="text-gray-600">Try adjusting your search or filter criteria</p>
-    </div>
+    @if (filteredVendors.length === 0) {
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">🔍</div>
+        <h3 class="text-xl font-semibold text-[dark] mb-2">No vendors found</h3>
+        <p class="text-gray-600">Try adjusting your search or filter criteria</p>
+      </div>
+    }
   </div>
 </section>
 
@@ -150,7 +152,7 @@
 <app-features-strip></app-features-strip>
 
 <!-- CTA Section -->
-<section class="py-16 bg-gradient-to-r from-[#42af57] to-[#2d7025]">
+<section class="py-16 bg-gradient-to-r from-[fresh-500] to-[#2d7025]">
   <div class="container mx-auto px-5 text-center">
     <h2 class="text-3xl font-bold text-white mb-4 font-outfit">Become a Vendor</h2>
     <p class="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
@@ -158,8 +160,8 @@
     </p>
     <a
       routerLink="/become-a-vendor"
-      class="inline-flex items-center gap-2 bg-white text-[#42af57] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all hover:-translate-y-0.5 hover:shadow-lg"
-    >
+      class="inline-flex items-center gap-2 bg-white text-[fresh-500] px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all hover:-translate-y-0.5 hover:shadow-lg"
+      >
       <i class="fas fa-store"></i>
       Register as Vendor
     </a>

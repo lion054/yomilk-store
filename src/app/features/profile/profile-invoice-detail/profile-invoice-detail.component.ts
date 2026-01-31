@@ -3,7 +3,7 @@ import {ActivatedRoute, Router, RouterModule} from "@angular/router";
 import {StoreService} from "../../../core/services/store/store.service";
 import {BrowserModule, DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
 import {AuthService} from "../../../core/services/auth/auth.service";
-import {DatePipe, DecimalPipe, NgIf} from "@angular/common";
+import { DatePipe, DecimalPipe } from "@angular/common";
 import {QRCodeComponent} from "angularx-qrcode";
 import {NgxPrintModule} from "ngx-print";
 
@@ -12,12 +12,11 @@ import {NgxPrintModule} from "ngx-print";
   standalone: true,
   imports: [
     RouterModule,
-    NgIf,
     QRCodeComponent,
     DecimalPipe,
     NgxPrintModule,
     DatePipe
-  ],
+],
   templateUrl: './profile-invoice-detail.component.html',
   styleUrl: './profile-invoice-detail.component.css'
 })

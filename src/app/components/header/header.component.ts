@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, HostListener} from '@angular/core';
 import {CurrencyService} from "../../core/services/currency/currency.service";
-import {CommonModule, NgIf} from "@angular/common";
+
 import {FormsModule} from "@angular/forms";
 import {CartService} from "../../core/services/cart/cart.service";
 import {Router, RouterLink} from "@angular/router";
@@ -18,15 +18,13 @@ import {Subject, debounceTime, distinctUntilChanged, filter, switchMap, takeUnti
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
-    NgIf,
     RouterLink,
     WeekendNoticeComponent,
     ServicesDrawerComponent,
     MegaMenuComponent,
     ShopSelectorComponent
-  ],
+],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
@@ -60,7 +58,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // Scroll state
   isScrolled: boolean = false;
 
-  @HostListener('window:scroll', ['$event'])
+  @HostListener('window:scroll')
   onWindowScroll() {
     this.isScrolled = window.pageYOffset > 50;
   }

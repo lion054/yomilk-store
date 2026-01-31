@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CommonModule, DecimalPipe} from "@angular/common";
+import { CommonModule, DecimalPipe } from "@angular/common";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {StoreService} from "../../../../core/services/store/store.service";
