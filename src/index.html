@@ -1,139 +1,354 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Snappy Fresh | Fresh Dairy, Milk & Groceries Delivery in Harare, Zimbabwe</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Primary SEO Meta Tags -->
-  <meta name="description" content="Order fresh dairy products, milk, yoghurt, cheese, bread and groceries online in Harare, Zimbabwe. Fast delivery, competitive prices. Shop now at Snappy Fresh!">
-  <meta name="keywords" content="fresh milk Zimbabwe, dairy delivery Harare, online grocery Zimbabwe, yoghurt delivery, cheese products Zimbabwe, bread delivery Harare, Snappy Fresh, grocery delivery Zimbabwe, fresh cream, yolac products">
-  <meta name="author" content="Snappy Fresh">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://snappyfresh.net/">
-
-  <!-- Open Graph Meta Tags -->
-  <meta property="og:type" content="website"/>
-  <meta property="og:site_name" content="Snappy Fresh"/>
-  <meta property="og:title" content="Snappy Fresh | Fresh Dairy & Groceries Delivery in Harare"/>
-  <meta property="og:description" content="Order fresh dairy products, milk, yoghurt, cheese, bread and groceries online in Harare, Zimbabwe. Fast delivery, competitive prices!"/>
-  <meta property="og:url" content="https://snappyfresh.net"/>
-  <meta property="og:image" content="https://snappyfresh.net/assets/logo.png"/>
-  <meta property="og:image:alt" content="Snappy Fresh - Fresh Dairy & Groceries"/>
-  <meta property="og:locale" content="en_ZW"/>
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:site" content="@snappyfresh"/>
-  <meta name="twitter:title" content="Snappy Fresh | Fresh Dairy & Groceries Delivery"/>
-  <meta name="twitter:description" content="Order fresh dairy products, milk, yoghurt, cheese, bread and groceries online in Harare, Zimbabwe. Fast delivery!"/>
-  <meta name="twitter:image" content="https://snappyfresh.net/assets/logo.png"/>
-
-  <!-- Additional Meta Tags -->
-  <meta name="geo.region" content="ZW-HA"/>
-  <meta name="geo.placename" content="Harare"/>
-  <meta name="geo.position" content="-17.8292;31.0522"/>
-  <meta name="ICBM" content="-17.8292, 31.0522"/>
-
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Organization Schema -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Snappy Fresh",
-      "alternateName": "SnappyFresh",
-      "url": "https://snappyfresh.net",
-      "logo": "https://snappyfresh.net/assets/logo.png",
-      "description": "Order fresh dairy products, milk, yoghurt, cheese, bread and groceries online in Harare, Zimbabwe. Fast delivery, competitive prices!",
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "telephone": "+263782978460",
-          "contactType": "Customer Service",
-          "areaServed": "ZW",
-          "availableLanguage": ["en"]
-        },
-        {
-          "@type": "ContactPoint",
-          "email": "support@snappyfresh.net",
-          "contactType": "Customer Support",
-          "areaServed": "ZW"
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#42af57" />
+    <meta
+      name="description"
+      content="Order fresh dairy products, milk, yoghurt, cheese, bread and groceries online in Harare, Zimbabwe. Fast delivery, competitive prices. Shop now at Snappy Fresh!"
+    />
+    <title>Snappy Fresh | Fresh Dairy, Milk & Groceries Delivery in Zimbabwe</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Original Template CSS -->
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/cart-drawer.css">
+    <link rel="stylesheet" href="assets/css/scheduled-orders.css">
+    <!-- Slick Carousel CSS -->
+    <link rel="stylesheet" href="assets/css/slick.css">
+    <style>
+        :root {
+            --color-brand: #42af57;
+            --color-brand-dark: #3d9332;
+            --color-brand-light: #4a9a48;
         }
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "185 Lorely Close, Msasa",
-        "addressLocality": "Harare",
-        "addressCountry": "ZW"
-      },
-      "sameAs": [
-        "https://www.facebook.com/snappyfreshzw",
-        "https://www.instagram.com/snappyfreshzw"
-      ],
-      "openingHours": "Mo-Su 06:00-18:00"
-    }
-  </script>
+        .text-brand { color: #42af57 !important; }
+        .bg-brand { background-color: #42af57 !important; }
+        .btn-brand { background-color: #42af57 !important; border-color: #42af57 !important; }
+        .btn-brand:hover { background-color: #3d9332 !important; }
+    </style>
+  </head>
 
-  <!-- LocalBusiness Schema for Local SEO -->
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "GroceryStore",
-      "name": "Snappy Fresh",
-      "image": "https://snappyfresh.net/assets/logo.png",
-      "url": "https://snappyfresh.net",
-      "telephone": "+263782978460",
-      "email": "support@snappyfresh.net",
-      "priceRange": "$$",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "185 Lorely Close, Msasa",
-        "addressLocality": "Harare",
-        "addressCountry": "ZW"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": -17.8292,
-        "longitude": 31.0522
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        "opens": "06:00",
-        "closes": "18:00"
-      },
-      "paymentAccepted": "Cash, EcoCash, InnBucks, Credit Card",
-      "currenciesAccepted": "USD, ZWL"
-    }
-  </script>
-<!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1334321168343886');
-  fbq('track', 'PageView');
-</script>
-<!-- End Facebook Pixel Code -->
-
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#42af57">
-  <meta name="msapplication-TileColor" content="#42af57">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#42af57">
-</head>
 <body>
-<noscript><img height="1" width="1" style="display:none"
-               src="https://www.facebook.com/tr?id=1334321168343886&ev=PageView&noscript=1"
-/></noscript>
-  <app-root></app-root>
-</body>
-</html>
+    <!-- Quick view -->
+    <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                            <div class="detail-gallery">
+                                <span class="zoom-icon"><i class="fi-rs-search"></i></span>
+                                <!-- MAIN SLIDES -->
+                                <div class="product-image-slider">
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-2.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-1.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-3.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-4.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-5.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-6.jpg" alt="product image">
+                                    </figure>
+                                    <figure class="border-radius-10">
+                                        <img src="assets/images/product-16-7.jpg" alt="product image">
+                                    </figure>
+                                </div>
+                                <!-- THUMBNAILS -->
+                                <div class="slider-nav-thumbnails">
+                                    <div><img src="assets/images/thumbnail-3.jpg" alt="product image"></div>
+                                    <div><img src="assets/images/thumbnail-4.jpg" alt="product image"></div>
+                                    <div><img src="assets/images/thumbnail-5.jpg" alt="product image"></div>
+                                    <div><img src="assets/images/thumbnail-6.jpg" alt="product image"></div>
+                                    <div><img src="assets/images/thumbnail-7.jpg" alt="product image"></div>
+                                    <div><img src="assets/images/thumbnail-8.jpg" alt="product image"></div>
+                                    <div><img src="assets/images/thumbnail-9.jpg" alt="product image"></div>
+                                </div>
+                            </div>
+                            <!-- End Gallery -->
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="detail-info pr-30 pl-30">
+                                <span class="stock-status out-stock"> Sale Off </span>
+                                <h3 class="title-detail"><a href="shop/product-details.html" class="text-heading">Seeds of Change Organic Quinoa, Brown</a></h3>
+                                <div class="product-detail-rating">
+                                    <div class="product-rate-cover text-end">
+                                        <div class="product-rate d-inline-block">
+                                            <div class="product-rating" style="width: 90%"></div>
+                                        </div>
+                                        <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="clearfix product-price-cover">
+                                    <div class="product-price primary-color float-left">
+                                        <span class="current-price text-brand">$38</span>
+                                        <span>
+                                            <span class="save-price font-md color3 ml-15">26% Off</span>
+                                            <span class="old-price font-md ml-15">$52</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="detail-extralink mb-30">
+                                    <div class="detail-qty border radius">
+                                        <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
+                                        <span class="qty-val">1</span>
+                                        <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                    </div>
+                                    <div class="product-extra-link2">
+                                        <button type="submit" class="button button-add-to-cart"><i class="fi-rs-shopping-cart"></i>Add to cart</button>
+                                    </div>
+                                </div>
+                                <div class="font-xs">
+                                    <ul>
+                                        <li class="mb-5">Vendor: <span class="text-brand">Snappy Fresh</span></li>
+                                        <li class="mb-5">MFG:<span class="text-brand"> Jun 4.2024</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Detail Info -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Minimalistic Nest-Style Header -->
+    <header class="header-area header-style-nest">
+        <!-- Top Bar (Optional - Hidden on Scroll) -->
+        <div class="header-top bg-white border-bottom d-none d-lg-block">
+            <div class="container">
+                <div class="row align-items-center py-2">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="location-selector">
+                                <select class="form-select form-select-sm border-0" style="max-width: 180px; font-size: 13px; color: #2d5016; font-weight: 500;">
+                                    <option>Harare</option>
+                                    <option>Bulawayo</option>
+                                    <option>Mutare</option>
+                                </select>
+                            </div>
+                            <span style="color: #ddd;">|</span>
+                            <div class="quick-links d-flex gap-3" style="font-size: 13px;">
+                                <a href="pages/about.html" class="text-decoration-none" style="color: #2d5016; font-weight: 500;">About</a>
+                                <a href="pages/contact.html" class="text-decoration-none" style="color: #2d5016; font-weight: 500;">Contact</a>
+                                <a href="pages/faq.html" class="text-decoration-none" style="color: #2d5016; font-weight: 500;">FAQ</a>
+                                <a href="#" class="text-decoration-none" style="color: #2d5016; font-weight: 500;">Track Order</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <div class="d-flex align-items-center justify-content-end gap-3" style="font-size: 13px;">
+                            <a href="account/login.html" class="text-muted text-decoration-none">Sign In</a>
+                            <span style="color: #ddd;">/</span>
+                            <a href="account/register.html" class="text-muted text-decoration-none">Sign Up</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <div class="header-middle bg-white border-bottom sticky-bar">
+            <div class="container">
+                <div class="row align-items-center py-3">
+                    <!-- Logo -->
+                    <div class="col-lg-2 col-md-3 col-6">
+                        <div class="logo">
+                            <a href="index.html"><img src="assets/images/logo.png" alt="Snappy Fresh" style="max-height: 45px;"></a>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced Search Bar -->
+                    <div class="col-lg-7 col-md-6 d-none d-md-block">
+                        <div class="search-bar-enhanced">
+                            <form action="#" class="search-form position-relative d-flex align-items-stretch" style="box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-radius: 10px; overflow: hidden; transition: box-shadow 0.3s ease;">
+                                <select class="form-select border-0" style="max-width: 180px; background: #f8f9fa; font-size: 14px; font-weight: 500; color: #333; padding: 12px 16px; cursor: pointer;">
+                                    <option>All Categories</option>
+                                    <option>Fresh Produce</option>
+                                    <option>Meat & Seafood</option>
+                                    <option>Bakery</option>
+                                    <option>Dairy & Eggs</option>
+                                    <option>Frozen Foods</option>
+                                    <option>Pantry</option>
+                                    <option>Beverages</option>
+                                </select>
+                                <div class="position-relative flex-grow-1 d-flex align-items-center" style="background: white;">
+                                    <i class="fi-rs-search position-absolute" style="left: 16px; color: #999; font-size: 18px; pointer-events: none;"></i>
+                                    <input type="text" class="form-control border-0" placeholder="Search for fresh groceries, dairy, meat..." style="font-size: 14px; padding: 12px 120px 12px 48px; background: transparent;">
+                                    <button type="submit" class="btn position-absolute end-0 me-2" style="background: #42af57; border: none; border-radius: 8px; padding: 10px 28px; font-weight: 600; color: white; transition: all 0.3s ease; box-shadow: 0 2px 6px rgba(66, 175, 87, 0.3);">
+                                        Search
+                                    </button>
+                                </div>
+                            </form>
+                            <style>
+                                .search-form:focus-within {
+                                    box-shadow: 0 4px 16px rgba(66, 175, 87, 0.15) !important;
+                                }
+                                .search-form button:hover {
+                                    background: #3d9332 !important;
+                                    transform: translateY(-1px);
+                                    box-shadow: 0 4px 10px rgba(66, 175, 87, 0.4) !important;
+                                }
+                                .search-form button:active {
+                                    transform: translateY(0);
+                                }
+                                .search-form input:focus {
+                                    outline: none;
+                                }
+                                .search-form select:focus {
+                                    outline: none;
+                                    background: #f0f2f5 !important;
+                                }
+                            </style>
+                        </div>
+                    </div>
+
+                    <!-- Header Icons -->
+                    <div class="col-lg-3 col-md-3 col-6">
+                        <div class="header-action-right d-flex align-items-center justify-content-end gap-3">
+                            <!-- Wishlist -->
+                            <div class="header-action-icon position-relative">
+                                <a href="account/wishlist.html" class="text-decoration-none d-flex flex-column align-items-center">
+                                    <i class="fi-rs-heart" style="font-size: 24px; color: #333;"></i>
+                                    <span class="badge bg-brand position-absolute" style="top: -5px; right: -10px; font-size: 10px; background: #42af57;">6</span>
+                                    <span class="d-none d-lg-block" style="font-size: 12px; color: #666; margin-top: 2px;">Wishlist</span>
+                                </a>
+                            </div>
+
+                            <!-- Cart -->
+                            <div class="header-action-icon position-relative">
+                                <a href="#" data-cart-trigger class="text-decoration-none d-flex flex-column align-items-center">
+                                    <i class="fi-rs-shopping-cart" style="font-size: 24px; color: #333;"></i>
+                                    <span class="badge bg-brand position-absolute cart-count" data-cart-count style="top: -5px; right: -10px; font-size: 10px; background: #42af57;">2</span>
+                                    <span class="d-none d-lg-block" style="font-size: 12px; color: #666; margin-top: 2px;">Cart</span>
+                                </a>
+                            </div>
+
+                            <!-- Account -->
+                            <div class="header-action-icon">
+                                <a href="account/dashboard.html" class="text-decoration-none d-flex flex-column align-items-center">
+                                    <i class="fi-rs-user" style="font-size: 24px; color: #333;"></i>
+                                    <span class="d-none d-lg-block" style="font-size: 12px; color: #666; margin-top: 2px;">Account</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Navigation Bar with Checkers-Style Services -->
+        <div class="header-nav" style="background: #f8f9fa; border-top: 1px solid #e0e0e0; border-bottom: 2px solid #e0e0e0;">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between py-3 flex-wrap gap-3">
+                    <!-- Left Side: Shop Options -->
+                    <div class="d-flex align-items-center gap-3 flex-wrap">
+                        <!-- Shop by Department (Main Button) -->
+                        <a href="shop/shop-grid.html" class="btn d-flex align-items-center gap-2" style="background: #8BC34A; color: white; border: none; border-radius: 6px; padding: 10px 16px; font-size: 14px; font-weight: 500;">
+                            <i class="fi-rs-apps"></i>
+                            <span>Shop by Department</span>
+                        </a>
+
+                        <!-- Shop By Delivery with Instant/Scheduled Options -->
+                        <div class="d-none d-lg-flex align-items-center gap-2">
+                            <i class="fi-rs-truck" style="font-size: 18px; color: #8BC34A;"></i>
+                            <span style="font-weight: 500; font-size: 13px; color: #333;">Shop By Delivery</span>
+                            <button class="delivery-option-btn active" onclick="selectDeliveryOption(this)" style="background: #8BC34A; color: white; border: 2px solid #8BC34A; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-left: 6px;">
+                                <i class="fi-rs-time-fast" style="font-size: 11px;"></i> Instant
+                            </button>
+                            <button class="delivery-option-btn" onclick="selectDeliveryOption(this)" style="background: white; color: #8BC34A; border: 2px solid #8BC34A; padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                <i class="fi-rs-calendar" style="font-size: 11px;"></i> Scheduled
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Service Icons -->
+                    <div class="d-none d-md-flex align-items-center gap-3">
+                        <!-- My Shop -->
+                        <a href="shop/shop-grid.html" class="service-nav-item d-flex align-items-center gap-2 text-decoration-none" style="color: #333;">
+                            <i class="fi-rs-shop" style="font-size: 17px; color: #8BC34A;"></i>
+                            <span style="font-size: 12px; font-weight: 500;">My Shop</span>
+                        </a>
+
+                        <!-- Brochures (Stores & Leaflets) -->
+                        <a href="pages/brochures.html" class="service-nav-item d-flex align-items-center gap-2 text-decoration-none" style="color: #333;">
+                            <i class="fi-rs-document" style="font-size: 17px; color: #8BC34A;"></i>
+                            <span style="font-size: 12px; font-weight: 500;">Brochures</span>
+                        </a>
+
+                        <!-- Shops -->
+                        <a href="pages/shops.html" class="service-nav-item d-flex align-items-center gap-2 text-decoration-none" style="color: #333;">
+                            <i class="fi-rs-shop" style="font-size: 17px; color: #8BC34A;"></i>
+                            <span style="font-size: 12px; font-weight: 500;">Shops</span>
+                        </a>
+
+                        <!-- Other Services -->
+                        <button class="service-nav-item d-flex align-items-center gap-2 border-0 bg-transparent" style="color: #333; cursor: pointer;" onclick="toggleOtherServices()">
+                            <i class="fi-rs-apps-sort" style="font-size: 17px; color: #8BC34A;"></i>
+                            <span style="font-size: 12px; font-weight: 500;">Other Services</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Header Toggle -->
+        <div class="mobile-header-toggle d-lg-none">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between py-3">
+                    <div class="mobile-menu-toggle">
+                        <button class="burger-icon btn p-0 border-0">
+                            <div class="hamburger-icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="mobile-icons d-flex gap-3">
+                        <a href="account/wishlist.html"><i class="fi-rs-heart" style="font-size: 22px;"></i></a>
+                        <a href="#" data-cart-trigger><i class="fi-rs-shopping-cart" style="font-size: 22px;"></i><span class="cart-count" data-cart-count>2</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+\n<app-root></app-root>\n
+    <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
+    <script src="assets/js/vendor/jquery-3.7.1.min.js"></script>
+    <script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+    <script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/vendor/slick.js"></script>
+    <script src="assets/js/vendor/jquery.syotimer.min.js"></script>
+    <script src="assets/js/vendor/wow.js"></script>
+    <script src="assets/js/vendor/perfect-scrollbar.js"></script>
+    <script src="assets/js/vendor/magnific-popup.js"></script>
+    <script src="assets/js/vendor/select2.min.js"></script>
+    <script src="assets/js/vendor/waypoints.js"></script>
+    <script src="assets/js/vendor/counterup.js"></script>
+    <script src="assets/js/vendor/jquery.countdown.min.js"></script>
+    <script src="assets/js/scheduled-orders-simple.js"></script>
+    <script src="assets/js/vendor/images-loaded.js"></script>
+    <script src="assets/js/vendor/isotope.js"></script>
+    <script src="assets/js/vendor/scrollup.js"></script>
+    <script src="assets/js/vendor/jquery.vticker-min.js"></script>
+    <script src="assets/js/vendor/jquery.theia.sticky.js"></script>
+    <script src="assets/js/vendor/jquery.elevatezoom.js"></script>
+    <!-- Template  JS -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/shop.js"></script>
+\n<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>\n<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>\n
